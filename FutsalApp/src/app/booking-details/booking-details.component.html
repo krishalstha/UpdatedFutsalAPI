@@ -1,0 +1,170 @@
+<app-booking-detail-report></app-booking-detail-report>
+<form
+  #form="ngForm"
+  (ngSubmit)="onSubmit(form)"
+  [class.submitted]="formSubmitted"
+  novalidate
+  autocomplete="off"
+  class="p-4 shadow-lg rounded-3 bg-light"
+>
+
+  <div class="row">
+
+
+<!-- Email -->
+<div class="col-md-6 mb-4">
+  <label for="email" class="form-label">Email</label>
+  <input
+    id="email"
+    type="email"
+    class="form-control"
+    name="email"
+    [(ngModel)]="formData.email"
+    readonly
+  />
+</div>
+
+
+    <!-- Select Date -->
+    <div class="col-md-6 mb-4">
+      <label for="selectDate" class="form-label">Select Date</label>
+      <input
+        id="selectDate"
+        type="date"
+        class="form-control"
+        name="selectDate"
+        [(ngModel)]="formData.selectDate"
+        required
+        #selectDate="ngModel"
+      />
+      <div *ngIf="selectDate.invalid && (selectDate.dirty || selectDate.touched)" class="text-danger">
+        <small *ngIf="selectDate.errors?.['required']">Date is required.</small>
+      </div>
+    </div>
+
+    <!-- Select Time -->
+<div class="col-md-6 mb-4">
+  <label for="selectTime" class="form-label">Select Time</label>
+  <input
+    id="selectTime"
+    type="time"
+    class="form-control"
+    name="selectTime"
+    [(ngModel)]="formData.selectTime"
+    (ngModelChange)="calculateEndTime()"
+    required
+    #selectTime="ngModel"
+  />
+  <div *ngIf="selectTime.invalid && (selectTime.dirty || selectTime.touched)" class="text-danger">
+    <small *ngIf="selectTime.errors?.['required']">Time is required.</small>
+  </div>
+</div>
+
+<!-- Select Duration -->
+<div class="col-md-6 mb-4">
+  <label for="selectDuration" class="form-label">Duration</label>
+  <select
+    id="selectDuration"
+    class="form-select"
+    name="selectDuration"
+    [(ngModel)]="formData.selectDuration"
+    (ngModelChange)="calculateEndTime()"
+    required
+    #selectDuration="ngModel"
+  >
+    <option value="" disabled selected>Select Duration</option>
+    <option value="30 mins">30 mins</option>
+    <option value="1 hour">1 hour</option>
+    <option value="2 hours">2 hours</option>
+  </select>
+  <div *ngIf="selectDuration.invalid && (selectDuration.dirty || selectDuration.touched)" class="text-danger">
+    <small *ngIf="selectDuration.errors?.['required']">Duration is required.</small>
+  </div>
+</div>
+
+   
+    <!-- Calculated End Time -->
+<div class="col-md-6 mb-4">
+  <label for="calculatedEndTime" class="form-label">Calculated End Time</label>
+  <input
+    id="calculatedEndTime"
+    type="text"
+    class="form-control"
+    name="calculatedEndTime"
+    [(ngModel)]="formData.calcTime"
+    readonly
+  />
+</div>
+
+
+    <!-- Select Court -->
+    <div class="col-md-6 mb-4">
+      <label for="selectCourt" class="form-label">Court Selection</label>
+      <select
+        id="selectCourt"
+        class="form-select"
+        name="selectCourt"
+        [(ngModel)]="formData.selectCourt"
+        required
+        #selectCourt="ngModel"
+      >
+        <option value="" disabled selected>Select Court</option>
+        <option value="Court 1">Court 1</option>
+        <option value="Court 2">Court 2</option>
+      </select>
+      <div *ngIf="selectCourt.invalid && (selectCourt.dirty || selectCourt.touched)" class="text-danger">
+        <small *ngIf="selectCourt.errors?.['required']">Court selection is required.</small>
+      </div>
+    </div>
+
+    
+
+    <!-- Select Payment Method -->
+    <div class="col-md-6 mb-4">
+      <label for="selectPaymentMethod" class="form-label">Payment Method</label>
+      <select
+        id="selectPaymentMethod"
+        class="form-select"
+        name="selectPaymentMethod"
+        [(ngModel)]="formData.selectPaymentMethod"
+        required
+        #selectPaymentMethod="ngModel"
+      >
+        <option value="" disabled selected>Select Payment Method</option>
+        <option value="Cash">Cash</option>
+        <option value="Online">Online</option>
+      </select>
+      <div *ngIf="selectPaymentMethod.invalid && (selectPaymentMethod.dirty || selectPaymentMethod.touched)" class="text-danger">
+        <small *ngIf="selectPaymentMethod.errors?.['required']">Payment method is required.</small>
+      </div>
+    </div>
+
+    <!-- Contact Number -->
+    <div class="col-md-6 mb-4">
+      <label for="contactNumber" class="form-label">Contact Number</label>
+      <input
+        id="contactNumber"
+        type="text"
+        class="form-control"
+        placeholder="10 Digit Number"
+        name="contactNumber"
+        [(ngModel)]="formData.contactNumber"
+        required
+        pattern="^[0-9]{10}$"
+        #contactNumber="ngModel"
+      />
+      <div *ngIf="contactNumber.invalid && (contactNumber.dirty || contactNumber.touched)" class="text-danger">
+        <small *ngIf="contactNumber.errors?.['required']">Contact Number is required.</small>
+        <small *ngIf="contactNumber.errors?.['pattern']">Enter a valid 10-digit number.</small>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="d-grid">
+      <button class="btn btn-success btn-lg" type="submit" [disabled]="form.invalid || formSubmitted">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+<app-booking-detail-form></app-booking-detail-form>

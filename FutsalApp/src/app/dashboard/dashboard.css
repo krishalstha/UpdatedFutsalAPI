@@ -1,0 +1,25 @@
+/* dashboard.component.css */
+:host {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .dashboard-screen {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #ecf0f1;
+  }
+  
+  .stats {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .card {
+    background: rgb(255, 255, 255);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  

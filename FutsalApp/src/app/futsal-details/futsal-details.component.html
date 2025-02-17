@@ -1,0 +1,64 @@
+<div class="row mt-5">
+  <div class="col-12">
+    <div class="card p-4">
+      <h2 class="mb-4">Futsal Details</h2>
+      <app-futsal-detail-form [futsalForEdit]="selectedFutsal"></app-futsal-detail-form>
+
+    </div>
+  </div>
+</div>
+<div class="row mt-4">
+  <div class="col-12">
+    <div class="card p-4">
+      <h2 class="mb-4">List of Futsals</h2>
+      <div class="table-responsive">
+        <table class="table table-striped text-center">
+          <thead>
+            <tr>
+              <th>Futsal Name</th>
+              <th>Phone Number</th>
+              <th>Email</th>
+              <th>Pricing</th>
+              <th>Location</th>
+              <th>Operation Hours</th>
+              
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let futsal of futsalList">
+              <td>{{ futsal.futsalName }}</td>
+              <td>{{ futsal.contactNumber }}</td>
+              <td>{{ futsal.email }}</td>
+              <td>{{ futsal.pricing }}</td>
+              <td>{{futsal.location}}</td>
+              <td>{{ futsal.operationHours }}</td>
+              <td>{{futsal.description}}</td>
+              <td class="text-center">
+                <div class="btn-group" role="group">
+                  <button 
+                   class="btn btn-danger btn-sm me-2" 
+                    (click)="onDelete(futsal.futsalId ?? 0)" 
+                      aria-label="Delete Futsal Detail">
+                        <i class="fa-solid fa-trash"></i> Delete
+                        </button>
+                  <button class="btn btn-warning btn-sm" 
+                  (click)="populateForm(futsal)" 
+                  aria-label="Edit Futsl Detail">
+                    <i class="fa-solid fa-pen-to-square"></i>Edit
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div> 
+
+
+
+
+
+

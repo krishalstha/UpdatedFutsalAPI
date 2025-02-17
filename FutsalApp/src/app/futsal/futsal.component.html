@@ -1,0 +1,28 @@
+<div class="futsal-booking-container">
+  <header class="booking-header">
+    <h1>Book Your Futsal Ground</h1>
+    <p>Find and reserve your favorite futsal grounds instantly!</p>
+    
+    <div class="auth-buttons">
+      <button *ngIf="!isLoggedIn" mat-button (click)="openLoginDialog()">Login</button>
+      <button *ngIf="!isLoggedIn" mat-button (click)="openSignupDialog()">Register</button>
+      <button *ngIf="isLoggedIn" mat-button (click)="logout()">Logout</button>
+      </div>
+  </header>
+  
+  <div class="futsal-list">
+    <div *ngFor="let futsal of futsalDetails" class="futsal-card">
+      <img src="assets/football.jpg" alt="Futsal Ground" class="futsal-image">
+      <div class="futsal-info">
+        <h2>{{ futsal.futsalName }}</h2>
+        <p><strong>Location:</strong> {{ futsal.location }}</p>
+        <p><strong>Contact:</strong> {{ futsal.contactNumber }}</p>
+        <p><strong>Pricing:</strong> {{ futsal.pricing }}</p>
+        <p><strong>Opening Hours:</strong> {{ futsal.operationHours }}</p>
+        <p><strong>Email:</strong> {{ futsal.email }}</p>
+        <p class="description">{{ futsal.description }}</p>
+        <button (click)="goToBooking(futsal)" class="book-now" [disabled]="!isLoggedIn">Book Now</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<aside class="sidebar" [class.hidden]="!isSidebarOpen">
+  <h2 *ngIf="isSidebarOpen">Admin Panel</h2>
+  <ul>
+    <li class="nav-link">
+      <a routerLink="/admin-dashboard/dashboard" routerLinkActive="active">
+        <i class="fas fa-home"></i><span *ngIf="isSidebarOpen">Dashboard</span>
+      </a>
+    </li>
+    <li class="nav-link" routerLinkActive="active">
+      <a routerLink="users">
+        <i class="fa-solid fa-users"></i><span *ngIf="isSidebarOpen">Users</span>
+      </a>
+    </li>
+    <li class="nav-link">
+      <a routerLink="/admin-dashboard/accept-bookings" routerLinkActive="active">
+        <i class="fa-solid fa-book"></i><span *ngIf="isSidebarOpen">Accept Bookings</span>
+      </a>
+    </li>
+    <li class="nav-link">
+      <a routerLink="/admin-dashboard/futsaldetailcomponent" routerLinkActive="active">
+        <i class="fa-solid fa-futbol"></i><span *ngIf="isSidebarOpen">Futsals</span>
+      </a>
+    </li>
+    <li class="nav-link" routerLinkActive="active">
+      <a routerLink="settings">
+        <i class="fa-solid fa-sliders"></i><span *ngIf="isSidebarOpen">Settings</span>
+      </a>
+    </li>
+  </ul>
+</aside>

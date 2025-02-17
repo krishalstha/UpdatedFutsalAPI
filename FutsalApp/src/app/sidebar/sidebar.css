@@ -1,0 +1,129 @@
+/* Sidebar Styles */
+.sidebar {
+  width: 300px;
+  height: 100vh;
+  background-color: #303030;
+  color: white;
+  position: fixed;
+  top: auto;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+  transition: width 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+/* Sidebar Title */
+.sidebar h2 {
+  margin-bottom: 20px;
+  font-size: 22px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 10px;
+}
+
+/* Sidebar Navigation */
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+/* Sidebar Links */
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 5px;
+  transition: padding 0.3s, margin 0.3s;
+}
+
+.nav-link a {
+  text-decoration: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  transition: background 0.3s;
+}
+
+/* Icon Styles */
+.nav-link i {
+  width: 25px;
+  text-align: center;
+  font-size: 18px;
+}
+
+/* Hover Effect */
+.nav-link a:hover {
+  background-color: #34495e;
+  border-radius: 5px;
+}
+
+/* Sidebar Hidden: Keep Icons, Hide Text, Increase Line Spacing */
+.sidebar.hidden {
+  width: 60px;
+  padding: 20px 10px;
+}
+
+/* Hide text but keep icons when collapsed */
+.sidebar.hidden h2 {
+  display: none;
+}
+
+.sidebar.hidden .nav-link a span {
+  display: none;
+}
+
+/* Increase spacing when sidebar is collapsed */
+.sidebar.hidden .nav-link {
+  padding: 16px; /* Increase padding */
+  margin: 12px 0; /* Increase vertical spacing */
+  justify-content: center; /* Center icon when text is hidden */
+}
+
+.sidebar.hidden .nav-link i {
+  font-size: 22px; /* Slightly larger icons */
+}
+
+/* Adjust Main Content Area */
+.content {
+  margin-left: 300px; /* Default when sidebar is open */
+  padding: 20px;
+  flex-grow: 1;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+/* When sidebar is collapsed */
+.sidebar.hidden + .content {
+  margin-left: 60px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+  }
+
+  .content {
+    margin-left: 200px;
+  }
+
+  /* Hide text but keep icons on small screens */
+  .sidebar.hidden {
+    width: 60px;
+    padding: 20px 10px;
+  }
+
+  .sidebar.hidden .nav-link {
+    padding: 18px;
+    margin: 14px 0;
+  }
+
+  .sidebar.hidden + .content {
+    margin-left: 60px;
+  }
+}

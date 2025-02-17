@@ -1,0 +1,48 @@
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 2rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+h1 {
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.text-danger {
+    font-size: 0.875rem;
+}
+
+button {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1.1rem;
+    border-radius: 4px;
+}
+
+.register-link, .forgot-password {
+    font-size: 1rem;
+    color: #007bff;
+    cursor: pointer;
+    margin-top: 0.5rem;
+}
+
+.register-link:hover, .forgot-password:hover {
+    text-decoration: underline;
+}

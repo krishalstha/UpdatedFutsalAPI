@@ -1,0 +1,151 @@
+<form
+  #form="ngForm"
+  (ngSubmit)="onSubmit(form)"
+  [class.submitted]="formSubmitted"
+  novalidate
+  autocomplete="off"
+  class="p-4 shadow-lg rounded-3 bg-light"
+>
+  <div class="row">
+    <!-- Futsal Name -->
+    <div class="col-md-6 mb-4">
+      <label for="futsalName" class="form-label">Futsal Name</label>
+      <input
+        id="futsalName"
+        type="text"
+        class="form-control"
+        placeholder="Enter Futsal Name"
+        name="futsalName"
+        [(ngModel)]="formData.futsalName"
+        required
+        #futsalName="ngModel"
+      />
+      <div *ngIf="futsalName.invalid && (futsalName.dirty || futsalName.touched)" class="text-danger">
+        <small *ngIf="futsalName.errors?.['required']">Futsal Name is required.</small>
+      </div>
+    </div>
+
+    <!-- Location -->
+    <div class="col-md-6 mb-4">
+      <label for="location" class="form-label">Location</label>
+      <input
+        id="location"
+        type="text"
+        class="form-control"
+        placeholder="Location of your place"
+        name="location"
+        [(ngModel)]="formData.location"
+        required
+        #futsalLocation="ngModel"
+      />
+      <div *ngIf="futsalLocation.invalid && (futsalLocation.dirty || futsalLocation.touched)" class="text-danger">
+        <small *ngIf="futsalLocation.errors?.['required']">Location is required.</small>
+      </div>
+    </div>
+
+    <!-- Contact Number -->
+    <div class="col-md-6 mb-4">
+      <label for="contactNumber" class="form-label">Contact Number</label>
+      <input
+        id="contactNumber"
+        type="text"
+        class="form-control"
+        placeholder="10 Digit Number"
+        name="contactNumber"
+        [(ngModel)]="formData.contactNumber"
+        required
+        pattern="^[0-9]{10}$"
+        #contactNumber="ngModel"
+        (input)="onNumberInput($event)"
+      />
+      <div *ngIf="contactNumber.invalid && (contactNumber.dirty || contactNumber.touched)" class="text-danger">
+        <small *ngIf="contactNumber.errors?.['required']">Contact Number is required.</small>
+        <small *ngIf="contactNumber.errors?.['pattern']">Enter a valid 10-digit number.</small>
+      </div>
+    </div>
+
+    <!-- Pricing -->
+    <div class="col-md-6 mb-4">
+      <label for="pricing" class="form-label">Pricing</label>
+      <input
+        id="pricing"
+        type="text"
+        class="form-control"
+        placeholder="Enter Pricing"
+        name="pricing"
+        [(ngModel)]="formData.pricing"
+        required
+        #pricing="ngModel"
+      />
+      <div *ngIf="pricing.invalid && (pricing.dirty || pricing.touched)" class="text-danger">
+        <small *ngIf="pricing.errors?.['required']">Pricing is required.</small>
+      </div>
+    </div>
+
+    <!-- Operation Hours -->
+    <div class="col-md-6 mb-4">
+      <label for="operationHours" class="form-label">Operation Hours</label>
+      <select
+        id="operationHours"
+        class="form-select"
+        name="operationHours"
+        [(ngModel)]="formData.operationHours"
+        required
+        #operationHours="ngModel"
+      >
+        <option value="" disabled selected>Select Operation Hours</option>
+        <option value="6am - 6pm">6am - 6pm</option>
+        <option value="7am - 7pm">7am - 7pm</option>
+        <option value="6am - 11pm">6am - 11pm</option>
+      </select>
+      <div *ngIf="formData.operationHours">
+        Operation Hours: {{ formData.operationHours }}
+      </div>
+      <div *ngIf="!formData.operationHours">Operation Hours: Not available</div>
+    </div>
+
+    <!-- Email -->
+    <div class="col-md-6 mb-4">
+      <label for="email" class="form-label">Email</label>
+      <input
+        id="email"
+        type="email"
+        class="form-control"
+        placeholder="Enter Email"
+        name="email"
+        [(ngModel)]="formData.email"
+        required
+        email
+        #email="ngModel"
+      />
+      <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+        <small *ngIf="email.errors?.['required']">Email is required.</small>
+        <small *ngIf="email.errors?.['email']">Enter a valid email address.</small>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="col-12 mb-4">
+      <label for="description" class="form-label">Description</label>
+      <textarea
+        id="description"
+        class="form-control"
+        placeholder="Enter a description"
+        name="description"
+        [(ngModel)]="formData.description"
+        required
+        #description="ngModel"
+      ></textarea>
+      <div *ngIf="description.invalid && (description.dirty || description.touched)" class="text-danger">
+        <small *ngIf="description.errors?.['required']">Description is required.</small>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="d-grid">
+      <button class="btn btn-success btn-lg" type="submit" [disabled]="form.invalid || formSubmitted">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>

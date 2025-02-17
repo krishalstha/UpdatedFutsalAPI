@@ -1,0 +1,14 @@
+ <div class="booking-list">
+    <div *ngFor="let futsal of bookingDetail" class="booked-card">
+      <div class="futsal-info">
+        <p><strong>Email</strong>{{  booking.email }}</p>
+        <p><strong>Date:</strong> {{  booking.selectDate }}</p>
+        <p><strong>Time:</strong> {{ booking.selectTime }}</p>
+        <p><strong>Duration:</strong> {{ booking.selectDuration }}</p>
+        <p><strong>Court:</strong> {{ booking.selectCourt }}</p>
+        <p><strong>ContactNumber:</strong> {{ booking.contactNumber }}</p>
+        <p> <strong>PaymentMethod:</strong>{{ booking.selectPaymentMethod }}</p>
+       
+    </div>
+    </div>
+  </div>
