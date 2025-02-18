@@ -26,7 +26,7 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 
 // Import Routes
 import { routes } from './app.routes';
-import { AppRoutingModule } from './app-routing.module';
+//import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
@@ -43,7 +43,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     RouterModule.forRoot(routes),
     ToastrModule.forRoot(),
     MatDialogModule,
-    AppRoutingModule,
+   // AppRoutingModule,
     CommonModule,
     HomeComponent,
     FutsalComponent,

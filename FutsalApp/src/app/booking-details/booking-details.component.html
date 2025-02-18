@@ -1,4 +1,5 @@
 <app-booking-detail-report></app-booking-detail-report>
+
 <form
   #form="ngForm"
   (ngSubmit)="onSubmit(form)"
@@ -30,7 +31,7 @@
       <label for="selectDate" class="form-label">Select Date</label>
       <input
         id="selectDate"
-        type="date"
+        type="selectDate"
         class="form-control"
         name="selectDate"
         [(ngModel)]="formData.selectDate"
@@ -167,4 +168,4 @@
     </div>
   </div>
 </form>
-<app-booking-detail-form></app-booking-detail-form>
+<app-booking-detail-form (updatedBooking)="onBookingForEdit($event)"></app-booking-detail-form>

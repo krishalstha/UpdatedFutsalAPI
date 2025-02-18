@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges, OnInit } from '@angular/core'; 
+import { Component, OnChanges, SimpleChanges, OnInit } from '@angular/core'; 
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
@@ -19,12 +19,22 @@ import { BookingDetailReportComponent } from '../booking-detail-report/booking-d
   
 })
 export class BookingDetailsComponent implements OnInit, OnChanges {
+// Method to receive the emitted data from child
+onBookingForEdit(booking: BookingDetail): void {
+  //this.bookingForEdit = booking;
+  //console.log('Received booking for edit:', this.bookingForEdit);
+  const bookingData = booking;
+  // this.formData.email=bookingData.email;
+  // this.formData.contactNumber=bookingData.contactNumber;
+  this.formData = bookingData;
+}
+  bookingForEdit: BookingDetail | null = null;
   formSubmitted: boolean = false;
   calculatedEndTime: string = ''; // Stores calculated end time
   formData: BookingDetail = this.initializeFormData();
   
 
-  @Input() bookingForEdit: BookingDetail | null = null;
+ // @Input() bookingForEdit: BookingDetail | null = null;
 
   constructor(
     private bookingscreenService: BookingDetailService,
@@ -66,6 +76,15 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
       this.formData = { ...this.bookingForEdit };
     }
   }
+
+
+  // This method is called when updatedBooking event is emitted from the child
+  onBookingUpdate(updatedBooking: BookingDetail): void {
+    console.log('Received updated booking:', updatedBooking);
+    this.formData = updatedBooking;  // Update form data with the emitted booking
+  }
+
+
  /**
    * Convert duration string to minutes.
    */

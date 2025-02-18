@@ -10,7 +10,7 @@ import { FutsalDetailService } from '../../shared/futsal-detail.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './futsal-detail-form.component.html',
-  styles: [],
+  styleUrls: ['./futsal-detail-form.css'],
 })
 export class FutsalDetailFormComponent implements OnChanges {
   formSubmitted: boolean = false;

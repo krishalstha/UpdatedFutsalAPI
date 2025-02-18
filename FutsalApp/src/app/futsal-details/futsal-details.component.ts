@@ -10,6 +10,7 @@ import { FutsalDetailFormComponent } from "../FutsalDetails/futsal-detail-form/f
   templateUrl: './futsal-details.component.html',
   standalone: true,
   imports: [CommonModule, FutsalDetailFormComponent],
+  styleUrls:['./futsal-details.css'],
 })
 export class FutsalDetailsComponent {
 
@@ -46,6 +47,7 @@ export class FutsalDetailsComponent {
    * @param futsal - Futsal detail to populate in the form
    */
   populateForm(futsal: FutsalDetail): void {
+    debugger;
     this.selectedFutsal = { ...futsal }; // Create a copy of the selected futsal for editing
     console.log('Populating form with futsal data:', this.selectedFutsal);
   }

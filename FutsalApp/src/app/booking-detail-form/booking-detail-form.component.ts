@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BookingDetailService } from '../shared/booking-detail.service';
 import { ToastrService } from 'ngx-toastr';  // For toast notifications
@@ -15,6 +15,8 @@ import { CommonModule } from '@angular/common';
   
 })
 export class BookingDetailFormComponent {
+  @Output() updatedBooking = new EventEmitter<BookingDetail>();  // Declare Output event emitter
+  
   bookingList: BookingDetail[] = [];  // List to store booking details
   selectedBooking: BookingDetail | null = null;  // Booking detail selected for editing
 
@@ -30,7 +32,6 @@ export class BookingDetailFormComponent {
    * Fetches the list of booking details from the service.
    */
   private loadBookingList(): void {
-
     this.bookingService.getBookingDetails().subscribe({
       next: (res: BookingDetail[]) => {
         this.bookingList = res;
@@ -54,7 +55,9 @@ export class BookingDetailFormComponent {
     
     this.selectedBooking = { ...booking };  // Copy the selected booking for editing
     console.log('Populating form with booking data:', this.selectedBooking);
-  }
+    
+    // Emit the selected booking to the parent component
+    this.updatedBooking.emit(this.selectedBooking); }
 
   /**
    * Updates the selected booking detail.
