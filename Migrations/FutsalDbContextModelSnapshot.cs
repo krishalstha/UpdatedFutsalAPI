@@ -105,6 +105,10 @@ namespace FutsalAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(15)");
 
+                    b.Property<string>("court")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)");
+
                     b.Property<string>("description")
                         .IsRequired()
                         .HasColumnType("nvarchar(500)");
@@ -153,6 +157,42 @@ namespace FutsalAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Login");
+                });
+
+            modelBuilder.Entity("FutsalAPI.modules.UploadImage", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("fileName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int>("fileSize")
+                        .HasColumnType("int");
+
+                    b.Property<string>("fileType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("fileUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime>("uploadDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("uploadedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("UploadImage");
                 });
 #pragma warning restore 612, 618
         }

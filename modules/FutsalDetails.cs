@@ -37,8 +37,8 @@ namespace FutsalAPI.modules
         [Column(TypeName = "nvarchar(15)")]
         public string operationHours { get; set; } = "";
 
-        //[Column(TypeName = "nvarchar(20)")]
-        //public string court  { get; set; } = "";
+        [Column(TypeName = "nvarchar(20)")]
+        public string court { get; set; } = "";
 
     }
 }

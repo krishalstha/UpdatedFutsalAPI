@@ -43,7 +43,8 @@ namespace FutsalAPI.Migrations
                     email = table.Column<string>(type: "nvarchar(100)", nullable: false),
                     description = table.Column<string>(type: "nvarchar(500)", nullable: false),
                     pricing = table.Column<string>(type: "nvarchar(15)", nullable: false),
-                    operationHours = table.Column<string>(type: "nvarchar(15)", nullable: false)
+                    operationHours = table.Column<string>(type: "nvarchar(15)", nullable: false),
+                    court = table.Column<string>(type: "nvarchar(20)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -79,6 +80,24 @@ namespace FutsalAPI.Migrations
                 {
                     table.PrimaryKey("PK_Registration", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "UploadImage",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    fileName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    fileUrl = table.Column<string>(type: "nvarchar(500)", nullable: false),
+                    fileType = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    fileSize = table.Column<int>(type: "int", nullable: false),
+                    uploadedBy = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    uploadDate = table.Column<DateTime>(type: "datetime", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UploadImage", x => x.id);
+                });
         }
 
         /// <inheritdoc />
@@ -95,6 +114,9 @@ namespace FutsalAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Registration");
+
+            migrationBuilder.DropTable(
+                name: "UploadImage");
         }
     }
 }
