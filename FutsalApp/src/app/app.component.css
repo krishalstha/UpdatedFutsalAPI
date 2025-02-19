@@ -11,65 +11,44 @@ html {
 
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
 }
 
 a {
     text-decoration: none;
     color: inherit;
 }
-/* Logo Styling */
-.logo {
-    flex-shrink: 0; /* Prevents the logo from shrinking */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100px; /* Adjusts the height of the logo container */
-    width: auto;
-}
-
-.logo img {
-    height: 100%; /* Makes the logo fill the container */
-    width: auto; /* Keeps the aspect ratio of the logo */
-    max-height: 100px; /* Optional: Limits the max height of the logo */
-    object-fit: contain; /* Ensures the image maintains its aspect ratio */
-}
 
 /* Top Bar */
 .top-bar {
     background-color: #333;
     color: white;
-    padding: 0.5px 0;
+    padding: 5px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-left: 20px;
-    padding-right: 20px;
 }
 
 .top-bar a {
     color: white;
     margin: 0 10px;
-    text-decoration: none;
 }
-
-
 
 /* Header Container */
 .header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: nowrap;
-    padding: 5px;
+    padding: 10px 20px;
     background: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    gap: 20px;
 }
 
-
+/* Logo */
+.logo img {
+    height: 80px;
+    max-height: 100px;
+    object-fit: contain;
+}
 
 /* Navbar */
 #navbar {
@@ -80,18 +59,16 @@ a {
 
 #navbar ul {
     list-style-type: none;
-    padding: 0;
     display: flex;
 }
 
 #navbar li {
-    margin-right: 60px;
+    margin-right: 40px;
 }
 
 #navbar li a {
     color: #333;
     font-weight: bold;
-    text-decoration: none;
 }
 
 #navbar li a:hover {
@@ -99,108 +76,46 @@ a {
     color: #4CAF50;
 }
 
-/* Form (Register/Login) */
-#form {
-    display: flex;
-    justify-content: flex-end;
-}
-
-#form ul {
-    display: flex;
-    list-style: none;
-    gap: 15px;
-}
-
-#form li {
-    font-size: 16px;
-    font-weight: bold;
-    background: #5c8df6;
-    color: white;
-    padding: 8px 15px;
-    border-radius: 20px;
+/* Hamburger Menu Button */
+.menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 30px;
     cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
+    padding: 10px;
 }
 
-#form li:hover {
-    background: #4a74d3;
-    transform: scale(1.05);
-}
-
-.fa {
-    padding: 20px;
-    font-size: 20px;
-    width: 60px;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 50%;
-
-}
-
-/* Add a hover effect */
-.fa:hover {
-    opacity: 0.7;
-}
-
-/* Specific colors for brand icons */
-.fa-facebook {
-    background: #3B5998;
-    color: white;
-}
-
-.fa-twitter {
-    background: #55ACEE;
-    color: white;
-}
-
-.fa-instagram {
-    background: #E4405F;
-    color: white;
-}
-
-/* Media Queries for Responsiveness */
+/* Responsive Styles */
 @media (max-width: 768px) {
-    .logo img {
-        max-height: 70px; /* Reduces the logo size on smaller screens */
-    }
-
-    .header-container {
-        flex-direction: column;
-        align-items: flex-start;
+    .menu-btn {
+        display: block; /* Show menu button */
     }
 
     #navbar {
+        display: none; /* Hide navbar by default */
         flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 10px 0;
+        z-index: 1000;
+    }
+
+    #navbar.mobile-menu {
+        display: flex; /* Show when toggled */
+    }
+
+    #navbar ul {
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
     }
 
     #navbar li {
-        margin-bottom: 10px;
+        margin: 10px 0;
     }
-
-    .top-bar {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    
 }
-
-@media (max-width: 480px) {
-    .logo img {
-        max-height: 60px; /* Further reduce size for mobile screens */
-    }
-
-    .fa {
-        padding: 15px;
-        font-size: 18px;
-    }
-
-   
-}
-
-  
-  
- 
-

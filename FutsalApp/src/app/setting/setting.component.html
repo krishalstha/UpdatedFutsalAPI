@@ -1,0 +1,56 @@
+<div class="settings-wrapper">
+    <!-- Top Navigation Bar -->
+    <div class="topbar">
+      <!-- Content on the left side (Optional) -->
+      <h2>Settings</h2>
+      
+      <!-- Gear/Settings Icon on the right side -->
+      <button class="menu-btn" (click)="toggleMenu()">
+        <i class="fas fa-cog"></i> <!-- FontAwesome Gear Icon -->
+      </button>
+    </div>
+  
+    <!-- Dropdown Menu -->
+    <div class="dropdown-menu" [ngClass]="{'show': menuVisible}">
+      <ul>
+        <li><a href="#">Profile</a></li>
+        <li><a href="#">Account</a></li>
+        <li><a href="#">Notifications</a></li>
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#" class="logout-btn">Logout</a></li>
+      </ul>
+    </div>
+  
+    <!-- Main Settings Content -->
+    <div class="settings-content">
+        <div class="section">
+            <h2>Profile</h2>
+            <div class="profile-card">
+              <p><strong>Username:</strong> JohnDoe</p>
+              <p><strong>Email:</strong> johndoeexample.com</p>
+              <button class="edit-btn">Edit Profile</button>
+            </div>
+          </div>
+      
+          <div class="section">
+            <h2>Account</h2>
+            <div class="account-options">
+              <button class="btn">Change Password</button>
+              <button class="btn danger">Delete Account</button>
+            </div>
+          </div>
+      
+          <div class="section">
+            <h2>Other Settings</h2>
+            <div class="other-settings">
+              <button class="btn">Manage Notifications</button>
+              <button class="btn">Privacy Settings</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+    
+    
+     
+  

@@ -14,6 +14,7 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AcceptBookingsComponent } from './accept-bookings/accept-bookings.component';
 import { BookingDetailFormComponent } from './booking-detail-form/booking-detail-form.component';
+import { SettingComponent } from './setting/setting.component';
 
 
 
@@ -40,7 +41,8 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },  
       { path: 'dashboard', component: DashboardComponent },
-      { path: 'accept-bookings', component: AcceptBookingsComponent },
+      { path: 'setting', component: SettingComponent},
+      { path: 'acceptbookings', component: AcceptBookingsComponent },
       { path: 'futsaldetailcomponent', component: FutsalDetailsComponent },
        ]},
 ];

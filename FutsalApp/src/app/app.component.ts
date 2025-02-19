@@ -13,10 +13,10 @@ import { NgIf } from '@angular/common';
   styleUrls: ['./app.component.css']  // Corrected from styleUrl to styleUrls
 })
 export class AppComponent implements OnInit {
-  
+  isMenuOpen = false;
   isAdmin: boolean = false;
   isLoggedIn: boolean = true;
-    loginStatusChange = new EventEmitter<boolean>();
+  loginStatusChange = new EventEmitter<boolean>();
 
   constructor(
     private router: Router,
@@ -28,6 +28,9 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
    
     this.checkUserRole();
+  }
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
   }
   checkUserRole() {
     const userData = localStorage.getItem('loggedInUser'); // ✅ Fetch stored user data

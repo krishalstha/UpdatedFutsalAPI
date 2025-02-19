@@ -28,6 +28,7 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { routes } from './app.routes';
 //import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { SettingComponent } from './setting/setting.component';
 
 @NgModule({
   
@@ -55,6 +56,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     AcceptBookingsComponent,
     AdminDashboardComponent,
     DashboardComponent,
+    SettingComponent,
     
     
   ],

@@ -18,8 +18,12 @@
   <div class="logo">
    <img src="assets/futsal.png" alt="">
   </div>
+
+  <!-- Hamburger Menu Button (Only for Small Screens) -->
+  <button class="menu-btn" (click)="toggleMenu()">&#9776;</button>
+
   <!-- Navbar -->
-  <div id="navbar">
+  <div id="navbar" [class.mobile-menu]="isMenuOpen">
     <ul>
       <li><i class="fas fa-home"></i> <a routerLink="/home" routerLinkActive="active">Home</a></li>
       <li><i class="fas fa-futbol"></i> <a routerLink="/futsal" routerLinkActive="active">Futsal</a></li>

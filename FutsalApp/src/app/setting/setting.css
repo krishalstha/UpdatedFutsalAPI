@@ -1,0 +1,133 @@
+/* Layout */
+.settings-wrapper {
+    font-family: Arial, sans-serif;
+    margin-top: 37px;
+    margin-left: -20px;
+  }
+  
+  /* Topbar */
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #303030;
+    color: white;
+    padding: 15px 20px;
+  }
+  
+  /* Gear Icon Button */
+  .menu-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .menu-btn i {
+    font-size: 24px;
+  }
+  
+  /* Dropdown Menu */
+  .dropdown-menu {
+    display: none;
+    background: #303030;
+    padding: 10px;
+    position: absolute;
+    width: 100%;
+  }
+  
+  .dropdown-menu.show {
+    display: block;
+  }
+  
+  .dropdown-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .dropdown-menu ul li {
+    padding: 10px;
+  }
+  
+  .dropdown-menu ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  .dropdown-menu ul li a:hover {
+    background: #6e6b6b;
+    padding-left: 10px;
+  }
+  
+  .logout-btn {
+    color: #e74c3c;
+  }
+  
+  /* Main Content */
+  .settings-content {
+    padding: 40px;
+    background: #f4f4f4;
+  }
+  
+  .section {
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+  
+  /* Profile Card */
+  .profile-card {
+    background: #ecf0f1;
+    padding: 15px;
+    border-radius: 8px;
+  }
+  
+  .edit-btn {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .edit-btn:hover {
+    background: #2980b9;
+  }
+  
+  /* Buttons */
+  .btn {
+    padding: 10px;
+    border: none;
+    background: #27ae60;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .btn:hover {
+    background: #219150;
+  }
+  
+  .danger {
+    background: #e74c3c;
+  }
+  
+  .danger:hover {
+    background: #c0392b;
+  }
+  

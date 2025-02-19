@@ -9,6 +9,7 @@ import { TopbarComponent } from "../topbar/topbar.component";
   imports: [RouterModule, SidebarComponent, TopbarComponent],
   providers: [AppComponent],
   templateUrl: './admin-dashboard.component.html',
+  styleUrls: ['./admin-dashboard.css']
 })
 export class AdminDashboardComponent implements OnInit{
   isShownavbar: boolean=false;
