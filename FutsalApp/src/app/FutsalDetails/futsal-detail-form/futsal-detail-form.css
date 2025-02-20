@@ -36,6 +36,12 @@ form {
     font-size: 0.875rem;
     margin-top: 5px;
   }
+  .preview-image {
+    max-width: 150px;
+    max-height: 150px;
+    object-fit: cover; /* Ensures the image scales without distorting */
+  }
+  
   
   button {
     width: 100%;

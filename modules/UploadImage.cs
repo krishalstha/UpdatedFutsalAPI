@@ -11,21 +11,21 @@ namespace FutsalAPI.modules
 
         [Required]
         [Column(TypeName = "nvarchar(255)")]
-        [StringLength(255, ErrorMessage = "File name cannot exceed 255 characters.")]
-        public string fileName { get; set; } = "";
+        [StringLength(255, ErrorMessage = "Image name cannot exceed 255 characters.")]
+        public string imageName { get; set; } = "";
 
         [Required]
         [Column(TypeName = "nvarchar(500)")]
         [Url(ErrorMessage = "Please enter a valid URL.")]
-        public string fileUrl { get; set; } = "";
+        public string imageUrl { get; set; } = "";
 
         [Required]
         [Column(TypeName = "nvarchar(100)")]
-        public string fileType { get; set; } = "";
+        public string imageType { get; set; } = "";
 
         [Required]
         [Column(TypeName = "int")]
-        public long fileSize { get; set; }
+        public long imageSize { get; set; }
 
         [Column(TypeName = "nvarchar(100)")]
         public string uploadedBy { get; set; } = "";

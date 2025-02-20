@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { FutsalDetail } from '../../shared/futsal-detail';
 import { FutsalDetailService } from '../../shared/futsal-detail.service';
+import { ImageService } from 'src/app/shared/Image.service';
 
 @Component({
   selector: 'app-futsal-detail-form',
@@ -13,14 +14,18 @@ import { FutsalDetailService } from '../../shared/futsal-detail.service';
   styleUrls: ['./futsal-detail-form.css'],
 })
 export class FutsalDetailFormComponent implements OnChanges {
+  image: string = '';
   formSubmitted: boolean = false;
   formData: FutsalDetail = this.initializeFormData();
+  selectedFile: File | null = null;
+  selectedFileUrl: string | null = null;
 
   @Input() futsalForEdit: FutsalDetail | null = null;
 
   constructor(
     private futsalService: FutsalDetailService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private imageService: ImageService
   ) {}
 
   /**
@@ -35,7 +40,9 @@ export class FutsalDetailFormComponent implements OnChanges {
       email: '',
       description: '',
       pricing: '',
-      operationHours: '',  // Ensure this uses operationHours
+      operationHours: '', 
+      court: '',
+      image: '',
     };
   }
 
@@ -51,6 +58,23 @@ export class FutsalDetailFormComponent implements OnChanges {
       if (!this.formData.operationHours) {
         this.fetchOperationHours();  // Ensure it's fetching operationHours
       }
+    }
+  }
+
+  /**
+   * Handle image file input change.
+   */
+  onImageChange(event: any) {
+    const file = event.target.files[0]; // Get the selected file
+    if (file) {
+      this.selectedFile = file;  // Store the file for later upload
+      this.formData.image = file.name;  // Set the file name in form data (or use a data URL if preferred)
+
+      const reader = new FileReader();  // Create a new FileReader instance
+      reader.onload = (e: any) => {
+        this.selectedFileUrl = e.target.result;  // Set the data URL for the image preview
+      };
+      reader.readAsDataURL(file);  // Read the file as a data URL (base64 encoded)
     }
   }
 
@@ -135,15 +159,40 @@ export class FutsalDetailFormComponent implements OnChanges {
    */
   private insertRecord(form: NgForm): void {
     console.log('Payload being sent:', this.formData);
+    
+    // Ensure the image is included
+    this.formData.image = this.selectedFile ? this.selectedFile.name : '';  // or base64 string if needed
 
     this.futsalService.postFutsalDetail(this.formData).subscribe({
       next: () => {
         this.toastr.success('Record inserted successfully!', 'Futsal Detail');
+        this.uploadimage();  // Upload the image after the record is inserted
         this.resetForm(form);
       },
       error: (err) => {
         console.error('Insert Error:', err);
         this.toastr.error('Failed to insert the record.', 'Insert Error');
+      },
+    });
+  }
+
+  /**
+   * Upload image after record insert.
+   */
+  uploadimage() {
+    if (!this.selectedFile) {
+      this.toastr.warning('No image selected to upload.', 'Warning');
+      return;
+    }
+  
+    this.imageService.uploadImage(this.selectedFile).subscribe({
+      next: (response) => {
+        this.toastr.success('Image uploaded successfully!', 'Upload Success');
+        console.log('Image Upload Response:', response);
+      },
+      error: (err) => {
+        console.error('Image Upload Error:', err);
+        this.toastr.error('Failed to upload image.', 'Upload Error');
       },
     });
   }

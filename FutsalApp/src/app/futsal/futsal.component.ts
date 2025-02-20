@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit} from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FutsalDetailService } from '../shared/futsal-detail.service';
@@ -8,19 +8,19 @@ import { LoginComponent } from '../login/login.component';
 import { RegisterComponent } from '../register/register.component';
 import { AuthService } from '../shared/auth.service';
 import { AppComponent } from '../app.component';
-
-
+import { ImageService } from 'src/app/shared/Image.service';
 
 @Component({
   selector: 'app-futsal',
-  standalone: true, 
+  standalone: true,
   imports: [CommonModule],
   providers: [],
   templateUrl: './futsal.component.html',
-  styleUrl: './futsal.css'
+  styleUrls: ['./futsal.css']
 })
 export class FutsalComponent implements OnInit {
-  //isShowLogout: boolean = false;
+
+  imageUrls: Map<string, string> = new Map();  // Use a Map to store images per futsal
   futsalDetails: FutsalDetail[] = [];
   isLoggedIn: boolean = false;
   loginStatusChange = new EventEmitter<boolean>();
@@ -31,43 +31,47 @@ export class FutsalComponent implements OnInit {
     private dialog: MatDialog,
     private authService: AuthService,
     private appcomponent: AppComponent,
-    
-   
+    private imageService: ImageService
   ) {}
+
   ngOnInit(): void {
-    const token = localStorage.getItem("Token");
-    if(token){
-      this.isLoggedIn =true;
-    }else{
-      this.isLoggedIn = false;
-    }
-    // Check if the user is logged in
+    const token = localStorage.getItem('Token');
+    this.isLoggedIn = !!token; // Check if user is logged in from localStorage
+
+    // Subscribe to the login status
     this.authService.isLoggedIn().subscribe((status) => {
-      this.isLoggedIn = status;   
+      this.isLoggedIn = status;
     });
-    
-    // Call the service to fetch futsal details when the component is initialized
+
+    // Fetch futsal details when component initializes
     this.futsalDetailService.getFutsalDetails().subscribe(
       (data) => {
         this.futsalDetails = data; // Store the fetched data
+        this.futsalDetails.forEach((futsal) => {
+          if (futsal.image) { // Ensure image is defined before attempting to load
+            this.loadImage(futsal); // Load image for each futsal
+          }
+        });
       },
       (error) => {
         console.error('Error fetching futsal details:', error);
       }
     );
   }
+
   openLoginDialog(): void {
     const dialogRef = this.dialog.open(LoginComponent, {
       width: '400px',
       disableClose: false,
-      autoFocus: true,  
+      autoFocus: true,
     });
     dialogRef.afterClosed().subscribe(() => {
-      if (localStorage.getItem("Token")) {
-        window.location.reload();
+      if (localStorage.getItem('Token')) {
+        window.location.reload(); // Reload the page after successful login
       }
     });
   }
+
   openSignupDialog(): void {
     this.dialog.open(RegisterComponent, {
       width: '400px',
@@ -75,24 +79,48 @@ export class FutsalComponent implements OnInit {
     });
   }
 
+  fetchFutsalDetails(): void {
+    this.futsalDetailService.getFutsalDetails().subscribe((data) => {
+      this.futsalDetails = data;
+      this.futsalDetails.forEach((futsal) => {
+        if (futsal.image) { // Ensure image is defined
+          this.loadImage(futsal);
+        }
+      });
+    });
+  }
+
+  loadImage(futsal: FutsalDetail): void {
+    if (futsal.image) {
+      this.imageService.getImage(futsal.image).subscribe((imageBlob) => {
+        const objectURL = URL.createObjectURL(imageBlob);
+        this.imageUrls.set(futsal.futsalName, objectURL);  // Store the URL in the map
+      });
+    }
+  }
+  getImageUrl(futsal: FutsalDetail): string {
+    return this.imageUrls.get(futsal.futsalName) || '';  // Return the image URL for the specific futsal
+  }
+  
+
   goToBooking(futsal: FutsalDetail): void {
     if (this.isLoggedIn) {
+      // Navigate to booking screen with futsal details as query params
       this.router.navigate(['/bookingscreen', futsal.futsalName], {
         queryParams: {
           location: futsal.location,
           contactNumber: futsal.contactNumber,
           pricing: futsal.pricing,
-          }
+        },
       });
     } else {
       alert('Please login to book a futsal ground!');
     }
   }
 
-  logout(): void {  
-    //this.appcomponent.logout();
-    this.authService.logout(); 
-    this.isLoggedIn = false;  
-    localStorage.clear();
+  logout(): void {
+    this.authService.logout(); // Call logout method from auth service
+    this.isLoggedIn = false; // Update login status
+    localStorage.clear(); // Clear local storage
   }
 }

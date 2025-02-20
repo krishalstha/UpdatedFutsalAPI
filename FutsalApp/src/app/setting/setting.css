@@ -2,7 +2,7 @@
 .settings-wrapper {
     font-family: Arial, sans-serif;
     margin-top: 37px;
-    margin-left: -20px;
+    margin-left: -10px;
   }
   
   /* Topbar */
@@ -10,7 +10,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #303030;
+    background: #777676;
     color: white;
     padding: 15px 20px;
   }
@@ -31,7 +31,7 @@
   /* Dropdown Menu */
   .dropdown-menu {
     display: none;
-    background: #303030;
+    background: #777676;
     padding: 10px;
     position: absolute;
     width: 100%;

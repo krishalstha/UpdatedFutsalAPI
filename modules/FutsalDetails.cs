@@ -40,5 +40,11 @@ namespace FutsalAPI.modules
         [Column(TypeName = "nvarchar(20)")]
         public string court { get; set; } = "";
 
+        [Column(TypeName = "nvarchar(255)")]
+        public string image { get; set; } = "";
+
+
+
+
     }
 }

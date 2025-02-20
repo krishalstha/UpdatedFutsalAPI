@@ -7,6 +7,9 @@ export class FutsalDetail {
   description: string = '';       // Description of the futsal court
   pricing?: string;               // Optional: Pricing details
   operationHours?: string;        // Optional: Operation hours
+  court?: string;
+  image?: string;
+  imageUrl?: string; // Optional, for storing the image URL after processing
 
   constructor(init?: Partial<FutsalDetail>) {
       if (init) {

@@ -41,6 +41,19 @@ export class LoginDetailService {
       .pipe(catchError((error) => this.handleError(error, 'POST', loginDetail)));
   }
 /**
+ * Upload an image for a futsal detail.
+ * @param formData - The FormData object containing the futsalId and image file.
+ * @returns Observable for the upload response.
+ */
+uploadImage(formData: FormData): Observable<any> {
+  const uploadUrl = 'https://localhost:5001/UploadImage'; // Upload API URL
+  return this.http.post<any>(uploadUrl, formData, { headers: this.getHeaders() }).pipe(
+    catchError((error) => this.handleError(error, 'POST', formData))
+  );
+}
+
+
+/**
    * Centralized error handling for HTTP requests with enhanced logging.
    * @param error - The HttpErrorResponse object.
    * @param method - The HTTP method that caused the error.

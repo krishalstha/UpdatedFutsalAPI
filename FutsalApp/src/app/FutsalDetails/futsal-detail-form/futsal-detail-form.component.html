@@ -124,6 +124,46 @@
       </div>
     </div>
 
+    <!-- Select Court -->
+    <div class="col-md-6 mb-4">
+      <label for="court" class="form-label">Court </label>
+      <select
+        id="court"
+        class="form-select"
+        name="court"
+        [(ngModel)]="formData.court"
+        required
+        #selectCourt="ngModel"
+      >
+        <option value="" disabled selected>Select Court </option>
+        <option value="Court 1">Court1</option>
+        <option value="Court 2">Court2</option>
+        <option value="Court 3">Court3</option>
+        <option value="Court 4">Court4</option>
+      </select>
+      <div *ngIf="formData.court">
+        Court: {{ formData.court }}
+      </div>
+      <div *ngIf="!formData.court">Court: Not available</div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+      <label for="image" class="form-label">Upload Image</label>
+      <input
+        id="image"
+        type="file"
+        class="form-control"
+        (change)="onImageChange($event)"
+        required
+      />
+      <!-- Image Preview -->
+      <img *ngIf="selectedFileUrl" [src]="selectedFileUrl" alt="Image Preview" class="preview-image" />
+      <div *ngIf="formData.image && !selectedFileUrl" class="text-danger">
+        <small *ngIf="!formData.image">Image is required.</small>
+      </div>
+    </div>
+
+
     <!-- Description -->
     <div class="col-12 mb-4">
       <label for="description" class="form-label">Description</label>

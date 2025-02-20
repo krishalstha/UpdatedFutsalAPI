@@ -12,7 +12,8 @@
   
   <div class="futsal-list">
     <div *ngFor="let futsal of futsalDetails" class="futsal-card">
-      <img src="assets/football.jpg" alt="Futsal Ground" class="futsal-image">
+      <img *ngIf="getImageUrl(futsal)" [src]="getImageUrl(futsal)" alt="Futsal Ground" class="futsal-image" style="max-width: 550px; max-height: 250px;">
+      
       <div class="futsal-info">
         <h2>{{ futsal.futsalName }}</h2>
         <p><strong>Location:</strong> {{ futsal.location }}</p>
@@ -25,4 +26,6 @@
       </div>
     </div>
   </div>
+  
+  
 </div>

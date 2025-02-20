@@ -121,6 +121,10 @@ namespace FutsalAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(255)");
+
                     b.Property<string>("location")
                         .IsRequired()
                         .HasColumnType("nvarchar(200)");
@@ -167,19 +171,19 @@ namespace FutsalAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<string>("fileName")
+                    b.Property<string>("imageName")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int>("fileSize")
+                    b.Property<int>("imageSize")
                         .HasColumnType("int");
 
-                    b.Property<string>("fileType")
+                    b.Property<string>("imageType")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("fileUrl")
+                    b.Property<string>("imageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(500)");
 
