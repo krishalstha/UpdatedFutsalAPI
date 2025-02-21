@@ -34,7 +34,7 @@
               <td>{{ futsal.email }}</td>
               <td>{{ futsal.pricing }}</td>
               <td>{{futsal.location}}</td>
-              <td>{{ futsal.operationHours }}</td>
+              <td>{{ futsal.operationHours }}</td>  
               <td>{{futsal.description}}</td>
               <td>{{futsal.court}}</td>
               <td>{{futsal.image}}</td>
@@ -43,6 +43,7 @@
                   <button 
                    class="btn btn-danger btn-sm me-2" 
                     (click)="onDelete(futsal.futsalId ?? 0)" 
+                    [disabled]="selectedFutsal !== null"
                       aria-label="Delete Futsal Detail">
                         <i class="fa-solid fa-trash"></i> Delete
                         </button>
