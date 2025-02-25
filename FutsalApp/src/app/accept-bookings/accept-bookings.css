@@ -1,0 +1,55 @@
+/* General Styling */
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+  
+  /* Table Styling */
+  .table {
+    border-collapse: separate;
+    border-spacing: 0 10px;
+  }
+  
+  .table th {
+    background-color: #007bff;
+    color: white;
+    padding: 12px;
+  }
+  
+  .table td {
+    vertical-align: middle;
+    padding: 10px;
+    background-color: #f8f9fa;
+  }
+  
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #e9ecef;
+  }
+  
+  /* Button Styling */
+  .btn-group .btn {
+    font-size: 14px;
+    padding: 12px 24px;
+    transition: 0.3s;
+  }
+  
+  .btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+  }
+  
+  .btn-success:hover {
+    background-color: #218838;
+  }
+  
+  .btn-outline-danger {
+    border-color: #dc3545;
+    color: #dc3545;
+  }
+  
+  .btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: white;
+  }
+  

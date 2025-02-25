@@ -49,5 +49,6 @@ namespace FutsalAPI.modules
         [RegularExpression(@"^\d{10}$", ErrorMessage = "Contact Number must be exactly 10 digits and numeric.")]
         [Required(ErrorMessage = "Contact Number is required.")]
         public string contactNumber { get; set; } = "";
+        
     }
 }

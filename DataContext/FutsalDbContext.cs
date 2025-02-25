@@ -14,8 +14,8 @@ namespace FutsalAPI.DataContext
         public DbSet<Register> Registration { get; set; }
         public DbSet<Login> Login { get; set; }
         public DbSet<BookingDetail> BookingDetail { get; set; }
-
         public DbSet<UploadImage> UploadImage { get; set; }
+        public DbSet<AcceptBookings> AcceptBookings { get; set; }
 
     }
 }

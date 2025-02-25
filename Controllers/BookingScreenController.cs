@@ -142,8 +142,6 @@ namespace FutsalAPI.Controllers
 
             return _context.BookingDetail.Any(e => e.id == id);
 
-           
-
         }
     }
 }

@@ -20,8 +20,9 @@ import { ContactusComponent } from './contactus/contactus.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
-import { AcceptBookingsComponent } from './accept-bookings/accept-bookings.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+
+import { AcceptedDetailsComponent } from './accepted-details/accepted-details.component';
 
 
 // Import Routes
@@ -29,6 +30,7 @@ import { routes } from './app.routes';
 //import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SettingComponent } from './setting/setting.component';
+import { AcceptBookingsComponent } from './accept-bookings/accept-bookings.component';
 
 @NgModule({
   
@@ -44,7 +46,6 @@ import { SettingComponent } from './setting/setting.component';
     RouterModule.forRoot(routes),
     ToastrModule.forRoot(),
     MatDialogModule,
-   // AppRoutingModule,
     CommonModule,
     HomeComponent,
     FutsalComponent,
@@ -53,12 +54,11 @@ import { SettingComponent } from './setting/setting.component';
     RegisterComponent,
     LoginComponent,
     BookingDetailFormComponent,
-    AcceptBookingsComponent,
     AdminDashboardComponent,
     DashboardComponent,
     SettingComponent,
-    
-    
+    AcceptBookingsComponent,
+    AcceptedDetailsComponent,
   ],
   
 })

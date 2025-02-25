@@ -8,6 +8,7 @@ export class BookingDetail {
     selectCourt?: string;        
     selectPaymentMethod?: string;
     email: string = '';
+    userId?: string;
   
     constructor(init?: Partial<BookingDetail>) {
         if (init) {

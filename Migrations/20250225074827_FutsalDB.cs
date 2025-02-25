@@ -6,11 +6,26 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FutsalAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class FutsalDb : Migration
+    public partial class FutsalDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "AcceptBookings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BookingId = table.Column<int>(type: "int", nullable: false),
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AcceptBookings", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "BookingDetail",
                 columns: table => new
@@ -104,6 +119,9 @@ namespace FutsalAPI.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AcceptBookings");
+
             migrationBuilder.DropTable(
                 name: "BookingDetail");
 

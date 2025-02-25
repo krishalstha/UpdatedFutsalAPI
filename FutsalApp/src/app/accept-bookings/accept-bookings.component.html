@@ -1,14 +1,55 @@
- <div class="booking-list">
-    <div *ngFor="let futsal of bookingDetail" class="booked-card">
-      <div class="futsal-info">
-        <p><strong>Email</strong>{{  booking.email }}</p>
-        <p><strong>Date:</strong> {{  booking.selectDate }}</p>
-        <p><strong>Time:</strong> {{ booking.selectTime }}</p>
-        <p><strong>Duration:</strong> {{ booking.selectDuration }}</p>
-        <p><strong>Court:</strong> {{ booking.selectCourt }}</p>
-        <p><strong>ContactNumber:</strong> {{ booking.contactNumber }}</p>
-        <p> <strong>PaymentMethod:</strong>{{ booking.selectPaymentMethod }}</p>
-       
-    </div>
+<div class="row mt-5">
+  <div class="col-12">
+    <div class="card p-4">
+      <h2 class="mb-4">Accept Bookings</h2>
     </div>
   </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-12">
+    <div class="card p-4">
+      <div class="table-responsive">
+        <table class="table table-striped text-center">
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Selected Date</th>
+              <th>Selected Time</th>
+              <th>Selected Duration</th>
+              <th>Selected Court</th>
+              <th>Selected Payment Method</th>
+              <th>Contact Number</th>
+              <th>Action</th> 
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let booking of bookingList">
+              <td>{{booking.email}}</td>
+              <td>{{ booking.selectDate }}</td>
+              <td>{{ booking.selectTime }}</td>
+              <td>{{ booking.selectDuration }}</td>
+              <td>{{ booking.selectCourt }}</td>
+              <td>{{ booking.selectPaymentMethod }}</td>
+              <td>{{ booking.contactNumber }}</td>
+              <td class="text-center">
+                <div class="btn-group" role="group">
+                  <button class="btn btn-success btn-lg me-2" 
+                          (click)="acceptBooking(booking)" 
+                          aria-label="Accept Booking Detail">
+                    <i class="fa-solid fa-check"></i> Accept
+                  </button>
+                  <button class="btn btn-outline-danger btn-lg" 
+                          (click)="denyBooking(booking.id ?? 0)" 
+                          aria-label="Deny Booking Detail">
+                    <i class="fa-solid fa-xmark"></i> Deny
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
