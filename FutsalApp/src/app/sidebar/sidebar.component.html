@@ -6,14 +6,9 @@
         <i class="fas fa-home"></i><span *ngIf="isSidebarOpen">Dashboard</span>
       </a>
     </li>
-    <li class="nav-link" routerLinkActive="active">
-      <a routerLink="users">
-        <i class="fa-solid fa-users"></i><span *ngIf="isSidebarOpen">Users</span>
-      </a>
-    </li>
     <li class="nav-link">
       <a routerLink="/admin-dashboard/acceptbookings" routerLinkActive="active">
-        <i class="fa-solid fa-futbol"></i><span *ngIf="isSidebarOpen">AcceptBookings</span>
+        <i class="fa-solid fa-book-open"></i><span *ngIf="isSidebarOpen">AcceptBookings</span>
       </a>
     </li>
     <li class="nav-link">
@@ -21,13 +16,19 @@
         <i class="fa-solid fa-futbol"></i><span *ngIf="isSidebarOpen">Futsals</span>
       </a>
     </li>
-    <li class="nav-link" routerLinkActive="active">
-      <a routerLink="/admin-dashboard/acceptdetail">
-        <i class="fa-solid fa-sliders"></i><span *ngIf="isSidebarOpen">Accepted Detials</span>
+    <li class="nav-link">
+      <a routerLink="/admin-dashboard/bookingscreen/:futsalName" routerLinkActive="active">
+        <i class="fa-solid fa-book"></i><span *ngIf="isSidebarOpen">Booking/Edit</span>
       </a>
     </li>
-    <li class="nav-link" routerLinkActive="active">
-      <a routerLink="/admin-dashboard/setting">
+    <!-- Dynamic link to Accepted Details -->
+    <!-- <li class="nav-link">
+      <a [routerLink]="['/admin-dashboard/accepted-details', selectedBookingId]" routerLinkActive="active">
+        <i class="fa-solid fa-receipt"></i><span *ngIf="isSidebarOpen">Accepted Details</span>
+      </a>
+    </li> -->
+    <li class="nav-link">
+      <a routerLink="/admin-dashboard/setting" routerLinkActive="active">
         <i class="fa-solid fa-sliders"></i><span *ngIf="isSidebarOpen">Settings</span>
       </a>
     </li>

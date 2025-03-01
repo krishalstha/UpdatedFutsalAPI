@@ -11,37 +11,35 @@
 
   <div class="row">
 
-
-<!-- Email -->
-<div class="col-md-6 mb-4">
-  <label for="email" class="form-label">Email</label>
-  <input
-    id="email"
-    type="email"
-    class="form-control"
-    name="email"
-    [(ngModel)]="formData.email"
-    readonly
-  />
-</div>
-
-
-    <!-- Select Date -->
+    <!-- Email -->
     <div class="col-md-6 mb-4">
-      <label for="selectDate" class="form-label">Select Date</label>
+      <label for="email" class="form-label">Email</label>
       <input
-        id="selectDate"
-        type="date"
+        id="email"
+        type="email"
         class="form-control"
-        name="selectDate"
-        [(ngModel)]="formData.selectDate"
-        required
-        #selectDate="ngModel"
+        name="email"
+        [(ngModel)]="formData.email"
+        readonly
       />
-      <div *ngIf="selectDate.invalid && (selectDate.dirty || selectDate.touched)" class="text-danger">
-        <small *ngIf="selectDate.errors?.['required']">Date is required.</small>
-      </div>
     </div>
+
+   <!-- Select Date -->
+<div class="col-md-6 mb-4">
+  <label for="selectDate" class="form-label">Select Date</label>
+  <input
+    id="selectDate"
+    type="date"
+    class="form-control"
+    name="selectDate"
+    [(ngModel)]="formData.selectDate"
+    required
+    #selectDate="ngModel"
+  />
+  <div *ngIf="selectDate.invalid && (selectDate.dirty || selectDate.touched)" class="text-danger">
+    <small *ngIf="selectDate.errors?.['required']">Date is required.</small>
+  </div>
+</div>
 
     <!-- Select Time -->
 <div class="col-md-6 mb-4">
@@ -52,7 +50,7 @@
     class="form-control"
     name="selectTime"
     [(ngModel)]="formData.selectTime"
-    (ngModelChange)="calculateEndTime()"
+    (ngModelChange)="calculateEndTime()" 
     required
     #selectTime="ngModel"
   />
@@ -61,64 +59,62 @@
   </div>
 </div>
 
-<!-- Select Duration -->
-<div class="col-md-6 mb-4">
-  <label for="selectDuration" class="form-label">Duration</label>
-  <select
-    id="selectDuration"
-    class="form-select"
-    name="selectDuration"
-    [(ngModel)]="formData.selectDuration"
-    (ngModelChange)="calculateEndTime()"
-    required
-    #selectDuration="ngModel"
-  >
-    <option value="" disabled selected>Select Duration</option>
-    <option value="30 mins">30 mins</option>
-    <option value="1 hour">1 hour</option>
-    <option value="2 hours">2 hours</option>
-  </select>
-  <div *ngIf="selectDuration.invalid && (selectDuration.dirty || selectDuration.touched)" class="text-danger">
-    <small *ngIf="selectDuration.errors?.['required']">Duration is required.</small>
-  </div>
-</div>
-
-   
-    <!-- Calculated End Time -->
-<div class="col-md-6 mb-4">
-  <label for="calculatedEndTime" class="form-label">Calculated End Time</label>
-  <input
-    id="calculatedEndTime"
-    type="text"
-    class="form-control"
-    name="calculatedEndTime"
-    [(ngModel)]="formData.calcTime"
-    readonly
-  />
-</div>
-
-
-    <!-- Select Court -->
+    <!-- Select Duration -->
     <div class="col-md-6 mb-4">
-      <label for="selectCourt" class="form-label">Court Selection</label>
+      <label for="selectDuration" class="form-label">Duration</label>
       <select
-        id="selectCourt"
+        id="selectDuration"
         class="form-select"
-        name="selectCourt"
-        [(ngModel)]="formData.selectCourt"
+        name="selectDuration"
+        [(ngModel)]="formData.selectDuration"
+        (ngModelChange)="calculateEndTime()"
         required
-        #selectCourt="ngModel"
+        #selectDuration="ngModel"
       >
-        <option value="" disabled selected>Select Court</option>
-        <option value="Court 1">Court 1</option>
-        <option value="Court 2">Court 2</option>
+        <option value="" disabled selected>Select Duration</option>
+        <option value="30 mins">30 mins</option>
+        <option value="1 hour">1 hour</option>
+        <option value="2 hours">2 hours</option>
       </select>
-      <div *ngIf="selectCourt.invalid && (selectCourt.dirty || selectCourt.touched)" class="text-danger">
-        <small *ngIf="selectCourt.errors?.['required']">Court selection is required.</small>
+      <div *ngIf="selectDuration.invalid && (selectDuration.dirty || selectDuration.touched)" class="text-danger">
+        <small *ngIf="selectDuration.errors?.['required']">Duration is required.</small>
       </div>
     </div>
 
-    
+    <!-- Calculated End Time -->
+    <div class="col-md-6 mb-4">
+      <label for="calculatedEndTime" class="form-label">Calculated End Time</label>
+      <input
+        id="calculatedEndTime"
+        type="text"
+        class="form-control"
+        name="calculatedEndTime"
+        [(ngModel)]="formData.calcTime"
+        readonly
+      />
+    </div>
+
+<!-- Select Court -->
+<div class="col-md-6 mb-4">
+  <label for="selectCourt" class="form-label">Court Selection</label>
+  <select
+    id="selectCourt"
+    class="form-select"
+    name="selectCourt"
+    [(ngModel)]="formData.selectCourt"
+    required
+    #selectCourt="ngModel"
+  >
+    <option value="" disabled selected>Select Court</option>
+    <option *ngFor="let court of courts" [value]="court.futsalId">{{ court.court }}</option>
+  </select>
+  <div *ngIf="selectCourt.invalid && (selectCourt.dirty || selectCourt.touched)" class="text-danger">
+    <small *ngIf="selectCourt.errors?.['required']">Court selection is required.</small>
+  </div>
+</div>
+
+
+
 
     <!-- Select Payment Method -->
     <div class="col-md-6 mb-4">
@@ -168,4 +164,5 @@
     </div>
   </div>
 </form>
+
 <app-booking-detail-form (updatedBooking)="onBookingForEdit($event)"></app-booking-detail-form>

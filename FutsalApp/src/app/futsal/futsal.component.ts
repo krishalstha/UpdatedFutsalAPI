@@ -4,8 +4,6 @@ import { Router } from '@angular/router';
 import { FutsalDetailService } from '../shared/futsal-detail.service';
 import { FutsalDetail } from '../shared/futsal-detail';
 import { MatDialog } from '@angular/material/dialog';
-import { LoginComponent } from '../login/login.component';
-import { RegisterComponent } from '../register/register.component';
 import { AuthService } from '../shared/auth.service';
 import { AppComponent } from '../app.component';
 import { ImageService } from 'src/app/shared/Image.service';
@@ -59,25 +57,7 @@ export class FutsalComponent implements OnInit {
     );
   }
 
-  openLoginDialog(): void {
-    const dialogRef = this.dialog.open(LoginComponent, {
-      width: '400px',
-      disableClose: false,
-      autoFocus: true,
-    });
-    dialogRef.afterClosed().subscribe(() => {
-      if (localStorage.getItem('Token')) {
-        window.location.reload(); // Reload the page after successful login
-      }
-    });
-  }
-
-  openSignupDialog(): void {
-    this.dialog.open(RegisterComponent, {
-      width: '400px',
-      disableClose: false, // Prevent closing by clicking outside
-    });
-  }
+ 
 
   fetchFutsalDetails(): void {
     this.futsalDetailService.getFutsalDetails().subscribe((data) => {
@@ -118,9 +98,5 @@ export class FutsalComponent implements OnInit {
     }
   }
 
-  logout(): void {
-    this.authService.logout(); // Call logout method from auth service
-    this.isLoggedIn = false; // Update login status
-    localStorage.clear(); // Clear local storage
-  }
+ 
 }

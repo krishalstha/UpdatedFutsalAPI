@@ -1,3 +1,4 @@
+import { AppRoutingModule } from './app.routes';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,7 +23,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 
-import { AcceptedDetailsComponent } from './accepted-details/accepted-details.component';
+
 
 
 // Import Routes
@@ -31,10 +32,12 @@ import { routes } from './app.routes';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SettingComponent } from './setting/setting.component';
 import { AcceptBookingsComponent } from './accept-bookings/accept-bookings.component';
+import { AcceptedDetailsComponent } from './accepted-details/accepted-details.component';
 
 @NgModule({
   
   imports: [
+    AppRoutingModule,
     AppComponent,
     FutsalDetailsComponent,
     FutsalDetailFormComponent,

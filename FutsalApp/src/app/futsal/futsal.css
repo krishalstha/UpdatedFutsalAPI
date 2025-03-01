@@ -1,79 +1,96 @@
 .futsal-booking-container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .booking-header {
-    margin-bottom: 20px;
-  }
-  
-  .auth-buttons {
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-  }
-  
-  .auth-buttons button {
-    background: linear-gradient(135deg, #3498db, #ff758c);
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: 0.3s;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .auth-buttons button:hover {
-    background: linear-gradient(135deg, #2980b9, #2980b9);
-  }
-  
-  .futsal-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-  }
-  
-  .futsal-card {
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    padding: 15px;
-    text-align: left;
-    transition: transform 0.3s;
-  }
-  
-  .futsal-card:hover {
-    transform: scale(1.05);
-  }
-  
-  .futsal-image {
-    width: 100%;
-    border-radius: 10px;
-    height: 200px;
-    object-fit: cover;
-  }
-  
-  .futsal-info h2 {
-    color: #2c3e50;
-  }
-  
-  .book-now {
-    background: linear-gradient(135deg, #3498db, #ff758c);
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: 0.3s;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .book-now:hover {
-    background: linear-gradient(135deg, #2980b9, #3498db);
-  }
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+}
+
+.booking-header {
+  margin-bottom: 30px;
+  color: #2c3e50;
+}
+
+.booking-header h1 {
+  font-size: 36px;
+  font-weight: 600;
+  color: #2980b9;
+}
+
+.booking-header p {
+  font-size: 18px;
+  color: #7f8c8d;
+  margin-bottom: 20px;
+}
+
+
+
+.futsal-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two columns */
+  gap: 20px;
+  justify-items: center;
+}
+
+.futsal-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: left;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+  width: 100%;
+  max-width: 600px;
+}
+
+.futsal-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.futsal-image {
+  width: 100%;
+  border-radius: 10px;
+  height: 250px;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+}
+
+.futsal-card:hover .futsal-image {
+  transform: scale(1.05);
+}
+
+.futsal-info h2 {
+  font-size: 24px;
+  color: #2c3e50;
+  margin-top: 15px;
+}
+
+.futsal-info p {
+  font-size: 16px;
+  color: #34495e;
+}
+
+.futsal-info .description {
+  font-size: 14px;
+  color: #7f8c8d;
+  margin: 10px 0;
+}
+
+.book-now {
+  background: linear-gradient(135deg, #3498db, #ff758c);
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  margin-top: 15px;
+}
+
+.book-now:hover {
+  background: linear-gradient(135deg, #2980b9, #3498db);
+}

@@ -45,7 +45,9 @@ export const routes: Routes = [
       { path: 'setting', component: SettingComponent },
       { path: 'acceptbookings', component: AcceptBookingsComponent },
       { path: 'futsaldetailcomponent', component: FutsalDetailsComponent },
-      { path: 'acceptdetail', component : AcceptedDetailsComponent}
+      { path: 'accepted-details/:id', component: AcceptedDetailsComponent },
+      { path: 'bookingscreen/:futsalName', component: BookingDetailsComponent },
+      { path: 'bookingdetailformcomponent', component: BookingDetailFormComponent }
     ]
   },
 ];

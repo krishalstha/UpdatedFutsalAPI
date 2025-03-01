@@ -1,40 +1,42 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <!-- Top bar inside header-container -->
- 
 <div *ngIf="!isAdmin">
-<div class="top-bar">
-  <div>Email: FutsalNepal.com.np</div>
-  <div>
-
-    <a href="#" class="fa fa-facebook"></a>
-    <a href="#" class="fa fa-twitter"></a>
-    <a href = "#" class="fa fa-instagram"></a>
-  </div>
-</div>
-<!-- <div *ngIf="!isShownavbar"></div> -->
-<!-- Header container with logo, navbar, and form -->
-<div class="header-container">
-  <div class="logo">
-   <img src="assets/futsal.png" alt="">
+  <div class="top-bar">
+    <div>Email: FutsalNepal.com.np</div>
+    <div>
+      <a href="#" class="fa fa-facebook"></a>
+      <a href="#" class="fa fa-twitter"></a>
+      <a href="#" class="fa fa-instagram"></a>
+    </div>
   </div>
 
-  <!-- Hamburger Menu Button (Only for Small Screens) -->
-  <button class="menu-btn" (click)="toggleMenu()">&#9776;</button>
+  <!-- Header container with logo, navbar, and form -->
+  <div class="header-container">
+    <div class="logo">
+      <img src="assets/futsal.png" alt="">
+    </div>
 
-  <!-- Navbar -->
-  <div id="navbar" [class.mobile-menu]="isMenuOpen">
-    <ul>
-      <li><i class="fas fa-home"></i> <a routerLink="/home" routerLinkActive="active">Home</a></li>
-      <li><i class="fas fa-futbol"></i> <a routerLink="/futsal" routerLinkActive="active">Futsal</a></li>
-      <li><i class="fas fa-info-circle"></i> <a routerLink="/aboutus" routerLinkActive="active">About</a></li>
-      <li><i class="fas fa-phone-alt"></i> <a routerLink="/contactus" routerLinkActive="active">Contact</a></li>
+    <!-- Hamburger Menu Button (Only for Small Screens) -->
+    <button class="menu-btn" (click)="toggleMenu()">&#9776;</button>
 
-    </ul>
+    <!-- Navbar -->
+    <div id="navbar" [class.mobile-menu]="isMenuOpen">
+      <ul>
+        <li><i class="fas fa-home"></i> <a routerLink="/home" routerLinkActive="active">Home</a></li>
+        <li><i class="fas fa-futbol"></i> <a routerLink="/futsal" routerLinkActive="active">Futsal</a></li>
+        <li><i class="fas fa-info-circle"></i> <a routerLink="/aboutus" routerLinkActive="active">About</a></li>
+        <li><i class="fas fa-phone-alt"></i> <a routerLink="/contactus" routerLinkActive="active">Contact</a></li>
+      </ul>
+    </div>
+    <!-- Authentication Buttons (Right-aligned) -->
+    <div class="auth-buttons">
+      <button *ngIf="!isLoggedIn" mat-button (click)="openLoginDialog()">Login</button>
+      <button *ngIf="!isLoggedIn" mat-button (click)="openSignupDialog()">Register</button>
+      <button *ngIf="isLoggedIn" mat-button (click)="logout()">Logout</button>
+    </div>
   </div>
-</div>
 </div>
 
 <router-outlet></router-outlet>
-
 <app-footer></app-footer>

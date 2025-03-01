@@ -3,16 +3,12 @@
     <h1>Book Your Futsal Ground</h1>
     <p>Find and reserve your favorite futsal grounds instantly!</p>
     
-    <div class="auth-buttons">
-      <button *ngIf="!isLoggedIn" mat-button (click)="openLoginDialog()">Login</button>
-      <button *ngIf="!isLoggedIn" mat-button (click)="openSignupDialog()">Register</button>
-      <button *ngIf="isLoggedIn" mat-button (click)="logout()">Logout</button>
-      </div>
+    
   </header>
   
   <div class="futsal-list">
     <div *ngFor="let futsal of futsalDetails" class="futsal-card">
-      <img *ngIf="getImageUrl(futsal)" [src]="getImageUrl(futsal)" alt="Futsal Ground" class="futsal-image" style="max-width: 550px; max-height: 250px;">
+      <img *ngIf="getImageUrl(futsal)" [src]="getImageUrl(futsal)" alt="Futsal Ground" class="futsal-image">
       
       <div class="futsal-info">
         <h2>{{ futsal.futsalName }}</h2>
@@ -26,6 +22,4 @@
       </div>
     </div>
   </div>
-  
-  
 </div>

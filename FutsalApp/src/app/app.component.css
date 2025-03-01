@@ -3,119 +3,147 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-html {
+  }
+  
+  html {
     scroll-behavior: smooth;
-}
-
-body {
+  }
+  
+  body {
     font-family: Arial, sans-serif;
-}
-
-a {
+  }
+  
+  a {
     text-decoration: none;
     color: inherit;
-}
-
-/* Top Bar */
-.top-bar {
+  }
+  
+  /* Top Bar */
+  .top-bar {
     background-color: #333;
     color: white;
     padding: 5px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.top-bar a {
+  }
+  
+  .top-bar a {
     color: white;
     margin: 0 10px;
-}
-
-/* Header Container */
-.header-container {
+  }
+  
+  /* Header Container */
+  .header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
     background: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Logo */
-.logo img {
+  }
+  
+  /* Logo */
+  .logo img {
     height: 80px;
     max-height: 100px;
     object-fit: contain;
-}
-
-/* Navbar */
-#navbar {
+  }
+  
+  /* Navbar */
+  #navbar {
     flex-grow: 1;
     display: flex;
-    justify-content: center;
-}
-
-#navbar ul {
+    justify-content: center; /* Center the navbar */
+    align-items: center;
+  }
+  
+  #navbar ul {
     list-style-type: none;
     display: flex;
-}
-
-#navbar li {
+    justify-content: center; /* Center the navbar items */
+  }
+  
+  #navbar li {
     margin-right: 40px;
-}
-
-#navbar li a {
+  }
+  
+  #navbar li a {
     color: #333;
     font-weight: bold;
-}
-
-#navbar li a:hover {
+  }
+  
+  #navbar li a:hover {
     text-decoration: underline;
     color: #4CAF50;
-}
-
-/* Hamburger Menu Button */
-.menu-btn {
+  }
+  
+  /* Authentication Buttons (Right-aligned) */
+  .auth-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end; /* Keep buttons at the right */
+    align-items: center;
+    margin-left: 30px; /* Add some space between navbar and auth buttons */
+  }
+  
+  .auth-buttons button {
+    background: linear-gradient(135deg, #3498db, #ff758c);
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .auth-buttons button:hover {
+    background: linear-gradient(135deg, #2980b9, #2980b9);
+  }
+  
+  /* Hamburger Menu Button */
+  .menu-btn {
     display: none;
     background: none;
     border: none;
     font-size: 30px;
     cursor: pointer;
     padding: 10px;
-}
-
-/* Responsive Styles */
-@media (max-width: 768px) {
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
     .menu-btn {
-        display: block; /* Show menu button */
+      display: block;
     }
-
+  
     #navbar {
-        display: none; /* Hide navbar by default */
-        flex-direction: column;
-        position: absolute;
-        top: 60px;
-        left: 0;
-        width: 100%;
-        background: white;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        padding: 10px 0;
-        z-index: 1000;
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      background: white;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 10px 0;
+      z-index: 1000;
     }
-
+  
     #navbar.mobile-menu {
-        display: flex; /* Show when toggled */
+      display: flex;
     }
-
+  
     #navbar ul {
-        flex-direction: column;
-        width: 100%;
-        text-align: center;
+      flex-direction: column;
+      width: 100%;
+      text-align: center;
     }
-
+  
     #navbar li {
-        margin: 10px 0;
+      margin: 10px 0;
     }
-}
+  }
+  

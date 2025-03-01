@@ -7,6 +7,7 @@ import { BookingDetail } from '../shared/BookingDetail';
 import { BookingDetailService } from '../shared/booking-detail.service';
 import { BookingDetailFormComponent } from '../booking-detail-form/booking-detail-form.component';
 import { BookingDetailReportComponent } from '../booking-detail-report/booking-detail-report.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-booking-details',
@@ -20,11 +21,13 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
   formSubmitted: boolean = false;
   calculatedEndTime: string = ''; // Stores calculated end time
   formData: BookingDetail = this.initializeFormData();
+  courts: any[] = [];
 
   constructor(
     private bookingscreenService: BookingDetailService,
     private authService: AuthService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private route: ActivatedRoute
   ) {}
 
   private initializeFormData(): BookingDetail {
@@ -39,7 +42,7 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
       email: '',
     };
   }
-
+  
   ngOnInit(): void {
     const user = this.authService.getLoggedInUser();
     console.log('Logged-in user:', user); // Add this for debugging
@@ -47,13 +50,47 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
       this.formData.id = user.Id; // Store user ID in formData
       this.formData.email = user.email;
     }
+    this.loadCourts(); // Load courts from database
+
+    // Check the initial value of selectCourt
+  console.log("Initial Selected Court ID: ", this.formData.selectCourt);
+
+   // Retrieve the date and time from query params
+   this.route.queryParams.subscribe(params => {
+    const { date, time } = params;
+    if (date && time) {
+      this.formData.selectDate = date; // Set date
+      this.formData.selectTime = time; // Set time
+      this.calculateEndTime(); // Calculate end time based on selected time and duration
+    }
+  });
   }
+  
+ 
+    
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['bookingForEdit'] && this.bookingForEdit) {
       console.log('Populating form with booking data:', this.bookingForEdit);
       this.formData = { ...this.bookingForEdit };
     }
+  }
+  loadCourts(): void {
+    this.bookingscreenService.getCourts().subscribe({
+      next: (data) => {
+        console.log('Fetched courts:', data);
+        if (Array.isArray(data) && data.length > 0) {
+          this.courts = data;
+          console.log('Courts loaded successfully:', this.courts);
+        } else {
+          this.toastr.warning('No courts available.', 'Info');
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching courts:', err);
+        this.toastr.error('Failed to load courts.', 'Error');
+      }
+    });
   }
 
   onBookingForEdit(booking: BookingDetail): void {
@@ -101,9 +138,12 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
       this.formSubmitted = false; // Allow resubmission after fixing errors
       return;
     }
+  
+    console.log("Selected Court ID on submit: ", this.formData.selectCourt); // Add this log here
+    
     this.formData.id ? this.updateRecord(form) : this.insertRecord(form);
-    // window.location.reload();
   }
+  
 
   private isFormValid(form: NgForm): boolean {
     console.log('Form Validity:', form.valid);

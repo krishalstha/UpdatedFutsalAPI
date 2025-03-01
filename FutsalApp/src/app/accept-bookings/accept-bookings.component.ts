@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { BookingDetailService } from '../shared/booking-detail.service';
 import { ToastrService } from 'ngx-toastr';
 import { BookingDetail } from '../shared/BookingDetail';
@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AcceptBookingsService } from '../shared/accept-bookings.service';
 import { AcceptBookings } from '../shared/accept-bookings';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-accept-bookings',
@@ -16,16 +17,16 @@ import { AcceptBookings } from '../shared/accept-bookings';
 export class AcceptBookingsComponent {
   bookings: AcceptBookings[] = [];
   bookingList: BookingDetail[] = [];
-  selectedBooking: BookingDetail | null = null;
 
   constructor(
     private bookingService: BookingDetailService,
     private toastr: ToastrService,
+    private cdr: ChangeDetectorRef,
     private acceptBookingService: AcceptBookingsService,
+    private router: Router
   ) {
     this.loadBookingList();
   }
-  
 
   private loadBookingList(): void {
     this.bookingService.getBookingDetails().subscribe({
@@ -44,56 +45,93 @@ export class AcceptBookingsComponent {
 
   acceptBooking(booking: BookingDetail): void {
     if (!booking.id) {
-        this.toastr.error('Invalid booking ID.', 'Error');
-        console.error('Booking ID is missing:', booking);
-        return;
+      this.toastr.error('Invalid booking ID.', 'Error');
+      return;
     }
-
+  
     if (!booking.selectDate || !booking.selectTime) {
-        this.toastr.error('Invalid date or time.', 'Error');
-        console.error('Invalid Date or Time:', booking.selectDate, booking.selectTime);
-        return;
+      this.toastr.error('Invalid date or time.', 'Error');
+      return;
     }
-
-    console.log('Original DateTime:', booking.selectDate, booking.selectTime);
-
-    const cleanedDate = booking.selectDate.split('T')[0]; // Remove time if already present
-const dateTimeString = `${cleanedDate}T${booking.selectTime}`;
-const dateObject = new Date(dateTimeString);
-
-if (isNaN(dateObject.getTime())) {
-    this.toastr.error('Invalid DateTime format.', 'Error');
-    console.error('Failed to create valid DateTime:', dateTimeString);
-    return;
-}
-
-const formattedDateTime = dateObject.toISOString();
-
-
+  
+    const cleanedDate = booking.selectDate.split('T')[0];
+    const dateTimeString = `${cleanedDate}T${booking.selectTime}`;
+    const dateObject = new Date(dateTimeString);
+  
+    if (isNaN(dateObject.getTime())) {
+      this.toastr.error('Invalid DateTime format.', 'Error');
+      return;
+    }
+  
+    const formattedDateTime = dateObject.toISOString();
+  
     const acceptBookingData: AcceptBookings = {
-        Id: booking.id,
-        BookingId: booking.id,
-        DateTime: formattedDateTime,  // Send correctly formatted DateTime
-        Status: 'Accepted'
+      Id: booking.id,
+      BookingId: booking.id,
+      DateTime: formattedDateTime,
+      Status: 'Accepted'
     };
-
-    console.log('Payload being sent:', acceptBookingData);
-
+  
+    // Accept booking on the backend
     this.acceptBookingService.acceptBooking(acceptBookingData).subscribe({
-        next: (res) => {
-          
-            console.log('Booking accepted:', res);
-            this.toastr.success('Booking accepted successfully.', 'Success');
-            this.loadBookingList(); // Refresh the list
-        },
-        error: (err) => {
-            console.error('Error accepting booking:', err);
-            this.toastr.error(`Failed to accept booking. ${err.error?.message || err.message}`, 'Error');
+      next: () => {
+        this.toastr.success('Booking accepted successfully.', 'Success');
+  
+        // Remove the accepted booking from the frontend list immediately
+        this.bookingList = this.bookingList.filter(b => b.id !== booking.id);
+  
+        // Delete the booking from the backend (optional based on your backend logic)
+        if (booking.id != null && !isNaN(booking.id)) {
+          this.bookingService.deleteBookingDetail(booking.id).subscribe({
+            next: () => {
+              console.log('Booking deleted successfully from backend.');
+            },
+            error: (err) => {
+              console.error('Failed to delete booking from backend:', err);
+              this.toastr.error('Failed to delete booking from backend.', 'Error');
+            }
+          });
+        } else {
+          this.toastr.error('Invalid booking ID for deletion.', 'Error');
         }
+  
+        // Optionally print the accepted booking details
+        this.printBookingDetails(booking);
+      },
+      error: (err) => {
+        this.toastr.error(`Failed to accept booking. ${err.error?.message || err.message}`, 'Error');
+      }
     });
-}
+  }
+  
+  
 
-
+  printBookingDetails(booking: BookingDetail): void {
+    const printWindow = window.open('', '_blank');
+    if (printWindow) {
+      printWindow.document.write(`
+        
+          <h2>Booking Details</h2>
+          <p><strong>Email:</strong> ${booking.email}</p>
+          <p><strong>Date:</strong> ${booking.selectDate}</p>
+          <p><strong>Time:</strong> ${booking.selectTime}</p>
+          <p><strong>Duration:</strong> ${booking.selectDuration}</p>
+          <p><strong>Court:</strong> ${booking.selectCourt}</p>
+          <p><strong>Payment Method:</strong> ${booking.selectPaymentMethod}</p>
+          <p><strong>Contact:</strong> ${booking.contactNumber}</p>
+          <script>
+            window.onload = function() {
+              window.print();
+              window.onafterprint = function() {
+                window.close();
+              };
+            };
+          </script>
+        
+      `);
+      printWindow.document.close();
+    }
+  }
 
   denyBooking(id: number): void {
     if (!id || isNaN(id)) {
