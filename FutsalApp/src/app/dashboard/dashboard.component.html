@@ -16,12 +16,13 @@
             }"
             (click)="onBookingClick(day.date, time)"
             [attr.data-day]="day.date | date: 'EEE (MM/dd)'">
-          <!-- If not booked, provide a clickable option -->
           <span *ngIf="!isBooked(day.date, time)"></span>
+          <!-- Display phone number inside the box if the slot is booked -->
+          <div *ngIf="isBooked(day.date, time)" class="phone-number-box">
+            {{ getBookingPhoneNumber(day.date, time) }}
+          </div>
         </td>
       </tr>
-    </tbody>
-    
-    
+    </tbody>     
   </table>
 </div>

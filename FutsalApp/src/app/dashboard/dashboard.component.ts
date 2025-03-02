@@ -9,6 +9,7 @@ interface Booking {
   date: string;
   time: string;
   duration: number; // Duration in minutes
+  contactNumber?: string;
 }
 
 @Component({
@@ -22,6 +23,7 @@ export class DashboardComponent implements OnInit {
   weekDays: { date: string }[] = []; // Stores 'YYYY-MM-DD' format
   timeSlots: string[] = [];
   bookings: Booking[] = [];
+ 
 
   constructor(
     private bookingService: BookingDetailService,
@@ -54,19 +56,30 @@ export class DashboardComponent implements OnInit {
     this.bookingService.getBookings().subscribe(
       (data: any[]) => {
         console.log('Bookings data received:', data);
-        this.bookings = data.map((booking) => ({
-          date: booking.selectDate.split('T')[0], // 'YYYY-MM-DD'
-          time: booking.selectTime.substring(0, 5), // 'HH:mm'
-          duration: booking.selectDuration ? parseInt(booking.selectDuration) * 60 : 60
-        }));
-        console.log('Processed bookings:', this.bookings);
-        this.cdr.detectChanges(); // Force UI update
+        this.bookings = data.map((booking) => {
+          let durationMinutes = 60;
+          if (booking.selectDuration === '30 mins') {
+            durationMinutes = 30;
+          } else if (booking.selectDuration === '2 hours') {
+            durationMinutes = 120;
+          }
+  
+          return {
+            date: booking.selectDate.split('T')[0],  // 'YYYY-MM-DD'
+            time: booking.selectTime.substring(0, 5),  // 'HH:mm'
+            duration: durationMinutes,
+            contactNumber: booking.contactNumber || '' // Fallback to empty string if undefined
+          };
+        });
+        this.cdr.detectChanges();  // Force UI update
       },
       (error: HttpErrorResponse) => {
         console.error('Error fetching bookings:', error);
       }
     );
   }
+  
+  
   onBookingClick(date: string, time: string): void {
     // Check if the slot is booked
     if (this.isBooked(date, time)) {
@@ -79,21 +92,44 @@ export class DashboardComponent implements OnInit {
   }
   
   isBooked(date: string, time: string): boolean {
+    // Get current slot's start and end times (assuming each slot is 1 hour)
+    const slotStart = this.convertTimeToMinutes(time);
+    const slotEnd = slotStart + 60; // Assuming each display slot is 1 hour
+    
     return this.bookings.some((booking) => {
       const bookingStart = this.convertTimeToMinutes(booking.time);
       const bookingEnd = bookingStart + booking.duration;
-
-      const slotTime = this.convertTimeToMinutes(time);
-      const booked = booking.date === date && slotTime >= bookingStart && slotTime < bookingEnd;
-
-      if (booked) {
-        console.log(`Slot booked: ${date} at ${time}`);
-      }
-
-      return booked;
+      
+      // Check for any overlap between booking and current slot
+      return booking.date === date && 
+             ((bookingStart < slotEnd && bookingEnd > slotStart) || 
+              (bookingStart === slotStart));
     });
   }
-
+  
+  onBookingUpdated(updatedBooking: { date: string, time: string, duration: number }) {
+    // Find the existing booking if it exists
+    const index = this.bookings.findIndex(booking => booking.date === updatedBooking.date && booking.time === updatedBooking.time);
+    
+  
+    if (index !== -1) {
+      // Update existing booking
+      this.bookings[index] = updatedBooking;
+    } else {
+      // Add new booking
+      this.bookings.push(updatedBooking);
+    }
+  
+    console.log('Updated Bookings:', this.bookings);
+    this.cdr.detectChanges(); // Update the UI
+  }
+  
+  getBookingPhoneNumber(date: string, time: string): string {
+    const booking = this.bookings.find(b => b.date === date && b.time === time);
+    return booking ? booking.contactNumber || 'No phone number available' : 'No booking';
+  }
+  
+  
   convertTimeToMinutes(time: string): number {
     const [hours, minutes] = time.split(':').map(Number);
     return hours * 60 + minutes;

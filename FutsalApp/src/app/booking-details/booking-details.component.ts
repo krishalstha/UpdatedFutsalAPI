@@ -1,3 +1,4 @@
+import { EventEmitter, Output } from '@angular/core';
 import { Component, OnChanges, SimpleChanges, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -17,6 +18,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./booking-details.css']
 })
 export class BookingDetailsComponent implements OnInit, OnChanges {
+  @Output() bookingUpdated = new EventEmitter<{ date: string, time: string, duration: number }>();
   bookingForEdit: BookingDetail | null = null;
   formSubmitted: boolean = false;
   calculatedEndTime: string = ''; // Stores calculated end time
@@ -111,25 +113,26 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
       this.formData.calcTime = '';
       return;
     }
-
-    let startTime = this.formData.selectTime;
-    let duration = this.getDurationInMinutes(this.formData.selectDuration);
-
+  
+    const startTime = this.formData.selectTime ?? '00:00'; // Default to "00:00" if undefined
+    const duration = this.getDurationInMinutes(this.formData.selectDuration ?? '0'); // Default to "0" if undefined
+  
     let [hours, minutes] = startTime.split(':').map(Number);
     let date = new Date();
     date.setHours(hours, minutes, 0, 0);
-
+  
     date.setMinutes(date.getMinutes() + duration);
-
+  
     let endHours = date.getHours();
     let endMinutes = date.getMinutes();
     let ampm = endHours >= 12 ? 'PM' : 'AM';
-
+  
     endHours = endHours % 12 || 12; // Convert 24-hour format to 12-hour format
     let endTimeStr = `${endHours}:${endMinutes.toString().padStart(2, '0')} ${ampm}`;
-
+  
     this.formData.calcTime = endTimeStr;
   }
+  
 
   onSubmit(form: NgForm): void {
     if (this.formSubmitted) return; // Prevent duplicate submissions
@@ -140,7 +143,7 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
     }
   
     console.log("Selected Court ID on submit: ", this.formData.selectCourt); // Add this log here
-    
+    console.log(this.formData);
     this.formData.id ? this.updateRecord(form) : this.insertRecord(form);
   }
   

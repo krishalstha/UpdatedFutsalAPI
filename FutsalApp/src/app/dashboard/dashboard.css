@@ -122,7 +122,14 @@ h2 {
     width: auto;
     padding: 5px;
   }
-
+  .phone-number-box {
+    background-color: #4CAF50; /* Example background color */
+    color: white;
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 14px;
+  }
+  
   /* Adjust columns to a more readable layout on small screens */
   .booking-table td {
     display: inline-block;
