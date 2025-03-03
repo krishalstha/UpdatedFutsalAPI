@@ -3,6 +3,7 @@ export class AcceptBookings {
     BookingId: number | undefined ; // Ensure this gets assigned
     DateTime: string = '';
     Status: string = '';
+    pricing?: string;
 
     constructor(init?: Partial<AcceptBookings>) {
         if (init) {

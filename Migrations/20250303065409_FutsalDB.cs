@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FutsalAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class FutsalDetail : Migration
+    public partial class FutsalDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

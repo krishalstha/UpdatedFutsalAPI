@@ -6,7 +6,8 @@ form {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   max-width: 900px;
   width: 70%;
-  margin: auto;
+  margin: 80px;
+  margin-left: 23%;
 }
 
 /* Labels */

@@ -125,8 +125,20 @@ export class DashboardComponent implements OnInit {
   }
   
   getBookingPhoneNumber(date: string, time: string): string {
-    const booking = this.bookings.find(b => b.date === date && b.time === time);
+    const slotStart = this.convertTimeToMinutes(time);
+  
+    const booking = this.bookings.find(b => {
+      const bookingStart = this.convertTimeToMinutes(b.time);
+      const bookingEnd = bookingStart + b.duration;
+      return b.date === date && slotStart >= bookingStart && slotStart < bookingEnd;
+    });
+  
     return booking ? booking.contactNumber || 'No phone number available' : 'No booking';
+  }
+  
+  
+  isBookingStartTime(booking: Booking, time: string): boolean {
+    return booking.time === time; // Ensures phone number only appears in the first slot
   }
   
   

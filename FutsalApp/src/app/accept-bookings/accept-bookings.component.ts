@@ -18,6 +18,7 @@ export class AcceptBookingsComponent {
   bookings: AcceptBookings[] = [];
   bookingList: BookingDetail[] = [];
 
+
   constructor(
     private bookingService: BookingDetailService,
     private toastr: ToastrService,
@@ -118,6 +119,7 @@ export class AcceptBookingsComponent {
           <p><strong>Duration:</strong> ${booking.selectDuration}</p>
           <p><strong>Court:</strong> ${booking.selectCourt}</p>
           <p><strong>Payment Method:</strong> ${booking.selectPaymentMethod}</p>
+          
           <p><strong>Contact:</strong> ${booking.contactNumber}</p>
           <script>
             window.onload = function() {

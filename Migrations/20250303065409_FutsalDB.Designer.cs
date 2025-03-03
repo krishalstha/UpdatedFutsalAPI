@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FutsalAPI.Migrations
 {
     [DbContext(typeof(FutsalDbContext))]
-    [Migration("20250228095212_FutsalDetail")]
-    partial class FutsalDetail
+    [Migration("20250303065409_FutsalDB")]
+    partial class FutsalDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

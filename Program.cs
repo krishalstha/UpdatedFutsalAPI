@@ -6,7 +6,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "FutsalAPI",
+        Version = "v1",
+        Description = "Mock eSewa Payment API"
+    });
+});
 
 // Configure Entity Framework Core with SQL Server.
 builder.Services.AddDbContext<FutsalDbContext>(options =>

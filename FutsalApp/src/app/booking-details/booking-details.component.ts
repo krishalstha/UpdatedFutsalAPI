@@ -9,6 +9,7 @@ import { BookingDetailService } from '../shared/booking-detail.service';
 import { BookingDetailFormComponent } from '../booking-detail-form/booking-detail-form.component';
 import { BookingDetailReportComponent } from '../booking-detail-report/booking-detail-report.component';
 import { ActivatedRoute } from '@angular/router';
+import { PaymentService } from '../shared/payment.service';
 
 @Component({
   selector: 'app-booking-details',
@@ -29,7 +30,8 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
     private bookingscreenService: BookingDetailService,
     private authService: AuthService,
     private toastr: ToastrService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private paymentService: PaymentService
   ) {}
 
   private initializeFormData(): BookingDetail {
@@ -55,21 +57,18 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
     this.loadCourts(); // Load courts from database
 
     // Check the initial value of selectCourt
-  console.log("Initial Selected Court ID: ", this.formData.selectCourt);
+    console.log("Initial Selected Court ID: ", this.formData.selectCourt);
 
-   // Retrieve the date and time from query params
-   this.route.queryParams.subscribe(params => {
-    const { date, time } = params;
-    if (date && time) {
-      this.formData.selectDate = date; // Set date
-      this.formData.selectTime = time; // Set time
-      this.calculateEndTime(); // Calculate end time based on selected time and duration
-    }
-  });
+    // Retrieve the date and time from query params
+    this.route.queryParams.subscribe(params => {
+      const { date, time } = params;
+      if (date && time) {
+        this.formData.selectDate = date; // Set date
+        this.formData.selectTime = time; // Set time
+        this.calculateEndTime(); // Calculate end time based on selected time and duration
+      }
+    });
   }
-  
- 
-    
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['bookingForEdit'] && this.bookingForEdit) {
@@ -77,13 +76,13 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
       this.formData = { ...this.bookingForEdit };
     }
   }
+
   loadCourts(): void {
     this.bookingscreenService.getCourts().subscribe({
       next: (data) => {
-        console.log('Fetched courts:', data);
+        console.log('Fetched courts:', data);  // Check the array structure
         if (Array.isArray(data) && data.length > 0) {
           this.courts = data;
-          console.log('Courts loaded successfully:', this.courts);
         } else {
           this.toastr.warning('No courts available.', 'Info');
         }
@@ -94,6 +93,7 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
       }
     });
   }
+  
 
   onBookingForEdit(booking: BookingDetail): void {
     this.formData = booking;
@@ -132,7 +132,19 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
   
     this.formData.calcTime = endTimeStr;
   }
-  
+
+  payOnline() {
+    const transactionId = 'TXN' + Math.floor(Math.random() * 1000000);
+    this.paymentService.makePayment(1000, transactionId).subscribe(response => {
+      console.log('Payment Response:', response);
+    });
+  }
+
+  checkPaymentStatus(transactionId: string) {
+    this.paymentService.checkPaymentStatus(transactionId).subscribe(response => {
+      console.log('Payment Status:', response);
+    });
+  }
 
   onSubmit(form: NgForm): void {
     if (this.formSubmitted) return; // Prevent duplicate submissions
@@ -147,7 +159,6 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
     this.formData.id ? this.updateRecord(form) : this.insertRecord(form);
   }
   
-
   private isFormValid(form: NgForm): boolean {
     console.log('Form Validity:', form.valid);
     console.log('Form Data:', this.formData);
@@ -176,6 +187,7 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
       error: (err) => {
         console.error('Insert Error:', err);
         this.toastr.error('Failed to insert the record.', 'Insert Error');
+        this.formSubmitted = false; // Allow retry on error
       },
     });
   }
@@ -191,6 +203,7 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
       error: (err) => {
         console.error('Update Error:', err);
         this.toastr.error('Failed to update the record.', 'Update Error');
+        this.formSubmitted = false; // Allow retry on error
       },
       complete: () => (this.formSubmitted = false),
     });

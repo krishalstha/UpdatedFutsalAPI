@@ -10,7 +10,6 @@
 >
 
   <div class="row">
-
     <!-- Email -->
     <div class="col-md-6 mb-4">
       <label for="email" class="form-label">Email</label>
@@ -24,40 +23,40 @@
       />
     </div>
 
-   <!-- Select Date -->
-<div class="col-md-6 mb-4">
-  <label for="selectDate" class="form-label">Select Date</label>
-  <input
-    id="selectDate"
-    type="date"
-    class="form-control"
-    name="selectDate"
-    [(ngModel)]="formData.selectDate"
-    required
-    #selectDate="ngModel"
-  />
-  <div *ngIf="selectDate.invalid && (selectDate.dirty || selectDate.touched)" class="text-danger">
-    <small *ngIf="selectDate.errors?.['required']">Date is required.</small>
-  </div>
-</div>
+    <!-- Select Date -->
+    <div class="col-md-6 mb-4">
+      <label for="selectDate" class="form-label">Select Date</label>
+      <input
+        id="selectDate"
+        type="date"
+        class="form-control"
+        name="selectDate"
+        [(ngModel)]="formData.selectDate"
+        required
+        #selectDate="ngModel"
+      />
+      <div *ngIf="selectDate.invalid && (selectDate.dirty || selectDate.touched)" class="text-danger">
+        <small *ngIf="selectDate.errors?.['required']">Date is required.</small>
+      </div>
+    </div>
 
     <!-- Select Time -->
-<div class="col-md-6 mb-4">
-  <label for="selectTime" class="form-label">Select Time</label>
-  <input
-    id="selectTime"
-    type="time"
-    class="form-control"
-    name="selectTime"
-    [(ngModel)]="formData.selectTime"
-    (ngModelChange)="calculateEndTime()" 
-    required
-    #selectTime="ngModel"
-  />
-  <div *ngIf="selectTime.invalid && (selectTime.dirty || selectTime.touched)" class="text-danger">
-    <small *ngIf="selectTime.errors?.['required']">Time is required.</small>
-  </div>
-</div>
+    <div class="col-md-6 mb-4">
+      <label for="selectTime" class="form-label">Select Time</label>
+      <input
+        id="selectTime"
+        type="time"
+        class="form-control"
+        name="selectTime"
+        [(ngModel)]="formData.selectTime"
+        (ngModelChange)="calculateEndTime()" 
+        required
+        #selectTime="ngModel"
+      />
+      <div *ngIf="selectTime.invalid && (selectTime.dirty || selectTime.touched)" class="text-danger">
+        <small *ngIf="selectTime.errors?.['required']">Time is required.</small>
+      </div>
+    </div>
 
     <!-- Select Duration -->
     <div class="col-md-6 mb-4">
@@ -94,7 +93,7 @@
       />
     </div>
 
-<!-- Select Court -->
+   <!-- Select Court -->
 <div class="col-md-6 mb-4">
   <label for="selectCourt" class="form-label">Court Selection</label>
   <select
@@ -105,15 +104,16 @@
     required
     #selectCourt="ngModel"
   >
-    <option value="" disabled selected>Select Court</option>
+    <!-- Default option -->
+    <option value="" disabled [selected]="!formData.selectCourt">Select Court</option>
+    <!-- Option for each court -->
     <option *ngFor="let court of courts" [value]="court.futsalId">{{ court.court }}</option>
   </select>
+  <!-- Validation message if required -->
   <div *ngIf="selectCourt.invalid && (selectCourt.dirty || selectCourt.touched)" class="text-danger">
     <small *ngIf="selectCourt.errors?.['required']">Court selection is required.</small>
   </div>
 </div>
-
-
 
 
     <!-- Select Payment Method -->
@@ -129,7 +129,7 @@
       >
         <option value="" disabled selected>Select Payment Method</option>
         <option value="Cash">Cash</option>
-        <option value="Online">Online</option>
+        <option value="Online">Esewa</option>
       </select>
       <div *ngIf="selectPaymentMethod.invalid && (selectPaymentMethod.dirty || selectPaymentMethod.touched)" class="text-danger">
         <small *ngIf="selectPaymentMethod.errors?.['required']">Payment method is required.</small>
@@ -154,6 +154,11 @@
         <small *ngIf="contactNumber.errors?.['required']">Contact Number is required.</small>
         <small *ngIf="contactNumber.errors?.['pattern']">Enter a valid 10-digit number.</small>
       </div>
+    </div>
+
+    <!-- Pay via eSewa Button -->
+    <div class="col-md-6 mb-4" *ngIf="formData.selectPaymentMethod === 'Online'">
+      <button class="btn btn-success" (click)="payOnline()">Pay via eSewa</button>
     </div>
 
     <!-- Submit Button -->
