@@ -93,10 +93,6 @@ namespace FutsalAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("selectCourt")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(10)");
-
                     b.Property<DateTime>("selectDate")
                         .HasColumnType("date");
 
@@ -127,10 +123,6 @@ namespace FutsalAPI.Migrations
                     b.Property<string>("contactNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(15)");
-
-                    b.Property<string>("court")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("description")
                         .IsRequired()

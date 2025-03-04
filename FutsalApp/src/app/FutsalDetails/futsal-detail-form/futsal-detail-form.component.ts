@@ -20,7 +20,7 @@ export class FutsalDetailFormComponent implements OnChanges {
   selectedFile: File | null = null;
   selectedFileUrl: string | null = null;
 
-  courts: string[] = ['Court 1', 'Court 2', 'Court 3', 'Court 4']; // Define the available courts.
+ 
 
 
   @Input() futsalForEdit: FutsalDetail | null = null;
@@ -44,7 +44,6 @@ export class FutsalDetailFormComponent implements OnChanges {
       description: '',
       pricing: '',
       operationHours: '', 
-      court: '',
       image: '',
     };
   }

@@ -63,7 +63,6 @@ namespace FutsalAPI.Controllers
             existingFutsalDetail.pricing = FutsalDetail.pricing;
             existingFutsalDetail.description = FutsalDetail.description;
             existingFutsalDetail.operationHours = FutsalDetail.operationHours;
-            existingFutsalDetail.court = FutsalDetail.court;
             existingFutsalDetail.image = FutsalDetail.image;
 
             try

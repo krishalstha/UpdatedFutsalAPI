@@ -124,28 +124,6 @@
       </div>
     </div>
 
-    <!-- Select Court -->
-<div class="col-md-6 mb-4">
-  <label for="court" class="form-label">Court</label>
-  <select
-    id="court"
-    class="form-select"
-    name="court"
-    [(ngModel)]="formData.court"
-    required
-    #selectCourt="ngModel"
-  >
-    <option value="" disabled selected>Select Court</option>
-    <option *ngFor="let court of courts" [value]="court">{{ court }}</option>
-  </select>
-  <div *ngIf="formData.court">
-    Court: {{ formData.court }}
-  </div>
-  <div *ngIf="!formData.court">
-    Court: Not available
-  </div>
-</div>
-
 
     <div class="col-md-6 mb-4">
       <label for="image" class="form-label">Upload Image</label>

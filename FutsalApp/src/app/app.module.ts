@@ -22,9 +22,7 @@ import { AboutusComponent } from './aboutus/aboutus.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
-
-
-
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 // Import Routes
 import { routes } from './app.routes';
@@ -62,6 +60,7 @@ import { AcceptedDetailsComponent } from './accepted-details/accepted-details.co
     SettingComponent,
     AcceptBookingsComponent,
     AcceptedDetailsComponent,
+    NgxMaterialTimepickerModule
   ],
   
 })

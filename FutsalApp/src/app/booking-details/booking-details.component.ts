@@ -10,11 +10,17 @@ import { BookingDetailFormComponent } from '../booking-detail-form/booking-detai
 import { BookingDetailReportComponent } from '../booking-detail-report/booking-detail-report.component';
 import { ActivatedRoute } from '@angular/router';
 import { PaymentService } from '../shared/payment.service';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 @Component({
   selector: 'app-booking-details',
   standalone: true,
-  imports: [CommonModule, FormsModule, BookingDetailFormComponent, BookingDetailReportComponent],
+  imports: [CommonModule, 
+    FormsModule, 
+    BookingDetailFormComponent,
+     BookingDetailReportComponent,
+     NgxMaterialTimepickerModule, // Import here
+    ],
   templateUrl: './booking-details.component.html',
   styleUrls: ['./booking-details.css']
 })
@@ -24,7 +30,7 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
   formSubmitted: boolean = false;
   calculatedEndTime: string = ''; // Stores calculated end time
   formData: BookingDetail = this.initializeFormData();
-  courts: any[] = [];
+ 
 
   constructor(
     private bookingscreenService: BookingDetailService,
@@ -41,7 +47,6 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
       selectDate: '',
       selectTime: '',
       selectDuration: '',
-      selectCourt: '',
       selectPaymentMethod: '',
       email: '',
     };
@@ -54,10 +59,7 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
       this.formData.id = user.Id; // Store user ID in formData
       this.formData.email = user.email;
     }
-    this.loadCourts(); // Load courts from database
-
-    // Check the initial value of selectCourt
-    console.log("Initial Selected Court ID: ", this.formData.selectCourt);
+    
 
     // Retrieve the date and time from query params
     this.route.queryParams.subscribe(params => {
@@ -77,22 +79,6 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
     }
   }
 
-  loadCourts(): void {
-    this.bookingscreenService.getCourts().subscribe({
-      next: (data) => {
-        console.log('Fetched courts:', data);  // Check the array structure
-        if (Array.isArray(data) && data.length > 0) {
-          this.courts = data;
-        } else {
-          this.toastr.warning('No courts available.', 'Info');
-        }
-      },
-      error: (err) => {
-        console.error('Error fetching courts:', err);
-        this.toastr.error('Failed to load courts.', 'Error');
-      }
-    });
-  }
   
 
   onBookingForEdit(booking: BookingDetail): void {
@@ -154,7 +140,7 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
       return;
     }
   
-    console.log("Selected Court ID on submit: ", this.formData.selectCourt); // Add this log here
+   
     console.log(this.formData);
     this.formData.id ? this.updateRecord(form) : this.insertRecord(form);
   }

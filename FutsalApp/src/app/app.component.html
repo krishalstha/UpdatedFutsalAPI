@@ -28,13 +28,14 @@
         <li><i class="fas fa-info-circle"></i> <a routerLink="/aboutus" routerLinkActive="active">About</a></li>
         <li><i class="fas fa-phone-alt"></i> <a routerLink="/contactus" routerLinkActive="active">Contact</a></li>
       </ul>
-    </div>
-    <!-- Authentication Buttons (Right-aligned) -->
+      <!-- Authentication Buttons (Right-aligned) -->
     <div class="auth-buttons">
       <button *ngIf="!isLoggedIn" mat-button (click)="openLoginDialog()">Login</button>
       <button *ngIf="!isLoggedIn" mat-button (click)="openSignupDialog()">Register</button>
       <button *ngIf="isLoggedIn" mat-button (click)="logout()">Logout</button>
     </div>
+    </div>
+    
   </div>
 </div>
 

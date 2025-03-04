@@ -4,8 +4,7 @@ export class BookingDetail {
     selectDate?: string = '';             
     selectTime?: string = '';      
     selectDuration?: string; 
-    calcTime?: string;             
-    selectCourt?: string;        
+    calcTime?: string;        
     selectPaymentMethod?: string;
     email: string = '';
     userId?: string;

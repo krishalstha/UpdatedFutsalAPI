@@ -58,6 +58,22 @@ form {
   background: #ccc;
   cursor: not-allowed;
 }
+.timepicker-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.timepicker-container input {
+  padding-right: 40px; /* Space for the icon */
+}
+
+.timepicker-icon {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+}
+
 
 /* Responsive Design */
 @media (max-width: 768px) {

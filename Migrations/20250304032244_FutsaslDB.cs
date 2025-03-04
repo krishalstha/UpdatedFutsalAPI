@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FutsalAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class FutsalDB : Migration
+    public partial class FutsaslDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -37,7 +37,6 @@ namespace FutsalAPI.Migrations
                     selectTime = table.Column<TimeSpan>(type: "time", nullable: false),
                     selectDuration = table.Column<string>(type: "nvarchar(10)", nullable: false),
                     calcTime = table.Column<string>(type: "nvarchar(10)", nullable: false),
-                    selectCourt = table.Column<string>(type: "nvarchar(10)", nullable: false),
                     selectPaymentMethod = table.Column<string>(type: "nvarchar(10)", nullable: false),
                     contactNumber = table.Column<string>(type: "nvarchar(15)", nullable: false)
                 },
@@ -59,7 +58,6 @@ namespace FutsalAPI.Migrations
                     description = table.Column<string>(type: "nvarchar(500)", nullable: false),
                     pricing = table.Column<string>(type: "nvarchar(15)", nullable: false),
                     operationHours = table.Column<string>(type: "nvarchar(15)", nullable: false),
-                    court = table.Column<string>(type: "nvarchar(20)", nullable: false),
                     image = table.Column<string>(type: "nvarchar(255)", nullable: false)
                 },
                 constraints: table =>

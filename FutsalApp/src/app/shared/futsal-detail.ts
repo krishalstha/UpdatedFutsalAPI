@@ -1,13 +1,12 @@
 export class FutsalDetail {
-  futsalId: number | null = null; // ID of the futsal detail (nullable)
-  futsalName: string = '';        // Name of the futsal court
-  location: string = '';          // Location of the futsal court
-  contactNumber: string = '';     // Contact number for the futsal court
-  email: string = '';             // Email for the futsal court
-  description: string = '';       // Description of the futsal court
-  pricing?: string;               // Optional: Pricing details
-  operationHours?: string;        // Optional: Operation hours
-  court?: string;
+  futsalId: number | null = null; 
+  futsalName: string = '';        
+  location: string = '';         
+  contactNumber: string = '';    
+  email: string = '';             
+  description: string = '';       
+  pricing?: string;               
+  operationHours?: string;      
   image?: string;
   imageUrl?: string; // Optional, for storing the image URL after processing
 

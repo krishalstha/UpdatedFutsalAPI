@@ -52,11 +52,7 @@ export class BookingDetailService {
       .pipe(catchError((error) => this.handleError(error, 'POST', bookingData)));
   }
 
-  // Get all courts
-  getCourts(): Observable<any[]> {
-    return this.http.get<any[]>('https://localhost:5001/api/FutsalDetails', { headers: this.getHeaders() })
-      .pipe(catchError((error) => this.handleError(error, 'GET')));
-  }
+  
 
   // Get booking detail by ID
   getBookingDetailById(id: number): Observable<BookingDetail> {

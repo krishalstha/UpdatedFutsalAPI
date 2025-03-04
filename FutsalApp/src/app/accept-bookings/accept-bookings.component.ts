@@ -117,7 +117,6 @@ export class AcceptBookingsComponent {
           <p><strong>Date:</strong> ${booking.selectDate}</p>
           <p><strong>Time:</strong> ${booking.selectTime}</p>
           <p><strong>Duration:</strong> ${booking.selectDuration}</p>
-          <p><strong>Court:</strong> ${booking.selectCourt}</p>
           <p><strong>Payment Method:</strong> ${booking.selectPaymentMethod}</p>
           
           <p><strong>Contact:</strong> ${booking.contactNumber}</p>

@@ -60,7 +60,6 @@ namespace FutsalAPI.Controllers
             existingBookingDetail.selectDate = BookingDetail.selectDate;
             existingBookingDetail.selectTime = BookingDetail.selectTime;
             existingBookingDetail.selectDuration = BookingDetail.selectDuration;
-            existingBookingDetail.selectCourt = BookingDetail.selectCourt;
             existingBookingDetail.selectPaymentMethod = BookingDetail.selectPaymentMethod;
             existingBookingDetail.contactNumber = BookingDetail.contactNumber;
 

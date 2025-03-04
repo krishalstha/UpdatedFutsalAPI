@@ -36,9 +36,6 @@ namespace FutsalAPI.modules
         public string calcTime { get; set; } = "";
 
 
-        [Column(TypeName = "nvarchar(10)")]
-        [Required(ErrorMessage = "Court selection is required.")]
-        public string selectCourt { get; set; } = "";
 
     
         [Column(TypeName = "nvarchar(10)")]
