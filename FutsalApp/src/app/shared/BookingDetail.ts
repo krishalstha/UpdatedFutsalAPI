@@ -1,5 +1,6 @@
 export class BookingDetail {
-    id: number | null = null;   
+    id: number | null = null;  
+    futsalId?: number; 
     contactNumber: string = '';     
     selectDate?: string = '';             
     selectTime?: string = '';      
@@ -7,15 +8,18 @@ export class BookingDetail {
     calcTime?: string;        
     selectPaymentMethod?: string;
     email: string = '';
+    price: number = 0;  // Ensure pricing is a number
     userId?: string;
-  
+    status?: string; 
     constructor(init?: Partial<BookingDetail>) {
         if (init) {
-        
             if (init.id !== undefined && init.id !== null) {
-                this.id = Number(init.id); // Convert to number
+                this.id = Number(init.id);
+            }
+            if (init.price !== undefined) {
+                this.price = Number(init.price); // Ensure pricing is always a number
             }
             Object.assign(this, init);
         }
     }
-  }
+}  

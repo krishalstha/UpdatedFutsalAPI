@@ -93,6 +93,9 @@ namespace FutsalAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<decimal>("price")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<DateTime>("selectDate")
                         .HasColumnType("date");
 

@@ -18,7 +18,6 @@ export class AcceptBookingsComponent {
   bookings: AcceptBookings[] = [];
   bookingList: BookingDetail[] = [];
 
-
   constructor(
     private bookingService: BookingDetailService,
     private toastr: ToastrService,
@@ -73,30 +72,13 @@ export class AcceptBookingsComponent {
       Status: 'Accepted'
     };
   
-    // Accept booking on the backend
     this.acceptBookingService.acceptBooking(acceptBookingData).subscribe({
       next: () => {
         this.toastr.success('Booking accepted successfully.', 'Success');
-  
-        // Remove the accepted booking from the frontend list immediately
-        this.bookingList = this.bookingList.filter(b => b.id !== booking.id);
-  
-        // Delete the booking from the backend (optional based on your backend logic)
-        if (booking.id != null && !isNaN(booking.id)) {
-          this.bookingService.deleteBookingDetail(booking.id).subscribe({
-            next: () => {
-              console.log('Booking deleted successfully from backend.');
-            },
-            error: (err) => {
-              console.error('Failed to delete booking from backend:', err);
-              this.toastr.error('Failed to delete booking from backend.', 'Error');
-            }
-          });
-        } else {
-          this.toastr.error('Invalid booking ID for deletion.', 'Error');
+        const acceptedBooking = this.bookingList.find(b => b.id === booking.id);
+        if (acceptedBooking) {
+          acceptedBooking.status = 'Accepted';
         }
-  
-        // Optionally print the accepted booking details
         this.printBookingDetails(booking);
       },
       error: (err) => {
@@ -104,31 +86,27 @@ export class AcceptBookingsComponent {
       }
     });
   }
-  
-  
 
   printBookingDetails(booking: BookingDetail): void {
-    const printWindow = window.open('', '_blank');
+    const printWindow = window.open('', '');
     if (printWindow) {
       printWindow.document.write(`
-        
-          <h2>Booking Details</h2>
-          <p><strong>Email:</strong> ${booking.email}</p>
-          <p><strong>Date:</strong> ${booking.selectDate}</p>
-          <p><strong>Time:</strong> ${booking.selectTime}</p>
-          <p><strong>Duration:</strong> ${booking.selectDuration}</p>
-          <p><strong>Payment Method:</strong> ${booking.selectPaymentMethod}</p>
-          
-          <p><strong>Contact:</strong> ${booking.contactNumber}</p>
-          <script>
-            window.onload = function() {
-              window.print();
-              window.onafterprint = function() {
-                window.close();
-              };
+        <h2>Booking Accepted</h2>
+        <p><strong>Email:</strong> ${booking.email}</p>
+        <p><strong>Date:</strong> ${booking.selectDate}</p>
+        <p><strong>Time:</strong> ${booking.selectTime}</p>
+        <p><strong>Duration:</strong> ${booking.selectDuration}</p>
+        <p><strong>Payment Method:</strong> ${booking.selectPaymentMethod}</p>
+        <p><strong>Contact:</strong> ${booking.contactNumber}</p>
+        <p><strong>Status:</strong> Accepted</p>
+        <script>
+          window.onload = function() {
+            window.print();
+            window.onafterprint = function() {
+              window.close();
             };
-          </script>
-        
+          };
+        </script>
       `);
       printWindow.document.close();
     }

@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
@@ -14,6 +14,7 @@ import { ImageService } from 'src/app/shared/Image.service';
   styleUrls: ['./futsal-detail-form.css'],
 })
 export class FutsalDetailFormComponent implements OnChanges {
+  @Output() updatedPricing = new EventEmitter<string>();
   image: string = '';
   formSubmitted: boolean = false;
   formData: FutsalDetail = this.initializeFormData();
@@ -55,6 +56,7 @@ export class FutsalDetailFormComponent implements OnChanges {
     if (changes['futsalForEdit'] && this.futsalForEdit) {
       console.log('Populating form with futsal data:', this.futsalForEdit);
       this.formData = { ...this.futsalForEdit };
+      this.updatedPricing.emit(this.formData.pricing); // Emit pricing when futsal data changes
 
       // Fetch operationHours if not already present in futsalForEdit
       if (!this.formData.operationHours) {
@@ -116,6 +118,8 @@ export class FutsalDetailFormComponent implements OnChanges {
     }
 
     this.formData.futsalId ? this.updateRecord(form) : this.insertRecord(form);
+    this.updatedPricing.emit(this.formData.pricing); // Emit pricing when form is submitted
+    
   }
 
   /**

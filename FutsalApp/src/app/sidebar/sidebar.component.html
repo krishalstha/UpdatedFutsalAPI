@@ -21,6 +21,11 @@
         <i class="fa-solid fa-book"></i><span *ngIf="isSidebarOpen">Booking/Edit</span>
       </a>
     </li>
+    <li class="nav-link">
+      <a routerLink="/admin-dashboard/report" routerLinkActive="active">
+        <i class="fa-solid fa-sliders"></i><span *ngIf="isSidebarOpen">Report</span>
+      </a>
+    </li>
     <!-- Dynamic link to Accepted Details -->
     <!-- <li class="nav-link">
       <a [routerLink]="['/admin-dashboard/accepted-details', selectedBookingId]" routerLinkActive="active">

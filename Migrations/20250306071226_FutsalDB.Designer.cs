@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FutsalAPI.Migrations
 {
     [DbContext(typeof(FutsalDbContext))]
-    [Migration("20250304032244_FutsaslDB")]
-    partial class FutsaslDB
+    [Migration("20250306071226_FutsalDB")]
+    partial class FutsalDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -95,6 +95,9 @@ namespace FutsalAPI.Migrations
                     b.Property<string>("email")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<decimal>("price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("selectDate")
                         .HasColumnType("date");

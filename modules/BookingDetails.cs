@@ -6,16 +6,16 @@ namespace FutsalAPI.modules
     public class BookingDetail
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]  
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int? id { get; set; }
 
-
-        [Required]
-      
         [Column(TypeName = "nvarchar(100)")]
         [EmailAddress(ErrorMessage = "Please enter a valid email address.")]
         public string email { get; set; } = "";
-
+        // Add price field
+        [Column(TypeName = "decimal(18,2)")]
+        [Required(ErrorMessage = "Price is required.")]
+        public decimal price { get; set; }
 
         [Column(TypeName = "date")]
         [Required(ErrorMessage = "Date is required.")]
@@ -29,15 +29,10 @@ namespace FutsalAPI.modules
         [Required(ErrorMessage = "Duration is required.")]
         public string selectDuration { get; set; } = "";
 
-
-
         [Column(TypeName = "nvarchar(10)")]
         [Required(ErrorMessage = "calc is required.")]
         public string calcTime { get; set; } = "";
 
-
-
-    
         [Column(TypeName = "nvarchar(10)")]
         [Required(ErrorMessage = "Payment method is required.")]
         public string selectPaymentMethod { get; set; } = "";
@@ -46,6 +41,7 @@ namespace FutsalAPI.modules
         [RegularExpression(@"^\d{10}$", ErrorMessage = "Contact Number must be exactly 10 digits and numeric.")]
         [Required(ErrorMessage = "Contact Number is required.")]
         public string contactNumber { get; set; } = "";
-        
+
+       
     }
 }

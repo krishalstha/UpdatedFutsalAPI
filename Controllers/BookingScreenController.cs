@@ -17,7 +17,6 @@ namespace FutsalAPI.Controllers
             _context = context;
         }
 
-
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BookingDetail>>> GetBookingDetails()
         {
@@ -38,12 +37,10 @@ namespace FutsalAPI.Controllers
         }
 
         // PUT: api/BookingScreenDetail/{id}
-        [HttpPut("{id}")]//put
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateBookingDetail(int id, BookingDetail BookingDetail)
         {
-
             if (id != BookingDetail.id)
-
             {
                 return BadRequest("ID in the URL does not match the ID in the provided object.");
             }
@@ -54,16 +51,14 @@ namespace FutsalAPI.Controllers
                 return NotFound($"BookingDetail with ID {id} not found.");
             }
 
-            // Update properties
-
+            // Update properties, including price
             existingBookingDetail.email = BookingDetail.email;
             existingBookingDetail.selectDate = BookingDetail.selectDate;
             existingBookingDetail.selectTime = BookingDetail.selectTime;
             existingBookingDetail.selectDuration = BookingDetail.selectDuration;
             existingBookingDetail.selectPaymentMethod = BookingDetail.selectPaymentMethod;
             existingBookingDetail.contactNumber = BookingDetail.contactNumber;
-
-
+            existingBookingDetail.price = BookingDetail.price;  // Update price
 
             try
             {
@@ -93,13 +88,10 @@ namespace FutsalAPI.Controllers
             try
             {
 
-                await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT BookingDetail ON");
-
                 _context.BookingDetail.Add(bookingDetail);
                 await _context.SaveChangesAsync();
 
                 return CreatedAtAction(nameof(GetBookingDetail), new { id = bookingDetail.id }, bookingDetail);
-                          
             }
             catch (DbUpdateException)
             {
@@ -111,14 +103,9 @@ namespace FutsalAPI.Controllers
             }
             finally
             {
-
                 await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT BookingDetail OFF");
-
-            
-
             }
         }
-
 
         // DELETE: api/BookingScreenDetail/{id}
         [HttpDelete("{id}")]
@@ -138,9 +125,7 @@ namespace FutsalAPI.Controllers
 
         private bool BookingDetailExists(int id)
         {
-
             return _context.BookingDetail.Any(e => e.id == id);
-
         }
     }
 }

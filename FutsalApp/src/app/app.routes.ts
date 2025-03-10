@@ -17,6 +17,7 @@ import { BookingDetailFormComponent } from './booking-detail-form/booking-detail
 import { SettingComponent } from './setting/setting.component';
 import { AuthGuard } from './auth.guard';
 import { AcceptedDetailsComponent } from './accepted-details/accepted-details.component';
+import { ReportComponent } from './report/report.component';
 
 
 export const routes: Routes = [
@@ -47,7 +48,8 @@ export const routes: Routes = [
       { path: 'futsaldetailcomponent', component: FutsalDetailsComponent },
       { path: 'accepted-details/:id', component: AcceptedDetailsComponent },
       { path: 'bookingscreen/:futsalName', component: BookingDetailsComponent },
-      { path: 'bookingdetailformcomponent', component: BookingDetailFormComponent }
+      { path: 'bookingdetailformcomponent', component: BookingDetailFormComponent },
+      { path: 'report', component: ReportComponent }
     ]
   },
 ];

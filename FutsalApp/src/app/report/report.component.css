@@ -1,0 +1,14 @@
+.report {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .report h2 {
+    color: #4CAF50;
+  }
+  
+  .report p {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  

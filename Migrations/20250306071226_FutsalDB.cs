@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FutsalAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class FutsaslDB : Migration
+    public partial class FutsalDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,6 +33,7 @@ namespace FutsalAPI.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     email = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     selectDate = table.Column<DateTime>(type: "date", nullable: false),
                     selectTime = table.Column<TimeSpan>(type: "time", nullable: false),
                     selectDuration = table.Column<string>(type: "nvarchar(10)", nullable: false),

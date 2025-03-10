@@ -31,7 +31,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { SettingComponent } from './setting/setting.component';
 import { AcceptBookingsComponent } from './accept-bookings/accept-bookings.component';
 import { AcceptedDetailsComponent } from './accepted-details/accepted-details.component';
-
+import { ReportComponent } from './report/report.component';
 @NgModule({
   
   imports: [
@@ -60,7 +60,8 @@ import { AcceptedDetailsComponent } from './accepted-details/accepted-details.co
     SettingComponent,
     AcceptBookingsComponent,
     AcceptedDetailsComponent,
-    NgxMaterialTimepickerModule
+    NgxMaterialTimepickerModule,
+    ReportComponent
   ],
   
 })

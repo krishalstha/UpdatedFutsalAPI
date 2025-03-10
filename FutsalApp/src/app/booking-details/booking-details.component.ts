@@ -1,4 +1,4 @@
-import { EventEmitter, Output } from '@angular/core';
+import { ChangeDetectorRef, EventEmitter, Output } from '@angular/core';
 import { Component, OnChanges, SimpleChanges, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -15,12 +15,13 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 @Component({
   selector: 'app-booking-details',
   standalone: true,
-  imports: [CommonModule, 
+  imports: [
+    CommonModule, 
     FormsModule, 
     BookingDetailFormComponent,
-     BookingDetailReportComponent,
-     NgxMaterialTimepickerModule, // Import here
-    ],
+    BookingDetailReportComponent,
+    NgxMaterialTimepickerModule,
+  ],
   templateUrl: './booking-details.component.html',
   styleUrls: ['./booking-details.css']
 })
@@ -30,14 +31,14 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
   formSubmitted: boolean = false;
   calculatedEndTime: string = ''; // Stores calculated end time
   formData: BookingDetail = this.initializeFormData();
- 
 
   constructor(
     private bookingscreenService: BookingDetailService,
     private authService: AuthService,
     private toastr: ToastrService,
     private route: ActivatedRoute,
-    private paymentService: PaymentService
+    private paymentService: PaymentService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   private initializeFormData(): BookingDetail {
@@ -49,9 +50,10 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
       selectDuration: '',
       selectPaymentMethod: '',
       email: '',
+      price: 0, 
     };
   }
-  
+
   ngOnInit(): void {
     const user = this.authService.getLoggedInUser();
     console.log('Logged-in user:', user); // Add this for debugging
@@ -59,7 +61,6 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
       this.formData.id = user.Id; // Store user ID in formData
       this.formData.email = user.email;
     }
-    
 
     // Retrieve the date and time from query params
     this.route.queryParams.subscribe(params => {
@@ -78,8 +79,33 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
       this.formData = { ...this.bookingForEdit };
     }
   }
-
+  onDurationChange(): void {
+    this.calculateEndTime();  // Recalculate end time when duration changes
+    this.calculatePricing();   // Recalculate pricing when duration changes
+  }
   
+  calculatePricing(): void {
+    console.log("Duration selected:", this.formData.selectDuration); // Debugging log
+    switch (this.formData.selectDuration) {
+      case '30 mins':
+        this.formData.price = 500; // Correct pricing as a number
+        break;
+      case '1 hour': 
+        this.formData.price = 1000;
+        break;
+      case '2 hours':
+        this.formData.price = 2000;
+        break;
+      default:
+        this.formData.price = 0; // Default to 0 if no duration is selected
+    }
+  }
+  
+
+  // Capture the pricing emitted from futsal-detail-form.component
+  onPricingUpdated(pricing: string): void {
+    this.formData.price = Number(pricing); // Assign the received pricing value to formData
+  }
 
   onBookingForEdit(booking: BookingDetail): void {
     this.formData = booking;
@@ -139,12 +165,14 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
       this.formSubmitted = false; // Allow resubmission after fixing errors
       return;
     }
-  
-   
+
+    // Set the price dynamically based on selected duration
+    this.calculatePricing();
     console.log(this.formData);
+
     this.formData.id ? this.updateRecord(form) : this.insertRecord(form);
   }
-  
+
   private isFormValid(form: NgForm): boolean {
     console.log('Form Validity:', form.valid);
     console.log('Form Data:', this.formData);
@@ -162,34 +190,34 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
     return true;
   }
 
-  private insertRecord(form: NgForm): void {
-    console.log('Payload being sent:', this.formData);
+ private insertRecord(form: NgForm): void {
+  console.log('Payload being sent:', this.formData); // Verify if pricing is included
+  this.bookingscreenService.postBookingDetail(this.formData).subscribe({
+    next: () => {
+      this.toastr.success('Record inserted successfully!', 'BookingDetail');
+      this.resetForm(form);
+    },
+    error: (err) => {
+      console.error('Insert Error:', err);
+      this.toastr.error('Failed to insert the record.', 'Insert Error');
+      this.formSubmitted = false; // Allow retry on error
+    },
+  });
+}
 
-    this.bookingscreenService.postBookingDetail(this.formData).subscribe({
-      next: () => {
-        this.toastr.success('Record inserted successfully!', 'BookingDetail');
-        this.resetForm(form);
-      },
-      error: (err) => {
-        console.error('Insert Error:', err);
-        this.toastr.error('Failed to insert the record.', 'Insert Error');
-        this.formSubmitted = false; // Allow retry on error
-      },
-    });
-  }
+  
+
 
   private updateRecord(form: NgForm): void {
-    console.log('Payload being sent for update:', this.formData);
-
     this.bookingscreenService.putBookingDetail(this.formData).subscribe({
       next: () => {
-        this.toastr.info('Record updated successfully!', 'BookingScreen Detail ');
+        this.toastr.info('Record updated successfully!', 'BookingScreen Detail');
         this.resetForm(form);
       },
       error: (err) => {
         console.error('Update Error:', err);
         this.toastr.error('Failed to update the record.', 'Update Error');
-        this.formSubmitted = false; // Allow retry on error
+        this.formSubmitted = false;
       },
       complete: () => (this.formSubmitted = false),
     });
