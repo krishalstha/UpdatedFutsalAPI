@@ -6,14 +6,10 @@ import { AuthService } from './shared/auth.service';
 import { NgIf } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { FutsalComponent } from "./futsal/futsal.component";
-import { HomeComponent } from "./home/home.component";
-import { AboutusComponent } from "./aboutus/aboutus.component";
-import { ContactusComponent } from "./contactus/contactus.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterModule, FooterComponent, NgIf, FutsalComponent, HomeComponent, AboutusComponent, ContactusComponent],
+  imports: [RouterModule, FooterComponent, NgIf],
   templateUrl: './app.component.html',
   providers: [],
   styleUrls: ['./app.component.css']  // Corrected from styleUrl to styleUrls
@@ -86,5 +82,4 @@ export class AppComponent implements OnInit {
     this.isLoggedIn = false;  // Update login status
     localStorage.clear();  // Clear local storage
   }
-  
 }
