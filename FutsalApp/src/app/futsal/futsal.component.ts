@@ -7,8 +7,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../shared/auth.service';
 import { AppComponent } from '../app.component';
 import { ImageService } from 'src/app/shared/Image.service';
-import { RegisterComponent } from '../register/register.component';
-import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-futsal',
@@ -19,12 +17,14 @@ import { LoginComponent } from '../login/login.component';
   styleUrls: ['./futsal.css']
 })
 export class FutsalComponent implements OnInit {
+  
 
   imageUrls: Map<string, string> = new Map();  // Use a Map to store images per futsal
   futsalDetails: FutsalDetail[] = [];
   isAdmin: boolean = false;
   isLoggedIn: boolean = false;
   loginStatusChange = new EventEmitter<boolean>();
+  
 
   constructor(
     private futsalDetailService: FutsalDetailService,
@@ -98,6 +98,7 @@ export class FutsalComponent implements OnInit {
       });
     } else {
       alert('Please login to book a futsal ground!');
+       this.appcomponent.openLoginDialog();
     }
   }
 
