@@ -40,6 +40,7 @@ export class BookingDetailService {
       .get<BookingDetail[]>(this.apiBookingUrl , { headers: this.getHeaders() })
       .pipe(catchError((error) => this.handleError(error, 'GET')));
   }
+  
 
   // Get specific bookings
   getBookings(): Observable<any> {

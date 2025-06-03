@@ -12,7 +12,7 @@ import { FutsalDetailFormComponent } from "../FutsalDetails/futsal-detail-form/f
   imports: [CommonModule, FutsalDetailFormComponent],
   styleUrls:['./futsal-details.css'],
 })
-export class FutsalDetailsComponent {
+export class FutsalDetailsComponent { 
 
   futsalList: FutsalDetail[] = []; // List to store futsal details
   selectedFutsal: FutsalDetail | null = null; // Futsal detail selected for editing
