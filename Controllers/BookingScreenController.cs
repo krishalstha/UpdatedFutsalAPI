@@ -35,6 +35,18 @@ namespace FutsalAPI.Controllers
 
             return BookingDetail;
         }
+        [HttpGet("{email}")]
+        public async Task<ActionResult<BookingDetail>> GetBookingByUserEmail(string email)
+        {
+            var BookingDetail = await _context.BookingDetail.FirstOrDefaultAsync(x => x.email == email);
+
+            if (BookingDetail == null)
+            {
+                return NotFound($"BookingDetail with ID {email} not found.");
+            }
+
+            return BookingDetail;
+        }
 
         // PUT: api/BookingScreenDetail/{id}
         [HttpPut("{id}")]

@@ -3,16 +3,29 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { BookingDetail } from './BookingDetail';
+import { AuthService } from './auth.service'; // Make sure this path is correct
 
 @Injectable({
   providedIn: 'root',
 })
 export class BookingDetailService {
-  private apiBookingUrl  = 'https://localhost:5001/api/BookingScreen'; // API base URL
+  private apiBookingUrl = 'https://localhost:5001/api/BookingScreen'; // API base URL
+  loggedInUserEmail: string = ''; // Email of currently logged in user
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService // Inject AuthService
+  ) {
+    const user = this.authService.getLoggedInUser(); // Get user info from AuthService
+    this.loggedInUserEmail = user?.email || '';
+    this.loadBookingList(); // Load booking list on initialization (optional)
+  }
 
-  // Helper method to get headers with Authorization token
+  private loadBookingList(): void {
+    console.log(`Loading bookings for: ${this.loggedInUserEmail}`);
+    // Add any relevant logic if needed
+  }
+
   private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('authToken');
     return new HttpHeaders({
@@ -21,70 +34,58 @@ export class BookingDetailService {
     });
   }
 
-  // Post a new booking detail
   postBookingDetail(bookingDetail: BookingDetail): Observable<BookingDetail> {
     console.log('POST Request - Payload being sent:', bookingDetail);
     return this.http
-      .post<BookingDetail>(this.apiBookingUrl , bookingDetail, { headers: this.getHeaders() })
+      .post<BookingDetail>(this.apiBookingUrl, bookingDetail, { headers: this.getHeaders() })
       .pipe(catchError((error) => this.handleError(error, 'POST', bookingDetail)));
   }
 
- 
   getPrice(bookingDetails: any): Observable<number> {
     return this.http.post<number>('your-api-url-to-fetch-price', bookingDetails);
   }
-  // Get all booking details
+
   getBookingDetails(): Observable<BookingDetail[]> {
     console.log('GET Request - Fetching all booking details');
     return this.http
-      .get<BookingDetail[]>(this.apiBookingUrl , { headers: this.getHeaders() })
+      .get<BookingDetail[]>(this.apiBookingUrl, { headers: this.getHeaders() })
       .pipe(catchError((error) => this.handleError(error, 'GET')));
   }
-  
 
-  // Get specific bookings
   getBookings(): Observable<any> {
-    return this.http.get(`${this.apiBookingUrl }`, { headers: this.getHeaders() })
-      .pipe(
-        catchError((error) => this.handleError(error, 'GET'))
-      );
+    return this.http
+      .get(`${this.apiBookingUrl}`, { headers: this.getHeaders() })
+      .pipe(catchError((error) => this.handleError(error, 'GET')));
   }
 
-  // Book a slot
   bookSlot(bookingData: { date: string; time: string }): Observable<any> {
     return this.http
-      .post<any>(`${this.apiBookingUrl }/book`, bookingData, { headers: this.getHeaders() })
+      .post<any>(`${this.apiBookingUrl}/book`, bookingData, { headers: this.getHeaders() })
       .pipe(catchError((error) => this.handleError(error, 'POST', bookingData)));
   }
 
-  
-
-  // Get booking detail by ID
   getBookingDetailById(id: number): Observable<BookingDetail> {
     if (!id || isNaN(id)) {
       console.error('Invalid booking ID:', id);
       return throwError(() => new Error('Invalid booking ID'));
     }
     return this.http
-      .get<BookingDetail>(`${this.apiBookingUrl }/${id}`, { headers: this.getHeaders() })
+      .get<BookingDetail>(`${this.apiBookingUrl}/${id}`, { headers: this.getHeaders() })
       .pipe(catchError((error) => this.handleError(error, 'GET', { id })));
   }
 
-  // Update booking detail
   putBookingDetail(bookingDetail: BookingDetail): Observable<BookingDetail> {
     return this.http
-      .put<BookingDetail>(`${this.apiBookingUrl }/${bookingDetail.id}`, bookingDetail, { headers: this.getHeaders() })
+      .put<BookingDetail>(`${this.apiBookingUrl}/${bookingDetail.id}`, bookingDetail, { headers: this.getHeaders() })
       .pipe(catchError((error) => this.handleError(error, 'PUT', bookingDetail)));
   }
 
-  // Delete booking detail by ID
   deleteBookingDetail(id: number): Observable<void> {
     return this.http
-      .delete<void>(`${this.apiBookingUrl }/${id}`, { headers: this.getHeaders() })
+      .delete<void>(`${this.apiBookingUrl}/${id}`, { headers: this.getHeaders() })
       .pipe(catchError((error) => this.handleError(error, 'DELETE', { id })));
   }
 
-  // Global error handler
   private handleError(error: HttpErrorResponse, method: string, payload: any = null): Observable<never> {
     let errorMessage: string;
 
@@ -95,7 +96,7 @@ export class BookingDetailService {
       console.error('Error response body:', error.error);
     }
 
-    console.error(`HTTP Error (${method}) - URL: ${this.apiBookingUrl }`);
+    console.error(`HTTP Error (${method}) - URL: ${this.apiBookingUrl}`);
     if (payload) console.error('Payload:', JSON.stringify(payload, null, 2));
     console.error('Full error details:', error);
 

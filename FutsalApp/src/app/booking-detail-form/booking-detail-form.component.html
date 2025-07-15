@@ -32,24 +32,27 @@
                 <td>{{ booking.selectDuration }}</td>
                 <td>{{ booking.selectPaymentMethod }}</td>
                 <td>{{ booking.contactNumber }}</td>
-              <td class="text-center">
-                <div class="btn-group" role="group">
-                  <button class="btn btn-danger btn-sm me-2" 
-                            (click)="onDelete(booking.id ?? 0)" 
-                            [disabled]="selectedBooking !== null"
-                            aria-label="Delete Booking Detail">
-                      <i class="fa-solid fa-trash"></i> Delete
-                    </button>
-                    
+              <!-- Inside *ngFor -->
+<td class="text-center">
+  <div class="btn-group" role="group">
+    <button 
+      class="btn btn-danger btn-sm me-2" 
+      (click)="onDelete(booking.id ?? 0)" 
+      [disabled]="selectedBooking !== null || booking.email !== loggedInUserEmail"
+      aria-label="Delete Booking Detail">
+      <i class="fa-solid fa-trash"></i> Delete
+    </button>
 
-                    <button class="btn btn-outline-warning btn-sm" 
-                            (click)="populateForm(booking)" 
-                            aria-label="Edit Booking Detail">
-                      <i class="fa-solid fa-pen-to-square"></i> Edit
-                    </button>
+    <button 
+      class="btn btn-outline-warning btn-sm" 
+      (click)="populateForm(booking)" 
+      [disabled]="booking.email !== loggedInUserEmail"
+      aria-label="Edit Booking Detail">
+      <i class="fa-solid fa-pen-to-square"></i> Edit
+    </button>
+  </div>
+</td>
 
-                </div>
-              </td>
             </tr>
           </tbody>
         </table>
