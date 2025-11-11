@@ -152,13 +152,16 @@
   <!-- Center-aligned Submit Button -->
   <div class="d-flex justify-content-center">
     <button
-      class="btn btn-primary submit-btn"
+      class="btn btn-primary submit-btn me-2"
       type="submit"
       [disabled]="formSubmitted || form.invalid"
     >
       {{ formSubmitted ? 'Processing...' : 'Submit' }}
     </button>
+  
+    
   </div>
+  
 </form>
 
 <app-booking-detail-form (updatedBooking)="onBookingForEdit($event)"></app-booking-detail-form>

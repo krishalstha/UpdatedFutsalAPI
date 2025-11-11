@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FutsalAPI.Migrations
 {
     [DbContext(typeof(FutsalDbContext))]
-    [Migration("20250714070920_FutsalDB")]
+    [Migration("20250716073238_FutsalDB")]
     partial class FutsalDB
     {
         /// <inheritdoc />
@@ -83,6 +83,10 @@ namespace FutsalAPI.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("calcTime")
                         .IsRequired()

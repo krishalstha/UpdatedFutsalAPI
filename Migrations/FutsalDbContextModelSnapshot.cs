@@ -81,6 +81,10 @@ namespace FutsalAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("calcTime")
                         .IsRequired()
                         .HasColumnType("nvarchar(10)");

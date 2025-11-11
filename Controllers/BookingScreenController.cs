@@ -34,7 +34,7 @@ namespace FutsalAPI.Controllers
             }
 
             return BookingDetail;
-        }
+        } 
         [HttpGet("{email}")]
         public async Task<ActionResult<BookingDetail>> GetBookingByUserEmail(string email)
         {

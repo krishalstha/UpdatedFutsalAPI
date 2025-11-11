@@ -9,7 +9,7 @@ import { BookingDetailService } from '../shared/booking-detail.service';
 import { BookingDetailFormComponent } from '../booking-detail-form/booking-detail-form.component';
 import { BookingDetailReportComponent } from '../booking-detail-report/booking-detail-report.component';
 import { ActivatedRoute } from '@angular/router';
-import { PaymentService } from '../shared/payment.service';
+//import { PaymentService } from '../shared/payment.service';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 @Component({
@@ -29,7 +29,7 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
   @Output() bookingUpdated = new EventEmitter<{ date: string, time: string, duration: number }>();
   bookingForEdit: BookingDetail | null = null;
   formSubmitted: boolean = false;
-  calculatedEndTime: string = ''; // Stores calculated end time
+  calculatedEndTime: string = '';
   formData: BookingDetail = this.initializeFormData();
 
   constructor(
@@ -37,7 +37,7 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
     private authService: AuthService,
     private toastr: ToastrService,
     private route: ActivatedRoute,
-    private paymentService: PaymentService,
+    //private paymentService: PaymentService,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -50,45 +50,43 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
       selectDuration: '',
       selectPaymentMethod: '',
       email: '',
-      price: 0, 
+      price: 0,
+      calcTime: ''
     };
   }
 
   ngOnInit(): void {
     const user = this.authService.getLoggedInUser();
-    console.log('Logged-in user:', user); // Add this for debugging
     if (user) {
-      this.formData.id = user.Id; // Store user ID in formData
+      this.formData.id = user.Id;
       this.formData.email = user.email;
     }
 
-    // Retrieve the date and time from query params
     this.route.queryParams.subscribe(params => {
       const { date, time } = params;
       if (date && time) {
-        this.formData.selectDate = date; // Set date
-        this.formData.selectTime = time; // Set time
-        this.calculateEndTime(); // Calculate end time based on selected time and duration
+        this.formData.selectDate = date;
+        this.formData.selectTime = time;
+        this.calculateEndTime();
       }
     });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['bookingForEdit'] && this.bookingForEdit) {
-      console.log('Populating form with booking data:', this.bookingForEdit);
       this.formData = { ...this.bookingForEdit };
     }
   }
+
   onDurationChange(): void {
-    this.calculateEndTime();  // Recalculate end time when duration changes
-    this.calculatePricing();   // Recalculate pricing when duration changes
+    this.calculateEndTime();
+    this.calculatePricing();
   }
-  
+
   calculatePricing(): void {
-    console.log("Duration selected:", this.formData.selectDuration); // Debugging log
     switch (this.formData.selectDuration) {
       case '30 mins':
-        this.formData.price = 500; // Correct pricing as a number
+        this.formData.price = 500;
         break;
       case '1 hour': 
         this.formData.price = 1000;
@@ -97,14 +95,12 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
         this.formData.price = 2000;
         break;
       default:
-        this.formData.price = 0; // Default to 0 if no duration is selected
+        this.formData.price = 0;
     }
   }
-  
 
-  // Capture the pricing emitted from futsal-detail-form.component
   onPricingUpdated(pricing: string): void {
-    this.formData.price = Number(pricing); // Assign the received pricing value to formData
+    this.formData.price = Number(pricing);
   }
 
   onBookingForEdit(booking: BookingDetail): void {
@@ -125,58 +121,99 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
       this.formData.calcTime = '';
       return;
     }
-  
-    const startTime = this.formData.selectTime ?? '00:00'; // Default to "00:00" if undefined
-    const duration = this.getDurationInMinutes(this.formData.selectDuration ?? '0'); // Default to "0" if undefined
-  
+
+    const startTime = this.formData.selectTime;
+    const duration = this.getDurationInMinutes(this.formData.selectDuration);
+
     let [hours, minutes] = startTime.split(':').map(Number);
     let date = new Date();
     date.setHours(hours, minutes, 0, 0);
-  
     date.setMinutes(date.getMinutes() + duration);
-  
+
     let endHours = date.getHours();
     let endMinutes = date.getMinutes();
     let ampm = endHours >= 12 ? 'PM' : 'AM';
-  
-    endHours = endHours % 12 || 12; // Convert 24-hour format to 12-hour format
+
+    endHours = endHours % 12 || 12;
     let endTimeStr = `${endHours}:${endMinutes.toString().padStart(2, '0')} ${ampm}`;
-  
+
     this.formData.calcTime = endTimeStr;
   }
 
-  payOnline() {
-    const transactionId = 'TXN' + Math.floor(Math.random() * 1000000);
-    this.paymentService.makePayment(1000, transactionId).subscribe(response => {
-      console.log('Payment Response:', response);
-    });
-  }
+  redirectToEsewa(amount: number): void {
+    const transactionId = 'TXN' + Math.floor(Math.random() * 100000000); 
+    const successUrl = 'http://localhost:4200/payment-success';
+    const failureUrl = 'http://localhost:4200/payment-failure';
+  
+    const esewaForm = document.createElement('form');
+    esewaForm.method = 'POST';
+    esewaForm.action = 'https://rc-epay.esewa.com.np/epay/main';
 
-  checkPaymentStatus(transactionId: string) {
-    this.paymentService.checkPaymentStatus(transactionId).subscribe(response => {
-      console.log('Payment Status:', response);
-    });
+
+
+  
+    const esewaData = {
+      amt: amount,
+      psc: 0,
+      pdc: 0,
+      txAmt: 0,
+      tAmt: amount,
+      pid: transactionId,
+      scd: 'EPAYTEST', // test merchant code
+      su: successUrl,
+      fu: failureUrl
+    };
+  
+    for (const key in esewaData) {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = key;
+      input.value = String(esewaData[key as keyof typeof esewaData]);
+      esewaForm.appendChild(input);
+    }
+  
+    document.body.appendChild(esewaForm);
+    esewaForm.submit();
   }
+  
+  
 
   onSubmit(form: NgForm): void {
-    if (this.formSubmitted) return; // Prevent duplicate submissions
+    if (this.formSubmitted) return;
     this.formSubmitted = true;
+  
     if (!this.isFormValid(form)) {
-      this.formSubmitted = false; // Allow resubmission after fixing errors
+      this.formSubmitted = false;
       return;
     }
-
-    // Set the price dynamically based on selected duration
+  
     this.calculatePricing();
-    console.log(this.formData);
-
-    this.formData.id ? this.updateRecord(form) : this.insertRecord(form);
+  
+    const user = this.authService.getLoggedInUser();
+    if (user) {
+      this.formData.email = user.email;
+    }
+  
+    if (this.formData.selectPaymentMethod === 'Online') {
+      // Save booking first, then redirect
+      this.bookingscreenService.postBookingDetail(this.formData).subscribe({
+        next: (res) => {
+          this.toastr.success('Booking saved! Redirecting to eSewa...', 'Success');
+          this.redirectToEsewa(this.formData.price);
+        },
+        error: (err) => {
+          this.toastr.error('Failed to save booking before payment.', 'Error');
+          console.error('Esewa Booking Error:', err);
+          this.formSubmitted = false;
+        }
+      });
+    } else {
+      this.formData.id ? this.updateRecord(form) : this.insertRecord(form);
+    }
   }
+  
 
   private isFormValid(form: NgForm): boolean {
-    console.log('Form Validity:', form.valid);
-    console.log('Form Data:', this.formData);
-
     if (!form.valid) {
       this.toastr.error('Please fill all the required fields.', 'Form Error');
       return false;
@@ -190,23 +227,19 @@ export class BookingDetailsComponent implements OnInit, OnChanges {
     return true;
   }
 
- private insertRecord(form: NgForm): void {
-  console.log('Payload being sent:', this.formData); // Verify if pricing is included
-  this.bookingscreenService.postBookingDetail(this.formData).subscribe({
-    next: () => {
-      this.toastr.success('Record inserted successfully!', 'BookingDetail');
-      this.resetForm(form);
-    },
-    error: (err) => {
-      console.error('Insert Error:', err);
-      this.toastr.error('Failed to insert the record.', 'Insert Error');
-      this.formSubmitted = false; // Allow retry on error
-    },
-  });
-}
-
-  
-
+  private insertRecord(form: NgForm): void {
+    this.bookingscreenService.postBookingDetail(this.formData).subscribe({
+      next: () => {
+        this.toastr.success('Record inserted successfully!', 'BookingDetail');
+        this.resetForm(form);
+      },
+      error: (err) => {
+        console.error('Insert Error:', err);
+        this.toastr.error('Failed to insert the record.', 'Insert Error');
+        this.formSubmitted = false;
+      },
+    });
+  }
 
   private updateRecord(form: NgForm): void {
     this.bookingscreenService.putBookingDetail(this.formData).subscribe({

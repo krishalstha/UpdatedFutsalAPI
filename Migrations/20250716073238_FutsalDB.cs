@@ -39,7 +39,8 @@ namespace FutsalAPI.Migrations
                     selectDuration = table.Column<string>(type: "nvarchar(10)", nullable: false),
                     calcTime = table.Column<string>(type: "nvarchar(10)", nullable: false),
                     selectPaymentMethod = table.Column<string>(type: "nvarchar(10)", nullable: false),
-                    contactNumber = table.Column<string>(type: "nvarchar(15)", nullable: false)
+                    contactNumber = table.Column<string>(type: "nvarchar(15)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
