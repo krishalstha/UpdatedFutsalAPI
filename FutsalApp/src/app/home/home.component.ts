@@ -8,7 +8,7 @@ import { NgIf } from '@angular/common';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterModule, NgIf],
+  imports: [RouterModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.css'],
 })

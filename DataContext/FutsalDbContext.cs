@@ -1,5 +1,6 @@
 ﻿using FutsalAPI.Models;
 using FutsalAPI.modules;
+using FutsalAPI.Modules;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Sockets;
 
@@ -16,7 +17,9 @@ namespace FutsalAPI.DataContext
         public DbSet<BookingDetail> BookingDetail { get; set; }
         public DbSet<UploadImage> UploadImage { get; set; }
         public DbSet<AcceptBookings> AcceptBookings { get; set; }
-        
+
+        public DbSet<Payment> Payment { get; set; }
+
 
 
     }

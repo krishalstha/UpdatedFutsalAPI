@@ -1,0 +1,124 @@
+/* General Styles */
+form {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    width: 70%;
+    margin: 80px auto;
+  }
+  
+  /* Labels */
+  .form-label {
+    font-weight: bold;
+    color: #333;
+    font-size: 18px;
+  }
+  
+  /* Inputs and Selects */
+  .form-control, .form-select {
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    padding: 14px;
+    font-size: 20px;
+    transition: all 0.3s;
+    width: 100%;
+  }
+  
+  .form-control:focus, .form-select:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 8px rgba(40, 167, 69, 0.5);
+  }
+  
+  /* Error Messages */
+  .text-danger {
+    font-size: 16px;
+    margin-top: 5px;
+  }
+  
+  /* Submit Button */
+  .submit-btn {
+    background: linear-gradient(to right, #28a745, #218838);
+    border: none;
+    padding: 16px;
+    border-radius: 10px;
+    font-size: 22px;
+    font-weight: bold;
+    transition: all 0.3s;
+    width: 500px;
+    text-align: center;
+  }
+  
+  .submit-btn:hover {
+    background: linear-gradient(to right, #218838, #1e7e34);
+  }
+  
+  .submit-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* Center-align the button */
+  .d-flex.justify-content-center {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .col-md-6 {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  
+    form {
+      padding: 30px;
+      max-width: 100%;
+    }
+  }
+  /* Full screen overlay */
+  .custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+  }
+  
+  /* Modal content box */
+  .custom-modal-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    border-radius: 10px;
+    max-width: 600px; /* bigger width */
+    width: 90%;
+    min-height: 300px; /* give it some height */
+    max-height: 80vh;  /* prevent overflow */
+    padding: 20px;
+    z-index: 1001;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    overflow-y: auto;  /* allow scrolling if content is bigger */
+  }
+  
+  
+  /* Header */
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .close-btn {
+    font-size: 1.5rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  

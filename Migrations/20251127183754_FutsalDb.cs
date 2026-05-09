@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FutsalAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class FutsalDB : Migration
+    public partial class FutsalDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,14 +32,19 @@ namespace FutsalAPI.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    FutsalName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     email = table.Column<string>(type: "nvarchar(100)", nullable: false),
-                    price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     selectDate = table.Column<DateTime>(type: "date", nullable: false),
                     selectTime = table.Column<TimeSpan>(type: "time", nullable: false),
                     selectDuration = table.Column<string>(type: "nvarchar(10)", nullable: false),
                     calcTime = table.Column<string>(type: "nvarchar(10)", nullable: false),
                     selectPaymentMethod = table.Column<string>(type: "nvarchar(10)", nullable: false),
-                    contactNumber = table.Column<string>(type: "nvarchar(15)", nullable: false)
+                    contactNumber = table.Column<string>(type: "nvarchar(15)", nullable: false),
+                    price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    discount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    finalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    isDiscountApplied = table.Column<bool>(type: "bit", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -78,6 +83,22 @@ namespace FutsalAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Login", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Payment",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BookingId = table.Column<int>(type: "int", nullable: true),
+                    PaymentModelId = table.Column<int>(type: "int", nullable: false),
+                    PaymentModelName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TotalAmount = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payment", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -129,6 +150,9 @@ namespace FutsalAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Login");
+
+            migrationBuilder.DropTable(
+                name: "Payment");
 
             migrationBuilder.DropTable(
                 name: "Registration");

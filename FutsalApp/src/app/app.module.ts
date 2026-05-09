@@ -28,10 +28,12 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { routes } from './app.routes';
 //import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { BDashboardComponent } from './dashboard/bdashboard.component';
 import { SettingComponent } from './setting/setting.component';
 import { AcceptBookingsComponent } from './accept-bookings/accept-bookings.component';
 import { AcceptedDetailsComponent } from './accepted-details/accepted-details.component';
 import { ReportComponent } from './report/report.component';
+import { PaymentComponent } from './payment/payment.component';
 @NgModule({
   
   imports: [
@@ -57,11 +59,13 @@ import { ReportComponent } from './report/report.component';
     BookingDetailFormComponent,
     AdminDashboardComponent,
     DashboardComponent,
+    BDashboardComponent,
     SettingComponent,
     AcceptBookingsComponent,
     AcceptedDetailsComponent,
     NgxMaterialTimepickerModule,
-    ReportComponent
+    ReportComponent,
+    PaymentComponent
   ],
   
 })

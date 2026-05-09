@@ -43,36 +43,29 @@ namespace FutsalAPI.Controllers
         public async Task<IActionResult> AcceptBooking([FromBody] AcceptBookings acceptBooking)
         {
             if (acceptBooking == null || acceptBooking.BookingId <= 0)
-            {
                 return BadRequest(new { message = "Invalid booking data." });
-            }
 
             var existingBooking = await _context.BookingDetail.FindAsync(acceptBooking.BookingId);
             if (existingBooking == null)
-            {
                 return BadRequest(new { message = "Referenced booking does not exist." });
-            }
 
             if (acceptBooking.DateTime == default)
-            {
                 return BadRequest(new { message = "Invalid DateTime value." });
-            }
 
-            acceptBooking.Id = 0; // Ensure database generates a new ID
+            // 1. Save AcceptBookings table entry
+            acceptBooking.Id = 0;
             acceptBooking.Status = "Accepted";
+            _context.AcceptBookings.Add(acceptBooking);
 
-            try
-            {
-                _context.AcceptBookings.Add(acceptBooking);
-                await _context.SaveChangesAsync();
-                return Ok(new { message = "Booking accepted successfully", acceptBooking });
-            }
-            catch (DbUpdateException ex)
-            {
-                Console.WriteLine($"Database Error: {ex.InnerException?.Message}");
-                return StatusCode(500, new { message = "Database error occurred." });
-            }
+            // 2. Update BookingDetail status
+            existingBooking.Status = "Accepted";
+            _context.Entry(existingBooking).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Booking accepted successfully" });
         }
+
 
         // PUT: api/AcceptBookings/accept/{id}
         [HttpPut("accept/{id}")]

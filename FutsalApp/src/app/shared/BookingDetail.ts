@@ -1,6 +1,7 @@
 export class BookingDetail {
     id: number | null = null;  
     futsalId?: number; 
+    futsalName?: string;    
     contactNumber: string = '';     
     selectDate?: string = '';             
     selectTime?: string = '';      
@@ -9,6 +10,9 @@ export class BookingDetail {
     selectPaymentMethod?: string;
     email: string = '';
     price: number = 0;  // Ensure pricing is a number
+    discount: string = '';
+    finalPrice: number = 0;
+    isDiscountApplied: boolean = false;
     userId?: string;
     status?: string; 
     constructor(init?: Partial<BookingDetail>) {

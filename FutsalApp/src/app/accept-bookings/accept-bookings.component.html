@@ -1,7 +1,7 @@
 <div class="row mt-5">
   <div class="col-12">
     <div class="card p-4">
-      <h2 class="mb-4">Accept Bookings</h2>
+      <h2 class="mb-4 dashboard-title">Accept Bookings</h2>
     </div>
   </div>
 </div>
@@ -10,45 +10,48 @@
   <div class="col-12">
     <div class="card p-4">
       <div class="table-responsive">
-        <table class="table table-striped text-center">
+        <table class="table booking-table text-center align-middle">
           <thead>
             <tr>
               <th>Email</th>
-              <th>Selected Date</th>
-              <th>Selected Time</th>
-              <th>Selected Duration</th>
-              <th>Selected Payment Method</th>
-              <th>Contact Number</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Duration</th>
+              <th>Payment Method</th>
+              <th>Contact</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let booking of bookingList">
-              <td>{{booking.email}}</td>
-              <td>{{ booking.selectDate }}</td>
+              <td>{{ booking.email }}</td>
+              <td>{{ booking.selectDate | date:'MMM d, y' }}</td>
               <td>{{ booking.selectTime }}</td>
               <td>{{ booking.selectDuration }}</td>
               <td>{{ booking.selectPaymentMethod }}</td>
               <td>{{ booking.contactNumber }}</td>
 
               <td>
-                <p *ngIf="booking.status === 'Accepted'" class="text-success">Accepted</p>
-                <p *ngIf="booking.status !== 'Accepted'" class="text-warning">Pending</p>
+                <span [ngClass]="{
+                    'status-accepted': booking.status === 'Accepted',
+                    'status-pending': booking.status !== 'Accepted'
+                  }">
+                  {{ booking.status }}
+                </span>
               </td>
 
-              <td class="text-center">
+              <td>
                 <div class="btn-group" role="group" *ngIf="booking.status !== 'Accepted'">
-                  <button class="btn btn-success btn-lg me-2" 
-                          (click)="acceptBooking(booking)" 
-                          aria-label="Accept Booking Detail" [disabled]="booking.status === 'Accepted'">
-                    <i class="fa-solid fa-check"></i> Accept
+                  <button class="btn btn-gradient btn-lg me-2" 
+                          (click)="acceptBooking(booking)">
+                    <i class="fa-solid fa-check me-1"></i> Accept
                   </button>
-                  <button class="btn btn-outline-danger btn-lg" 
-                          (click)="denyBooking(booking.id ?? 0)" 
-                          aria-label="Deny Booking Detail">
-                    <i class="fa-solid fa-xmark"></i> Deny
+                  <button class="btn btn-outline-gradient btn-lg" 
+                          (click)="denyBooking(booking.id ?? 0)">
+                    <i class="fa-solid fa-xmark me-1"></i> Deny
                   </button>
+                 
                 </div>
               </td>
             </tr>

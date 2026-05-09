@@ -1,28 +1,61 @@
 <div class="dashboard-container">
-  <h2>Weekly Booking Schedule</h2>
-  <table class="booking-table">
-    <thead>
-      <tr>
-        <th>Time</th>
-        <th *ngFor="let day of weekDays">{{ day.date | date: 'EEE (MM/dd)' }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let time of timeSlots; trackBy: trackByFn">
-        <td>{{ time }}</td>
-        <td *ngFor="let day of weekDays"
-            [ngClass]="{
-              'booked': isBooked(day.date, time)
-            }"
-            (click)="onBookingClick(day.date, time)"
-            [attr.data-day]="day.date | date: 'EEE (MM/dd)'">
-          <span *ngIf="!isBooked(day.date, time)"></span>
-          <!-- Display phone number inside the box if the slot is booked -->
-          <div *ngIf="isBooked(day.date, time)" class="phone-number-box">
-            {{ getBookingPhoneNumber(day.date, time) }}
-          </div>
-        </td>
-      </tr>
-    </tbody>     
-  </table>
+  <!-- Filter Dropdown -->
+  <div class="filter-container">
+    <button class="nav-btn filter-btn" (click)="toggleFutsalDropdown()">
+      Filter: {{ selectedFutsalName }} 
+      <i class="fa fa-caret-down ms-2"></i>
+    </button>
+    <div *ngIf="showFutsalDropdown" class="futsal-dropdown">
+      <div *ngFor="let name of futsalNames" 
+           (click)="selectFutsalName(name)"
+           class="dropdown-item"
+           [class.active]="name === selectedFutsalName">
+        {{ name }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Heading -->
+  <h2 class="dashboard-title">Weekly Booking Schedule</h2>
+
+  <!-- Week Navigation -->
+  <div class="week-navigation">
+    <button class="nav-btn" (click)="previousWeek()">
+      <i class="fa fa-chevron-left me-1"></i> Previous
+    </button>
+    <span class="week-label">
+      {{ weekStart | date:'MMM d' }} - {{ weekEnd | date:'MMM d' }}
+    </span>
+    <button class="nav-btn" (click)="nextWeek()">
+      Next <i class="fa fa-chevron-right ms-1"></i>
+    </button>
+  </div>
+
+  <!-- Booking Table -->
+  <div class="table-wrapper">
+    <table class="booking-table">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th *ngFor="let day of weekDays">{{ day.date | date: 'EEE (MM/dd)' }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let time of timeSlots; trackBy: trackByFn">
+          <td class="time-slot">{{ time }}</td>
+          <td *ngFor="let day of weekDays"
+              [ngClass]="{
+                'booked': isBooked(day.date, time),
+                'disabled-week': isPastWeek
+              }"
+              (click)="onBookingClick(day.date, time)"
+              [attr.data-day]="day.date | date: 'EEE (MM/dd)'">
+            <div *ngIf="isBooked(day.date, time)" class="phone-number-box">
+              {{ getBookingPhoneNumber(day.date, time) }}
+            </div>
+          </td>
+        </tr>
+      </tbody>     
+    </table>
+  </div>
 </div>

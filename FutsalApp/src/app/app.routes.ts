@@ -12,12 +12,16 @@ import { FutsalDetailsComponent } from './futsal-details/futsal-details.componen
 import { BookingDetailsComponent } from './booking-details/booking-details.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { BDashboardComponent } from './dashboard/bdashboard.component';
 import { AcceptBookingsComponent } from './accept-bookings/accept-bookings.component';
 import { BookingDetailFormComponent } from './booking-detail-form/booking-detail-form.component';
 import { SettingComponent } from './setting/setting.component';
 import { AuthGuard } from './auth.guard';
 import { AcceptedDetailsComponent } from './accepted-details/accepted-details.component';
 import { ReportComponent } from './report/report.component';
+import { PaymentComponent } from './payment/payment.component';
+import { AdminBookingDetailsComponent } from './admin-booking-details/admin-booking-details.component';
+
 
 
 export const routes: Routes = [
@@ -43,13 +47,16 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },  
       { path: 'dashboard', component: DashboardComponent },
+      { path: 'bdashboard', component: BDashboardComponent },
       { path: 'setting', component: SettingComponent },
       { path: 'acceptbookings', component: AcceptBookingsComponent },
       { path: 'futsaldetailcomponent', component: FutsalDetailsComponent },
       { path: 'accepted-details/:id', component: AcceptedDetailsComponent },
       { path: 'bookingscreen/:futsalName', component: BookingDetailsComponent },
+      { path: 'adminbookingdetailscomponent', component: AdminBookingDetailsComponent },
       { path: 'bookingdetailformcomponent', component: BookingDetailFormComponent },
-      { path: 'report', component: ReportComponent }
+      { path: 'report', component: ReportComponent },
+      { path: 'payment', component: PaymentComponent }  
     ]
   },
 ];

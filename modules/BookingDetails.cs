@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.OpenApi.MicrosoftExtensions;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FutsalAPI.modules
@@ -8,15 +9,13 @@ namespace FutsalAPI.modules
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int? id { get; set; }
+        public string FutsalName { get; set; }  // Name of the futsal
+
 
         [Column(TypeName = "nvarchar(100)")]
         [EmailAddress(ErrorMessage = "Please enter a valid email address.")]
         public string email { get; set; } = "";
-        // Add price field
-        [Column(TypeName = "decimal(18,2)")]
-        [Required(ErrorMessage = "Price is required.")]
-        public decimal price { get; set; }
-
+      
         [Column(TypeName = "date")]
         [Required(ErrorMessage = "Date is required.")]
         public DateTime selectDate { get; set; }
@@ -28,6 +27,12 @@ namespace FutsalAPI.modules
         [Column(TypeName = "nvarchar(10)")]
         [Required(ErrorMessage = "Duration is required.")]
         public string selectDuration { get; set; } = "";
+        [Column(TypeName = "datetime2")]
+        public DateTime StartTime { get; set; }  
+
+        [Column(TypeName = "datetime2")]
+        public DateTime EndTime { get; set; }    
+
 
         [Column(TypeName = "nvarchar(10)")]
         [Required(ErrorMessage = "calc is required.")]
@@ -42,6 +47,22 @@ namespace FutsalAPI.modules
         [Required(ErrorMessage = "Contact Number is required.")]
         public string contactNumber { get; set; } = "";
 
-       
+        // Add price field
+        [Column(TypeName = "decimal(18,2)")]
+        [Required(ErrorMessage = "Price is required.")]
+        public decimal price { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal? discount { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal? finalPrice { get; set; }
+
+        [Column(TypeName = "bit")]
+        public bool? isDiscountApplied { get; set; } = false;
+
+
+        public string Status { get; set; } = "Pending";
+
     }
 }

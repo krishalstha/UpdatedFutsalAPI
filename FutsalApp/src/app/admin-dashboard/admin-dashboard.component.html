@@ -1,6 +1,6 @@
 <div class="layout">
   <app-topbar (sidebarToggle)="toggleSidebar()"></app-topbar>
-  <div class="main-content">
+  <div class="main-content" [class.collapsed]="!isSidebarOpen">
     <app-sidebar [isSidebarOpen]="isSidebarOpen"></app-sidebar>
     <main class="content">
       

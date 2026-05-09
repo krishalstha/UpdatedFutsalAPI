@@ -1,8 +1,10 @@
+<!-- Topbar -->
 <header class="topbar">
-    <div class="left">
-        
-      <button class="menu-btn" (click)="toggleSidebar()">☰</button>
-    </div>
-    <button class="logout-btn" *ngIf="isLoggedIn" mat-button (click)="logout()">Logout</button>
-       </header>
-  
+  <div class="left">
+    <button class="menu-btn" (click)="toggleSidebar()">☰</button>
+    <span class="topbar-title">Admin Panel</span>
+  </div>
+  <div class="right">
+    <button *ngIf="isLoggedIn" mat-button class="logout-btn" (click)="logout()">Logout</button>
+  </div>
+</header>

@@ -2,77 +2,147 @@
 #search-bar-container {
     display: flex;
     justify-content: center;
-    margin: 20px 0;
+    margin: 30px 0;
 }
 
 #search-bar {
     width: 60%;
-    padding: 12px 20px;
+    max-width: 700px;
+    padding: 14px 25px;
     font-size: 16px;
-    border-radius: 25px;
-    border: 1px solid #ddd;
+    border-radius: 50px;
+    border: 1px solid #cbd5e0;
     outline: none;
     transition: all 0.3s ease-in-out;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
-#search-bar:hover, #search-bar:focus {
+#search-bar:hover,
+#search-bar:focus {
     border-color: #5c8df6;
-    box-shadow: 0 0 5px rgba(92, 141, 246, 0.5);
+    box-shadow: 0 0 12px rgba(92, 141, 246, 0.4);
 }
 
-/* Image Container */
+/* Image Container / Hero Section */
 .image-container {
     position: relative;
     width: 100%;
-    height: 560px;
+    height: 600px;
     overflow: hidden;
-    background-color: black;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    background-color: #000;
 }
 
 .image-container img {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
+    filter: brightness(70%);
+    transition: transform 0.5s ease;
 }
 
+.image-container:hover img {
+    transform: scale(1.05);
+}
+
+/* Text Overlay */
 .text-overlay {
     position: absolute;
     color: white;
-    text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.7);
+    text-shadow: 0px 3px 10px rgba(0, 0, 0, 0.7);
 }
 
 .text-overlay.left-aligned {
-    left: 10%;
+    left: 8%;
     top: 50%;
     transform: translateY(-50%);
-    text-align: left;
+    max-width: 500px;
 }
 
 .text-overlay h1 {
     font-size: 3rem;
-    margin: 0;
+    font-weight: 700;
+    margin-bottom: 15px;
+    line-height: 1.2;
 }
 
 .text-overlay p {
-    margin: 10px 0;
     font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 25px;
 }
 
-.book-now-button {
-    background-color: #5c8df6;
-    color: white;
+/* Call-to-Action Button */
+.nav-btn {
+    padding: 12px 28px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 35px;
     border: none;
-    padding: 15px 25px;
-    font-size: 18px;
-    border-radius: 8px;
+    background: linear-gradient(135deg, #5a67f2, #7f9cf5);
+    color: white;
     cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
-.book-now-button:hover {
-    background-color: #ff758c;
+.nav-btn:hover {
+    background: linear-gradient(135deg, #4c51bf, #667eea);
+    transform: translateY(-2px);
 }
 
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    .text-overlay.left-aligned {
+        left: 5%;
+        max-width: 400px;
+    }
+
+    .text-overlay h1 {
+        font-size: 2.5rem;
+    }
+
+    .text-overlay p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    #search-bar {
+        width: 80%;
+    }
+
+    .text-overlay h1 {
+        font-size: 2rem;
+    }
+
+    .text-overlay p {
+        font-size: 0.95rem;
+    }
+
+    .nav-btn {
+        padding: 10px 24px;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .image-container {
+        height: 450px;
+    }
+
+    .text-overlay h1 {
+        font-size: 1.6rem;
+    }
+
+    .text-overlay p {
+        font-size: 0.9rem;
+    }
+
+    .nav-btn {
+        padding: 8px 20px;
+        font-size: 14px;
+    }
+}

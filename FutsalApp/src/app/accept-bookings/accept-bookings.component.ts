@@ -86,31 +86,42 @@ export class AcceptBookingsComponent {
       }
     });
   }
-
-  printBookingDetails(booking: BookingDetail): void {
-    const printWindow = window.open('', '');
-    if (printWindow) {
-      printWindow.document.write(`
-        <h2>Booking Accepted</h2>
-        <p><strong>Email:</strong> ${booking.email}</p>
-        <p><strong>Date:</strong> ${booking.selectDate}</p>
-        <p><strong>Time:</strong> ${booking.selectTime}</p>
-        <p><strong>Duration:</strong> ${booking.selectDuration}</p>
-        <p><strong>Payment Method:</strong> ${booking.selectPaymentMethod}</p>
-        <p><strong>Contact:</strong> ${booking.contactNumber}</p>
-        <p><strong>Status:</strong> Accepted</p>
-        <script>
-          window.onload = function() {
-            window.print();
-            window.onafterprint = function() {
-              window.close();
-            };
-          };
-        </script>
-      `);
-      printWindow.document.close();
+  printBookingDetails(booking: any) {
+    const printContents = `
+      <html>
+        <head>
+          <title>Booking Details</title>
+          <style>
+            body { font-family: 'Arial', sans-serif; padding: 20px; }
+            h2 { color: #5a67f2; }
+            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+            th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+            th { background-color: #5a67f2; color: white; }
+          </style>
+        </head>
+        <body>
+          <h2>Booking Details</h2>
+          <table>
+            <tr><th>Email</th><td>${booking.email}</td></tr>
+            <tr><th>Date</th><td>${booking.selectDate}</td></tr>
+            <tr><th>Time</th><td>${booking.selectTime}</td></tr>
+            <tr><th>Duration</th><td>${booking.selectDuration}</td></tr>
+            <tr><th>Payment Method</th><td>${booking.selectPaymentMethod}</td></tr>
+            <tr><th>Contact</th><td>${booking.contactNumber}</td></tr>
+            <tr><th>Status</th><td>${booking.status}</td></tr>
+          </table>
+        </body>
+      </html>
+    `;
+    const popup = window.open('', '_blank', 'width=800,height=600');
+    if (popup) {
+      popup.document.open();
+      popup.document.write(printContents);
+      popup.document.close();
+      popup.print();
     }
   }
+  
 
   denyBooking(id: number): void {
     if (!id || isNaN(id)) {

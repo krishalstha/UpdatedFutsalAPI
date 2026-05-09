@@ -1,4 +1,5 @@
-<aside class="sidebar" [class.hidden]="!isSidebarOpen">
+<!-- Sidebar -->
+<aside class="sidebar" [class.collapsed]="!isSidebarOpen">
   <h2 *ngIf="isSidebarOpen">Admin Panel</h2>
   <ul>
     <li class="nav-link">
@@ -8,34 +9,23 @@
     </li>
     <li class="nav-link">
       <a routerLink="/admin-dashboard/acceptbookings" routerLinkActive="active">
-        <i class="fa-solid fa-book-open"></i><span *ngIf="isSidebarOpen">AcceptBookings</span>
+        <i class="fas fa-book-open"></i><span *ngIf="isSidebarOpen">Accept Bookings</span>
       </a>
     </li>
     <li class="nav-link">
       <a routerLink="/admin-dashboard/futsaldetailcomponent" routerLinkActive="active">
-        <i class="fa-solid fa-futbol"></i><span *ngIf="isSidebarOpen">Futsals</span>
+        <i class="fas fa-futbol"></i><span *ngIf="isSidebarOpen">Futsals</span>
       </a>
     </li>
-    <li class="nav-link">
+    <!-- <li class="nav-link">
       <a routerLink="/admin-dashboard/bookingscreen/:futsalName" routerLinkActive="active">
-        <i class="fa-solid fa-book"></i><span *ngIf="isSidebarOpen">Booking/Edit</span>
+        <i class="fas fa-book"></i><span *ngIf="isSidebarOpen">Booking / Edit</span>
       </a>
-    </li>
+    </li> -->
     <li class="nav-link">
       <a routerLink="/admin-dashboard/report" routerLinkActive="active">
-        <i class="fa-solid fa-sliders"></i><span *ngIf="isSidebarOpen">Report</span>
+        <i class="fas fa-chart-line"></i><span *ngIf="isSidebarOpen">Reports</span>
       </a>
     </li>
-    <!-- Dynamic link to Accepted Details -->
-    <!-- <li class="nav-link">
-      <a [routerLink]="['/admin-dashboard/accepted-details', selectedBookingId]" routerLinkActive="active">
-        <i class="fa-solid fa-receipt"></i><span *ngIf="isSidebarOpen">Accepted Details</span>
-      </a>
-    </li> -->
-    <!-- <li class="nav-link">
-      <a routerLink="/admin-dashboard/setting" routerLinkActive="active">
-        <i class="fa-solid fa-sliders"></i><span *ngIf="isSidebarOpen">Settings</span>
-      </a>
-    </li> -->
   </ul>
 </aside>

@@ -2,4 +2,31 @@
   <h2>Booking Report</h2>
   <p>Total Bookings: {{ totalBookings }}</p>
   <p>Total Income: Rs{{ totalIncome.toFixed(2) }}</p>
+
+  <table class="table table-bordered mt-3">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Email</th>
+        <th>Futsal</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Duration (hrs)</th>
+        <th>Price (Rs)</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of reportData; index as i">
+        <td>{{ i + 1 }}</td>
+        <td>{{ item.email }}</td>
+        <td>{{ item.FutsalName }}</td>
+        <td>{{ item.selectDate | date:'shortDate' }}</td>
+        <td>{{ item.selectTime }}</td>
+        <td>{{ item.selectDuration }}</td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.status }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>

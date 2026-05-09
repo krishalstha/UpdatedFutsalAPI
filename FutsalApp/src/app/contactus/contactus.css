@@ -66,18 +66,17 @@ header p {
 }
 
 .submit-btn {
-    background-color: #3498db;
-    color: white;
-    padding: 14px 24px;
-    font-size: 18px;
+    padding: 6px 14px;
     border: none;
-    border-radius: 8px;
+    background: linear-gradient(135deg, #3498db, #ff758c);
+    color: white;
+    border-radius: 6px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: background 0.3s ease;
 }
 
 .submit-btn:hover {
-    background-color: #ff758c;
+    background: #3498db;
 }
 
 .contact-details h2 {

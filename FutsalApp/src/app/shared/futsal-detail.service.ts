@@ -73,7 +73,10 @@ export class FutsalDetailService {
         })
       );
   }
-
+  getOperationHours(futsalName: string): Observable<string> {
+    return this.http.get<string>(`${this.apiUrl}/operation-hours/${futsalName}`);
+  }
+  
   /**
    * Update (PUT) an existing futsal name detail.
    * @param futsalDetail - The futsal name detail object to be updated.

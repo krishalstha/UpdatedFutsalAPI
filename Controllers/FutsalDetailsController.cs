@@ -39,6 +39,34 @@ namespace FutsalAPI.Controllers
 
             return futsalDetail;
         }
+        // GET: api/FutsalDetails/by-name/{name}
+        [HttpGet("by-name/{name}")]
+        public async Task<ActionResult<FutsalDetail>> GetFutsalDetailByName(string name)
+        {
+            var futsalDetail = await _context.FutsalDetail
+                .FirstOrDefaultAsync(f => f.futsalName == name);
+
+            if (futsalDetail == null)
+            {
+                return NotFound($"Futsal with name '{name}' not found.");
+            }
+
+            return Ok(futsalDetail);
+        }
+
+        // GET: api/FutsalDetails/operation-hours/{name}
+        [HttpGet("operation-hours/{name}")]
+        public async Task<ActionResult<string>> GetOperationHours(string name)
+        {
+            var futsal = await _context.FutsalDetail
+                .FirstOrDefaultAsync(f => f.futsalName == name);
+
+            if (futsal == null)
+                return NotFound($"Futsal with name '{name}' not found.");
+
+            return Ok(futsal.operationHours); // e.g., "06:00-22:00"
+        }
+
 
         // PUT: api/FutsalDetails/{id}
         [HttpPut("{id}")]//put

@@ -1,48 +1,71 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
 import { BookingDetailService } from '../shared/booking-detail.service';
-import { AcceptBookingsService } from '../shared/accept-bookings.service';
+
+interface ReportData {
+  bookingId: number;
+  email: string; 
+  FutsalName: string; 
+  selectDate: string;
+  selectTime: string;
+  selectDuration: number;
+  price: string; // Or number if numeric
+  status: string; // optional
+}
 
 @Component({
   selector: 'app-report',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.css'],
+  providers: [DatePipe]
 })
 export class ReportComponent implements OnInit {
+  reportData: ReportData[] = [];
   totalBookings: number = 0;
   totalIncome: number = 0;
 
   constructor(
-    private bookingscreenService: BookingDetailService,
-    private acceptbookingsService: AcceptBookingsService
+    private bookingService: BookingDetailService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
-    this.getReportData();
+    this.loadReport();
   }
 
-  getReportData(): void {
-    this.bookingscreenService.getBookingDetails().subscribe(
-      (bookingDetails) => {
-        this.totalBookings = bookingDetails.length;
-        this.calculateTotalIncome(bookingDetails);
+  loadReport(): void {
+    this.bookingService.getBookingDetails().subscribe(
+      (data) => {
+        // Map BookingDetail[] → ReportData[]
+        this.reportData = data.map((b: any) => ({
+          bookingId: b.id,
+          email: b.email,
+          FutsalName: b.futsalName,
+          selectDate: b.selectDate,
+          selectTime: b.selectTime,
+          selectDuration: b.selectDuration,
+          price: b.price,
+          status: b.status || 'Pending'
+        }));
+  
+        this.totalBookings = this.reportData.length;
+        this.totalIncome = this.reportData.reduce(
+          (sum, item) => sum + this.parsePrice(item.price),
+          0
+        );
       },
-      (error) => {
-        console.error('Error fetching booking details:', error);
-      }
+      (error) => console.error('Error loading report:', error)
     );
   }
+  
 
-  calculateTotalIncome(bookingDetails: any[]): void {
-    this.totalIncome = 0;
-    
-    bookingDetails.forEach((booking) => {
-      const pricePerBooking = this.parsePrice(booking.price); // Get the pricing directly from the backend
-      this.totalIncome += pricePerBooking; // Add to total income
-    });
+  parsePrice(price: string | number): number {
+    return typeof price === 'number' ? price : parseFloat(price);
   }
 
-  // Parse the price string and return the price per booking as a number
-  parsePrice(price: string): number {
-    return parseFloat(price); // Converts price from string to float
+  formatDate(dateString: string): string {
+    return this.datePipe.transform(dateString, 'short') || '';
   }
 }

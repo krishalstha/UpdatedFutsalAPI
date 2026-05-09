@@ -1,4 +1,3 @@
-<!-- futsal.component.html -->
 <div class="futsal-booking-container">
   <header class="booking-header">
     <h1>Book Your Futsal Ground</h1>
@@ -7,7 +6,9 @@
 
   <div class="futsal-list">
     <div *ngFor="let futsal of futsalDetails" class="futsal-card">
-      <img *ngIf="getImageUrl(futsal)" [src]="getImageUrl(futsal)" alt="Futsal Ground" class="futsal-image">
+      <div class="futsal-image-wrapper">
+        <img *ngIf="getImageUrl(futsal)" [src]="getImageUrl(futsal)" alt="Futsal Ground" class="futsal-image">
+      </div>
 
       <div class="futsal-info">
         <h2>{{ futsal.futsalName }}</h2>

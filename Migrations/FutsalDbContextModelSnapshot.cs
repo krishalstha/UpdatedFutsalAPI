@@ -73,6 +73,31 @@ namespace FutsalAPI.Migrations
                     b.ToTable("Registration");
                 });
 
+            modelBuilder.Entity("FutsalAPI.Modules.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("BookingId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PaymentModelId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PaymentModelName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TotalAmount")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Payment");
+                });
+
             modelBuilder.Entity("FutsalAPI.modules.BookingDetail", b =>
                 {
                     b.Property<int>("id")
@@ -80,6 +105,20 @@ namespace FutsalAPI.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FutsalName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("calcTime")
                         .IsRequired()
@@ -89,9 +128,18 @@ namespace FutsalAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(15)");
 
+                    b.Property<decimal?>("discount")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("email")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<decimal?>("finalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool?>("isDiscountApplied")
+                        .HasColumnType("bit");
 
                     b.Property<decimal>("price")
                         .HasColumnType("decimal(18,2)");

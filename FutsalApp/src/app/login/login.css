@@ -46,3 +46,16 @@ button {
 .register-link:hover, .forgot-password:hover {
     text-decoration: underline;
 }
+.nav-btn {
+    padding: 6px 14px;
+    border: none;
+    background: linear-gradient(135deg, #3498db, #ff758c);
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .nav-btn:hover {
+    background: #3498db;
+  }

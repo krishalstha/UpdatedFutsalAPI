@@ -23,8 +23,15 @@ export class DashboardComponent implements OnInit {
   weekDays: { date: string }[] = []; // Stores 'YYYY-MM-DD' format
   timeSlots: string[] = [];
   bookings: Booking[] = [];
- 
+  futsalNames: string[] = [];
+  selectedFutsalName: string = 'All Futsals'; // Default filter
+  showFutsalDropdown: boolean = false; // State for dropdown visibility
+  currentStartDate: Date = new Date();
+  weekStart: Date = new Date();
+  weekEnd: Date = new Date();
+  isPastWeek: boolean = false;
 
+  
   constructor(
     private bookingService: BookingDetailService,
     private cdr: ChangeDetectorRef,
@@ -33,63 +40,149 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.generateWeekDays();
-    this.generateTimeSlots();
-    this.fetchBookings();
-  }
+    this.generateTimeSlots();  
+    this.fetchFutsalNames(0);
+    this.updateWeekStatus();   // <-- REQUIRED
 
-  generateWeekDays() {
-    const today = new Date();
-    this.weekDays = Array.from({ length: 7 }, (_, i) => {
-      const day = new Date(today);
-      day.setDate(today.getDate() + i);
-      return { date: day.toISOString().split('T')[0] }; // 'YYYY-MM-DD'
+  }
+  fetchFutsalNames(indexToSelect?: number): void {
+        this.bookingService.getFutsalNames().subscribe({
+      next: (names) => {
+        this.futsalNames = ['', ...names]; // Add 'All Futsals' option
+        // The default selectedFutsalName is already 'All Futsals'
+        if (indexToSelect !== undefined && names.length > indexToSelect) {
+          this.selectedFutsalName = names[indexToSelect];
+          // Since the name is now set, fetch the bookings for this specific futsal.
+          this.fetchBookings(); 
+      } else {
+           // Fallback for when there are no futsals, or if 'All Futsals' is desired by default.
+           this.fetchBookings();
+      }
+
+      this.cdr.detectChanges();
+    },
+      error: (err) => {
+        console.error('Error fetching futsal names:', err);
+        // Handle error, e.g., show a toast or message
+      }
     });
   }
+  
+  // ✅ New: Toggle the dropdown visibility
+  toggleFutsalDropdown(): void {
+    this.showFutsalDropdown = !this.showFutsalDropdown;
+  }
+
+  // ✅ New: Set the filter and refresh bookings
+  selectFutsalName(futsalName: string): void {
+    this.selectedFutsalName = futsalName.trim();
+    this.showFutsalDropdown = false; // Close dropdown after selection
+    this.fetchBookings(); // Refresh the data for the selected futsal
+  }
+  generateWeekDays() {
+    this.weekDays = Array.from({ length: 7 }, (_, i) => {
+      const day = new Date(this.currentStartDate);
+      day.setDate(this.currentStartDate.getDate() + i);
+      return { date: day.toISOString().split('T')[0] };
+    });
+  
+    this.weekStart = new Date(this.currentStartDate);
+    this.weekEnd = new Date(this.currentStartDate);
+    this.weekEnd.setDate(this.currentStartDate.getDate() + 6);
+  }
+  updateWeekStatus() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+  
+    const start = new Date(this.weekStart);
+    start.setHours(0, 0, 0, 0);
+  
+    // If the weekStart is earlier than today's week → past week
+    this.isPastWeek = start < today;
+  }
+  
+
+  previousWeek() {
+    this.currentStartDate.setDate(this.currentStartDate.getDate() - 7);
+    this.generateWeekDays();
+    this.fetchBookings();
+    this.updateWeekStatus();  // <-- dynamically check
+
+
+  }
+  
+  nextWeek() {
+    this.currentStartDate.setDate(this.currentStartDate.getDate() + 7);
+    this.generateWeekDays();
+    this.fetchBookings();
+    this.updateWeekStatus(); // <-- dynamically check
+  }
+  
+  
 
   generateTimeSlots() {
-    this.timeSlots = Array.from({ length: 15 }, (_, i) =>
-      `${String(6 + i).padStart(2, '0')}:00`
-    );
+    const startHour = 6; // 6 AM
+    const endHour = 18;  // 6 PM
+    this.timeSlots = [];
+  
+    for (let hour = startHour; hour <= endHour; hour++) {
+      const formattedHour = hour.toString().padStart(2, '0');
+      this.timeSlots.push(`${formattedHour}:00`);
+    }
   }
+  
+ 
 
   fetchBookings() {
-    this.bookingService.getBookings().subscribe(
-      (data: any[]) => {
+    // Only pass the futsal name if it's not 'All Futsals'
+    const futsalNameToFetch = this.selectedFutsalName !== 'All Futsals' 
+      ? this.selectedFutsalName   
+      : undefined;
+  
+    this.bookingService.getBookings(futsalNameToFetch).subscribe({
+      next: (data: any[]) => {
+        
         console.log('Bookings data received:', data);
-        this.bookings = data.map((booking) => {
+  
+        // Map backend data to your Booking interface
+        this.bookings = data.map(booking => {
           let durationMinutes = 60;
-          if (booking.selectDuration === '30 mins') {
-            durationMinutes = 30;
-          } else if (booking.selectDuration === '2 hours') {
-            durationMinutes = 120;
-          }
+          if (booking.selectDuration === '30 mins') durationMinutes = 30;
+          else if (booking.selectDuration === '2 hours') durationMinutes = 120;
   
           return {
-            date: booking.selectDate.split('T')[0],  // 'YYYY-MM-DD'
-            time: booking.selectTime.substring(0, 5),  // 'HH:mm'
+            date: booking.selectDate.split('T')[0],   // 'YYYY-MM-DD'
+            time: booking.selectTime.substring(0, 5), // 'HH:mm'
             duration: durationMinutes,
-            contactNumber: booking.contactNumber || '' // Fallback to empty string if undefined
+            contactNumber: booking.contactNumber || ''
           };
         });
-        this.cdr.detectChanges();  // Force UI update
+  
+        this.cdr.detectChanges(); // Force UI refresh
       },
-      (error: HttpErrorResponse) => {
-        console.error('Error fetching bookings:', error);
-      }
-    );
+      error: (err) => console.error('Error fetching bookings:', err)
+    });
   }
+  
   
   
   onBookingClick(date: string, time: string): void {
-    // Check if the slot is booked
-    if (this.isBooked(date, time)) {
-      // Redirect to the booking details page for accepted bookings
-      this.router.navigate(['/admin-dashboard/acceptbookings'], { queryParams: { date, time } });
+    if (this.isPastWeek) {
+      return; // No navigation, no action
+    }
+    if (!this.isBooked(date, time)) {
+      const futsalNameEncoded = encodeURIComponent(this.selectedFutsalName);
+      this.router.navigate([`/admin-dashboard/bookingscreen/${futsalNameEncoded}`], {
+        queryParams: { date, time }
+      });
     } else {
-      // Redirect to a booking page for available slots
-      this.router.navigate(['/admin-dashboard/bookingscreen/:futsalName'], { queryParams: { date, time } });
+      this.router.navigate(['/admin-dashboard/acceptbookings'], {
+        queryParams: { date, time }
+      });
     }
   }
+  
+  
   
   isBooked(date: string, time: string): boolean {
     // Get current slot's start and end times (assuming each slot is 1 hour)

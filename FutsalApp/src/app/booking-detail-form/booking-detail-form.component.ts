@@ -11,7 +11,7 @@ import { AuthService } from '../shared/auth.service'; // Assuming you have this
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './booking-detail-form.component.html',
-  styles: ``
+  styleUrls: ['./booking-detail-form.component.css']
 })
 export class BookingDetailFormComponent {
   @Output() updatedBooking = new EventEmitter<BookingDetail>();

@@ -9,13 +9,29 @@
   flex: 1;
    overflow: auto;
 }
+.content {
+  flex: 1;
+  padding: 20px;
+  margin-left: 250px;     /* default when sidebar is open */
+  transition: margin-left 0.3s ease;
+  overflow: auto;
+  height: 100vh;
+}
 
+/* When sidebar is collapsed */
+.main-content.collapsed .content {
+  margin-left: 60px;      /* shift content properly */
+}
 app-sidebar {
   width: 250px;
   position: fixed; /* Fixes the sidebar */
   height: 100vh; /* Ensures it takes full height */
   overflow-y: auto; /* Allows scrolling if needed */
   background: #fff; /* Adjust based on your design */
+  transition: width 0.3s ease;
+}
+.main-content.collapsed app-sidebar {
+  width: 60px;
 }
 
 .content {

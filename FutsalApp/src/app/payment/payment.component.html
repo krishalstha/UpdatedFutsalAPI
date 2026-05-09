@@ -1,0 +1,100 @@
+<div class="payment-container">
+  <h2>💳 Payment Management</h2>
+
+  <!-- Show final price only if it exists -->
+  <strong>Final Booking Price:Rs. {{ displayFinalPrice }}</strong>
+  <!-- Payment Form -->
+  <form #paymentForm="ngForm" (ngSubmit)="submitAllPayments(paymentForm)">
+    <div *ngFor="let pay of newPayments; let i = index" class="payment-row">
+      <!-- Payment Type -->
+      <select
+        [(ngModel)]="pay.paymentModelId"
+        name="model{{ i }}"
+        required
+      >
+        <option value="" disabled>Select Payment Type</option>
+        <option *ngFor="let model of paymentModels" [ngValue]="model.value">
+          {{ model.key }}
+        </option>
+      </select>
+
+      <!-- Amount -->
+      <input
+        type="number"
+        placeholder="Amount"
+        [(ngModel)]="pay.totalAmount"
+        name="amount{{ i }}"
+        required
+        min="1"
+      />
+
+      <button type="button" (click)="removePaymentRow(i)">❌</button>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions mt-2">
+      <button type="button" (click)="addPaymentRow()">➕ Add More</button>
+      <button type="submit">💾 Save Payments</button>
+    </div>
+  </form>
+
+  <hr />
+
+  <!-- Payment Table -->
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Booking ID</th>
+        <th>Payment Type</th>
+        <th>Total Amount</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of payments">
+        <td>{{ p.id }}</td>
+        <td>{{ p.bookingId }}</td>
+        <td>{{ getPaymentModelName(p.paymentModelId) }}</td>
+        <td>{{ p.totalAmount }}</td>
+        <td>
+          <button (click)="editPayment(p)">✏️ Edit</button>
+          <button (click)="deletePayment(p.id!)">🗑️ Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Edit Modal -->
+  <div class="edit-modal" *ngIf="editingPayment">
+    <div class="edit-box">
+      <h3>Edit Payment</h3>
+      <form #editForm="ngForm" (ngSubmit)="updatePayment(editForm)">
+        <select
+          [(ngModel)]="editingPayment.paymentModelId"
+          name="editModel"
+          required
+        >
+          <option value="" disabled>Select Payment Type</option>
+          <option *ngFor="let model of paymentModels" [ngValue]="model.value">
+            {{ model.key }}
+          </option>
+        </select>
+
+        <input
+          type="number"
+          [(ngModel)]="editingPayment.totalAmount"
+          placeholder="Total Amount"
+          name="editAmount"
+          required
+          min="1"
+        />
+
+        <div class="buttons mt-2">
+          <button type="submit">💾 Save</button>
+          <button type="button" class="cancel" (click)="cancelEdit()">❌ Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

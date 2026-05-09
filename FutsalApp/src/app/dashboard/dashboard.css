@@ -1,138 +1,238 @@
 .dashboard-container {
   padding: 20px;
-  font-family: Arial, sans-serif;
-  margin-top: 70px; /* Ensure enough space from the top bar */
+  font-family: 'Inter', sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
-  padding: 0;
-  text-align: center;
+.dashboard-title {
+  font-size: 28px;
+  font-weight: 700;
   color: #333;
-  z-index: 1; /* Optional: Ensure h2 stays above any overlapping elements */
-  position: relative; /* Ensure h2 respects the layout */
+  text-align: center;
+  margin-bottom: 25px;
 }
 
-/* Styling for the booking table */
+/* Filter Dropdown */
+.filter-container {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.filter-btn {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: #fff;
+  border-radius: 8px;
+  border: none;
+  padding: 10px 18px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+  opacity: 0.9;
+}
+
+.futsal-dropdown {
+  position: absolute;
+  top: 105%;
+  left: 0;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  min-width: 200px;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.dropdown-item {
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+.dropdown-item.active {
+  background-color: #e0f7fa;
+  font-weight: 600;
+}
+
+/* Week Navigation */
+.week-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.week-label {
+  font-weight: 600;
+  font-size: 16px;
+  color: #555;
+}
+.btn-gradient {
+  background: linear-gradient(135deg, #5a67f2, #7f5af0); /* deep blue → purple */
+  color: #fff;
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-gradient:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.nav-btn {
+  background: linear-gradient(135deg, #00bfa6, #00d1ff); /* teal → light blue */
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* Optional: Disabled Button */
+.nav-btn:disabled, .btn-gradient:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Table Wrapper for scroll */
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* Booking Table */
 .booking-table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: fixed; /* Ensure the columns have a fixed width */
+  table-layout: fixed;
+  font-size: 14px;
 }
 
 .booking-table th, .booking-table td {
-  border: 1px solid #ddd;
-  height: 40px;
+  padding: 12px 8px;
   text-align: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  border-bottom: 1px solid #eee;
+  transition: background 0.3s ease;
 }
 
 .booking-table th {
-  font-weight: bold;
-  padding: 10px;
+  background: #f5f5f5;
+  font-weight: 600;
+  color: #333;
 }
 
 .booking-table td {
-  background-color: #f9f9f9;
-  padding: 5px;
+  background-color: #fff;
+  cursor: pointer;
+  position: relative;
 }
 
-/* Hover effect for available slots */
-.booking-table td:hover {
+.booking-table td:hover:not(.booked):not(.disabled-week) {
   background-color: #e0f7fa;
+  border-radius: 6px;
 }
 
-/* Styling for booked slots */
 .booking-table td.booked {
   background-color: #ff4d4d;
   color: white;
-  font-weight: bold;
-  cursor: pointer;
+  font-weight: 600;
 }
 
-/* Prevent hover effect on booked slots */
 .booking-table td.booked:hover {
   background-color: #d84343;
+}
+
+.booking-table td.disabled-week {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* Booked phone number box */
+.phone-number-box {
+  background-color: #ff5f5f;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Time Slot Column */
+.time-slot {
+  font-weight: 600;
+  background-color: #f0f0f0;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .dashboard-container {
-    padding: 10px;
+    padding: 15px;
   }
 
   .booking-table th, .booking-table td {
     font-size: 12px;
-    padding: 8px;
+    padding: 10px 6px;
   }
 
-  .booking-table td {
-    height: auto;
-    min-width: 70px;
-  }
-
-  .booking-table th {
-    padding: 8px 5px;
+  .table-wrapper {
+    overflow-x: scroll;
   }
 }
 
 @media (max-width: 480px) {
-  .booking-table th, .booking-table td {
-    font-size: 10px;
-    padding: 6px;
-  }
-
-  .booking-table td {
-    height: auto;
-    min-width: 60px;
-  }
-
-  .booking-table th {
-    padding: 6px 3px;
-  }
-
-  .dashboard-container {
-    padding: 5px;
-  }
-
-  /* Stack the weekdays vertically for small screens */
   .booking-table thead {
+    display: none;
+  }
+
+  .booking-table tr {
     display: block;
+    margin-bottom: 15px;
   }
 
   .booking-table td {
-    display: block;
-    text-align: left;
-    padding-left: 10px;
-    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 10px;
+    text-align: right;
   }
 
   .booking-table td:before {
-    content: attr(data-day); 
-    font-weight: bold;
-    margin-right: 10px;
+    content: attr(data-day);
+    font-weight: 600;
+    text-align: left;
+    flex: 1;
   }
 
-  .booking-table th {
-    font-size: 12px;
+  .time-slot {
     text-align: left;
-    display: inline-block;
-    width: auto;
-    padding: 5px;
-  }
-  .phone-number-box {
-    background-color: #4CAF50; /* Example background color */
-    color: white;
-    padding: 5px;
-    border-radius: 3px;
-    font-size: 14px;
-  }
-  
-  /* Adjust columns to a more readable layout on small screens */
-  .booking-table td {
-    display: inline-block;
-    width: 100%;
+    background: transparent;
+    font-weight: 700;
   }
 }
